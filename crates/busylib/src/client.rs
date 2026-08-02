@@ -19,7 +19,7 @@ use crate::types::token::Token;
 use crate::types::try_into_value::TryIntoValue;
 use crate::{ApiError, api};
 
-/// Path the API is mounted under.
+/// Path the API is mounted under
 ///
 /// A bar serves the API under `/api`, while BUSY Cloud proxies the same API under
 /// `/busybar`, which is the prefix the OpenAPI specification documents.
@@ -63,31 +63,43 @@ pub struct Client<T> {
 }
 
 impl<T> Client<T> {
+    /// The base url of the client
     pub fn base_url(&self) -> &Url {
         &self.base_url
     }
 
+    /// The [`ApiPrefix`] of the client
+    ///
+    /// The prefix on the actual device is `/api` while the OpenAPI spec
+    /// uses `/busybar` (on 2026-08-02 with version 1.1.1).
     pub fn api_prefix(&self) -> ApiPrefix {
         self.api_prefix
     }
 
+    /// The transport, i.e. usually the underlaying HTTP client
     pub fn transport(&self) -> &T {
         &self.transport
     }
 
+    /// The currently set timeout
     pub fn timeout(&self) -> Option<Duration> {
         self.timeout.map(Timeout::duration)
     }
 
+    /// Set the timeout of the client.
+    ///
+    /// Useful for commands which may take a longer time than the default timeout allows, such as
+    /// the firmware update command.
     pub fn with_timeout(&self, timeout: Duration) -> Client<&T> {
-        self.rebind(Some(Timeout::new(timeout)))
+        self.set_timeout(Some(Timeout::new(timeout)))
     }
 
+    /// Unset the timeout of the client
     pub fn without_timeout(&self) -> Client<&T> {
-        self.rebind(None)
+        self.set_timeout(None)
     }
 
-    fn rebind(&self, timeout: Option<Timeout>) -> Client<&T> {
+    fn set_timeout(&self, timeout: Option<Timeout>) -> Client<&T> {
         Client {
             transport: &self.transport,
             base_url: self.base_url.clone(),
@@ -107,58 +119,72 @@ impl<T> Client<T> {
 }
 
 impl<T: HttpTransport> Client<T> {
+    /// Create a new client
     pub fn new(transport: T, base_url: impl AsRef<str>) -> Result<Self> {
         Ok(ClientBuilder::new(base_url)?.build(transport))
     }
 
+    /// The `account` API group
     pub fn account(&self) -> api::Account<'_, T> {
         api::Account::new(self)
     }
 
+    /// The `assets` API group
     pub fn assets(&self) -> api::Assets<'_, T> {
         api::Assets::new(self)
     }
 
+    /// The `ble` API group (for bluetooth)
     pub fn ble(&self) -> api::Ble<'_, T> {
         api::Ble::new(self)
     }
 
+    /// The `busy` API group
     pub fn busy(&self) -> api::Busy<'_, T> {
         api::Busy::new(self)
     }
 
+    /// The `input` API group
     pub fn input(&self) -> api::Input<'_, T> {
         api::Input::new(self)
     }
 
+    /// The `settings` API group
     pub fn settings(&self) -> api::Settings<'_, T> {
         api::Settings::new(self)
     }
 
+    /// The `smart home` API group
     pub fn smart_home(&self) -> api::SmartHome<'_, T> {
         api::SmartHome::new(self)
     }
 
+    /// The `storage` API group
     pub fn storage(&self) -> api::Storage<'_, T> {
         api::Storage::new(self)
     }
 
+    /// The `streaming` API group
     pub fn streaming(&self) -> api::Streaming<'_, T> {
         api::Streaming::new(self)
     }
 
+    /// The `input` API group
     pub fn system(&self) -> api::System<'_, T> {
         api::System::new(self)
     }
 
+    /// The `time` API group
     pub fn time(&self) -> api::Time<'_, T> {
         api::Time::new(self)
     }
 
+    /// The `updater` API group
     pub fn updater(&self) -> api::Updater<'_, T> {
         api::Updater::new(self)
     }
 
+    /// The `wifi` API group
     pub fn wifi(&self) -> api::Wifi<'_, T> {
         api::Wifi::new(self)
     }
