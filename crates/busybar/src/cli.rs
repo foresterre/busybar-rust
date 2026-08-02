@@ -4,7 +4,7 @@ use clap::Parser;
 use crate::commands::Command;
 use crate::error::Result;
 use crate::reporter::Reporter;
-use crate::values::OutputFormat;
+use crate::values::{ApiPrefixArg, OutputFormat};
 
 /// Control a BUSY Bar over its HTTP API, using this CLI <3
 #[derive(Debug, Parser)]
@@ -18,6 +18,10 @@ pub struct Cli {
         default_value = "http://10.0.4.20"
     )]
     url: String,
+
+    /// Path the API is mounted under: `/api` on a bar, `/busybar` on OpenAPI spec
+    #[arg(long, value_enum, default_value_t = ApiPrefixArg::Device)]
+    api_prefix: ApiPrefixArg,
 
     /// BUSY Cloud BAR-scope API token
     #[arg(
@@ -40,12 +44,13 @@ impl Cli {
     pub async fn run(self) -> Result<()> {
         let Cli {
             url,
+            api_prefix,
             token,
             output_format,
             command,
         } = self;
 
-        let mut builder = ClientBuilder::new(&url)?;
+        let mut builder = ClientBuilder::new(&url)?.api_prefix(api_prefix.into());
         if let Some(token) = token {
             builder = builder.token(token)?;
         }
@@ -64,7 +69,6 @@ impl Cli {
 
 #[derive(Debug)]
 pub struct Context {
-    #[allow(unused)] // TODO Use when implemented
     pub client: Client<ReqwestHttpTransport>,
     pub reporter: Reporter,
 }

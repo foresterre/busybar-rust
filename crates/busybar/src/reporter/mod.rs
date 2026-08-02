@@ -14,7 +14,7 @@ use crate::reporter::human::HumanHandler;
 use crate::reporter::json::JsonHandler;
 use crate::values::OutputFormat;
 
-pub use crate::reporter::events::CliEvent;
+pub use crate::reporter::events::{CliEvent, WifiStatusEvent};
 pub use crate::reporter::output::{Output, OutputError};
 
 #[derive(Debug, thiserror::Error)]
@@ -60,7 +60,6 @@ impl Reporter {
         }
     }
 
-    #[allow(unused)] // TODO(foresterre): report cli events
     pub fn report(&self, event: impl Into<CliEvent>) -> Result<(), ReporterError> {
         self.reporter
             .report_event(event)
@@ -96,6 +95,8 @@ impl std::fmt::Debug for Reporter {
 mod tests {
     use std::io::Write;
     use std::sync::Mutex;
+
+    use busylib::model::wifi::{StatusResponse, WifiState};
 
     use super::*;
 
@@ -138,5 +139,48 @@ mod tests {
         reporter.finish().unwrap();
 
         assert!(buffer.contents().is_empty());
+    }
+
+    fn sample_event() -> CliEvent {
+        CliEvent::from(WifiStatusEvent::new(StatusResponse {
+            state: WifiState::Disconnected,
+            ssid: None,
+            bssid: None,
+            channel: None,
+            rssi: None,
+            security: None,
+            ip_config: None,
+        }))
+    }
+
+    fn render(format: OutputFormat, event: CliEvent) -> String {
+        let buffer = SharedBuffer::default();
+        let output = Arc::new(Output::new(buffer.clone()));
+        let reporter = Reporter::with_output(format, output);
+
+        reporter.report(event).unwrap();
+        reporter.finish().unwrap();
+
+        String::from_utf8(buffer.contents()).unwrap()
+    }
+
+    #[test]
+    fn human_reporter_writes_events_as_they_display() {
+        let event = sample_event();
+
+        assert_eq!(
+            render(OutputFormat::Text, event.clone()),
+            format!("{event}\n")
+        );
+    }
+
+    #[test]
+    fn json_reporter_writes_events_as_a_line_of_json() {
+        let event = sample_event();
+
+        assert_eq!(
+            render(OutputFormat::Json, event.clone()),
+            format!("{}\n", serde_json::to_string(&event).unwrap())
+        );
     }
 }

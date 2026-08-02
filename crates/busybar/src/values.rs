@@ -1,3 +1,4 @@
+use busylib::ApiPrefix;
 use busylib::model::busy::BusyProfileSlot;
 use busylib::model::display::{Align, Font, Screen};
 use busylib::model::input::Key;
@@ -10,6 +11,22 @@ use clap::ValueEnum;
 pub enum OutputFormat {
     Text,
     Json,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, ValueEnum)]
+#[value(rename_all = "kebab-case")]
+pub enum ApiPrefixArg {
+    Device,
+    Cloud,
+}
+
+impl From<ApiPrefixArg> for ApiPrefix {
+    fn from(prefix: ApiPrefixArg) -> Self {
+        match prefix {
+            ApiPrefixArg::Device => ApiPrefix::Device,
+            ApiPrefixArg::Cloud => ApiPrefix::Cloud,
+        }
+    }
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, ValueEnum)]
