@@ -10,44 +10,61 @@ use crate::types::{LogName, TryIntoValue};
 crate::api::endpoint!(System);
 
 impl<T: HttpTransport> System<'_, T> {
+    /// Get API version information
+    ///
+    /// Retrieves API version
     pub async fn version(&self) -> Result<String> {
         let response: VersionInfo = self.client.json(Call::get("/busybar/version")).await?;
         Ok(response.api_semver)
     }
 
+    /// Get device network connection info
+    ///
+    /// Retrieves device transport type (usb/wifi)
     pub async fn transport(&self) -> Result<TransportType> {
         let response: NetworkInterfaceInfo =
             self.client.json(Call::get("/busybar/transport")).await?;
         Ok(response.r#type)
     }
 
+    /// Get device status
     pub async fn status(&self) -> Result<Status> {
         self.client.json(Call::get("/busybar/status")).await
     }
 
+    /// Get device info
     pub async fn device(&self) -> Result<StatusDevice> {
         self.client.json(Call::get("/busybar/status/device")).await
     }
 
+    /// Get firmware info
     pub async fn firmware(&self) -> Result<StatusFirmware> {
         self.client
             .json(Call::get("/busybar/status/firmware"))
             .await
     }
 
+    /// Get system status
     pub async fn system_info(&self) -> Result<StatusSystem> {
         self.client.json(Call::get("/busybar/status/system")).await
     }
 
+    /// Get power status
     pub async fn power(&self) -> Result<StatusPower> {
         self.client.json(Call::get("/busybar/status/power")).await
     }
 
+    /// Dump captured log
+    ///
+    /// Snapshot the in-memory log buffer to a file (defaults to /ext/log.txt)
     pub async fn dump_log(&self) -> Result<String> {
         let response: LogDumpResponse = self.client.json(Call::post("/busybar/log_dump")).await?;
         Ok(response.path)
     }
 
+    /// Dump captured log
+    ///
+    /// Snapshot the in-memory log buffer to a file (defaults to /ext/log.txt)
     pub async fn dump_log_as(&self, filename: impl TryIntoValue<LogName>) -> Result<String> {
         let request = Call::post("/busybar/log_dump").query("filename", filename.try_into_value()?);
         let response: LogDumpResponse = self.client.json(request).await?;

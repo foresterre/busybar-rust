@@ -9,6 +9,9 @@ use crate::types::{StoragePath, TryIntoValue};
 crate::api::endpoint!(Storage);
 
 impl<T: HttpTransport> Storage<'_, T> {
+    /// Upload file to internal storage
+    ///
+    /// Uploads a file to a specified path
     pub async fn write(
         &self,
         path: impl TryIntoValue<StoragePath>,
@@ -20,11 +23,15 @@ impl<T: HttpTransport> Storage<'_, T> {
         self.client.ok(request).await
     }
 
+    /// Download file from internal storage
+    ///
+    /// Downloads a file from a specified path
     pub async fn read(&self, path: impl TryIntoValue<StoragePath>) -> Result<Bytes> {
         let request = Call::get("/busybar/storage/read").query("path", path.try_into_value()?);
         self.client.bytes(request).await
     }
 
+    /// List files on internal storage
     pub async fn list(
         &self,
         path: impl TryIntoValue<StoragePath>,
@@ -34,16 +41,25 @@ impl<T: HttpTransport> Storage<'_, T> {
         Ok(response.list)
     }
 
+    /// Remove a file on internal storage
+    ///
+    /// Removes a file with a specified path
     pub async fn remove(&self, path: impl TryIntoValue<StoragePath>) -> Result<()> {
         let request = Call::delete("/busybar/storage/remove").query("path", path.try_into_value()?);
         self.client.ok(request).await
     }
 
+    /// Create a directory on internal storage
+    ///
+    /// Creates a new directory with a specified path
     pub async fn create_dir(&self, path: impl TryIntoValue<StoragePath>) -> Result<()> {
         let request = Call::post("/busybar/storage/mkdir").query("path", path.try_into_value()?);
         self.client.ok(request).await
     }
 
+    /// Rename/move a file
+    ///
+    /// Moves a file to a new location
     pub async fn rename(
         &self,
         path: impl TryIntoValue<StoragePath>,
@@ -55,6 +71,7 @@ impl<T: HttpTransport> Storage<'_, T> {
         self.client.ok(request).await
     }
 
+    /// Show storage usage
     pub async fn status(&self) -> Result<StorageStatus> {
         self.client.json(Call::get("/busybar/storage/status")).await
     }

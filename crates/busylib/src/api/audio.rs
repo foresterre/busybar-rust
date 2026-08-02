@@ -7,25 +7,41 @@ use crate::types::Volume;
 crate::api::endpoint!(Audio);
 
 impl<T: HttpTransport> Audio<'_, T> {
+    /// Play audio file
+    ///
+    /// Plays an audio file from the assets directory.
+    /// Supported formats include .snd files.
     pub async fn play(&self, audio: &PlayAudio) -> Result<()> {
         let request = Call::post("/busybar/audio/play").json(audio)?;
         self.client.ok(request).await
     }
 
+    /// Stop audio playback
+    ///
+    /// Stops any currently playing audio
     pub async fn stop(&self) -> Result<()> {
         self.client.ok(Call::delete("/busybar/audio/play")).await
     }
 
+    /// Get audio volume
+    ///
+    /// Get audio volume value
     pub async fn volume(&self) -> Result<Volume> {
         let response: AudioVolumeInfo =
             self.client.json(Call::get("/busybar/audio/volume")).await?;
         Ok(response.volume)
     }
 
+    /// Set audio volume
+    ///
+    /// Set audio volume value
     pub async fn set_volume(&self, volume: Volume) -> Result<()> {
         self.set(volume, false).await
     }
 
+    /// Set audio volume silently
+    ///
+    /// Set audio volume value
     pub async fn set_volume_silently(&self, volume: Volume) -> Result<()> {
         self.set(volume, true).await
     }
