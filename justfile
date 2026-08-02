@@ -23,3 +23,6 @@ msrv-find:
 
 precommit: fmt check clippy test
     just msrv-verify || { just msrv-find; exit 1; }
+
+book:
+    mdbook serve --open book

@@ -1,0 +1,11 @@
+[package]
+name = "bookdoc"
+description = "Tests whether the Rust code in the book compiles"
+version = { workspace = true }
+edition = { workspace = true }
+license = { workspace = true }
+publish = false
+
+[dependencies]
+busylib.workspace = true
+tokio.workspace = true

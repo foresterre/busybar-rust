@@ -1,0 +1,32 @@
+name: publish-book
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "book/**"
+      - ".github/workflows/book.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: book-gh-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: peaceiris/actions-mdbook@v2
+        with:
+          mdbook-version: "0.5.4"
+      - run: mdbook build book
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./book/book
+          publish_branch: gh-pages

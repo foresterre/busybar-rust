@@ -1,5 +1,5 @@
 [workspace]
-members = ["crates/busybar", "crates/busylib"]
+members = ["crates/busybar", "crates/busylib", "crates/bookdoc"]
 resolver = "3"
 
 [workspace.package]
