@@ -1,7 +1,10 @@
+//! Time schemas
+
 use serde::{Deserialize, Serialize};
 
 use crate::types::timestamp::Timestamp;
 
+/// Time zone the device runs in
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct TimezoneInfo {
     /// Time zone name

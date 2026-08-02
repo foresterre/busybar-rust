@@ -1,3 +1,5 @@
+//! Wi-Fi schemas
+
 use serde::{Deserialize, Serialize};
 
 /// Wi-Fi status. Only `state` is always present.
@@ -27,6 +29,7 @@ impl StatusResponse {
     }
 }
 
+/// States the Wi-Fi connection can be in
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum WifiState {
@@ -40,6 +43,7 @@ pub enum WifiState {
     Unrecognized(String),
 }
 
+/// Security methods a network can use
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub enum WifiSecurityMethod {
     Open,
@@ -60,6 +64,7 @@ pub enum WifiSecurityMethod {
     Unknown(String),
 }
 
+/// IP configuration of the connection
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct WifiIpConfig {
     pub ip_method: Option<WifiIpMethod>,
@@ -67,6 +72,7 @@ pub struct WifiIpConfig {
     pub address: Option<String>,
 }
 
+/// How an IP address is obtained
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum WifiIpMethod {
@@ -74,6 +80,7 @@ pub enum WifiIpMethod {
     Static,
 }
 
+/// IP address families
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum WifiIpType {

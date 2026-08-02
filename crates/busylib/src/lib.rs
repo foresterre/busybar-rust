@@ -1,3 +1,5 @@
+//! Rust client for the BUSY Bar HTTP API
+
 pub mod api;
 mod client;
 mod error;

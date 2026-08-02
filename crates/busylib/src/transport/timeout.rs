@@ -1,7 +1,10 @@
+//! Request timeouts
+
 use http::Request;
 use std::fmt;
 use std::time::Duration;
 
+/// How long a request may take, until it times out
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct Timeout(Duration);
 

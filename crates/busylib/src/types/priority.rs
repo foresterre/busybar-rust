@@ -1,3 +1,5 @@
+//! Draw priorities
+
 crate::types::percentage_newtype!(
     /// Draw priority, where a higher value wins.
     Priority,

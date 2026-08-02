@@ -1,3 +1,5 @@
+//! Asset file names
+
 crate::types::string_newtype!(
     /// File name of an asset within an application.
     AssetName,

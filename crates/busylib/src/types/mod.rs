@@ -1,3 +1,5 @@
+//! Values the API accepts, validated on construction
+
 pub mod access_key;
 pub mod app_name;
 pub mod asset_name;

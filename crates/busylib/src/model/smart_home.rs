@@ -1,5 +1,8 @@
+//! Smart home schemas
+
 use serde::{Deserialize, Serialize};
 
+/// How many smart homes the device is paired with
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct SmartHomePairingInfo {
     /// Number of smart homes (Matter "fabrics") that this device is paired with ("commissioned
@@ -14,6 +17,7 @@ impl SmartHomePairingInfo {
     }
 }
 
+/// Latest pairing state and when it was recorded
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct PairingStatusInfo {
     /// Latest state of smart home pairing (Matter "commissioning") process. Note:
@@ -25,6 +29,7 @@ pub struct PairingStatusInfo {
     pub timestamp: Option<u64>,
 }
 
+/// States the pairing process can be in
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum PairingStatus {
@@ -49,6 +54,7 @@ pub struct SmartHomePairingPayload {
     pub manual_code: Option<String>,
 }
 
+/// State of the emulated switch
 #[derive(Debug, Clone, PartialEq, Eq, Default, Serialize, Deserialize)]
 pub struct SmartHomeSwitchState {
     /// State of emulated switch.
@@ -85,6 +91,7 @@ impl SmartHomeSwitchState {
     }
 }
 
+/// State the emulated switch takes on startup
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum SwitchStartup {

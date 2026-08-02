@@ -1,3 +1,5 @@
+//! Audio schemas
+
 use serde::{Deserialize, Serialize};
 
 use crate::types::app_name::AppName;
@@ -7,6 +9,7 @@ use crate::types::stock_path::StockPath;
 use crate::types::try_into_value::TryIntoValue;
 use crate::types::volume::Volume;
 
+/// Request to play an audio file
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct PlayAudio {
     /// Application ID for organizing assets
@@ -41,6 +44,7 @@ impl PlayAudio {
     }
 }
 
+/// Where an audio file is loaded from
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AudioSource {

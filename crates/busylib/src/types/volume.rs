@@ -1,3 +1,5 @@
+//! Audio volume values
+
 crate::types::percentage_newtype!(
     /// Audio volume, as a percentage.
     Volume,

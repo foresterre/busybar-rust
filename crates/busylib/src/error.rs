@@ -1,3 +1,5 @@
+//! Errors returned by the client
+
 use std::fmt;
 
 use http::{Method, StatusCode};
@@ -8,6 +10,7 @@ use crate::types::invalid_value::InvalidValue;
 
 pub type Result<T, E = Error> = std::result::Result<T, E>;
 
+/// Busylib's top level error
 #[derive(Debug, thiserror::Error)]
 pub enum Error {
     #[error("invalid base URL `{url}`")]
@@ -90,6 +93,7 @@ impl Error {
     }
 }
 
+/// Why a base URL is unusable
 #[derive(Debug, thiserror::Error)]
 pub enum BaseUrlError {
     #[error(transparent)]
@@ -102,6 +106,7 @@ pub enum BaseUrlError {
     HasQueryOrFragment,
 }
 
+/// Why a request could not be built
 #[derive(Debug, thiserror::Error)]
 pub enum BuildRequestError {
     #[error(transparent)]
@@ -114,6 +119,7 @@ pub enum BuildRequestError {
     Body(#[from] serde_json::Error),
 }
 
+/// Error reported by the device
 #[derive(Debug, Clone, PartialEq, Eq, Deserialize)]
 pub struct ApiError {
     pub error: String,
@@ -131,6 +137,7 @@ impl fmt::Display for ApiError {
 
 const SNIPPET_LIMIT: usize = 256;
 
+/// The body of a response, specifivally for error messages
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Body {
     text: String,

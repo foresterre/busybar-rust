@@ -1,3 +1,5 @@
+//! Validation failures
+
 /// Reason a value was rejected by a validating constructor.
 #[derive(Debug, Clone, PartialEq, Eq, thiserror::Error)]
 #[error("invalid {label} `{value}`: expected {expectation}")]

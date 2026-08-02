@@ -1,3 +1,5 @@
+//! HTTP API access keys
+
 use std::fmt;
 use std::str::FromStr;
 

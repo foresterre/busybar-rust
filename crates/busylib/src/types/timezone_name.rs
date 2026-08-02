@@ -1,3 +1,5 @@
+//! Time zone names
+
 crate::types::string_newtype!(
     /// Name of a time zone the device accepts.
     TimezoneName,

@@ -1,5 +1,8 @@
+//! Account schemas
+
 use serde::{Deserialize, Serialize};
 
+/// Linked account data
 #[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
 pub struct AccountInfo {
     pub linked: Option<bool>,
@@ -14,6 +17,7 @@ impl AccountInfo {
     }
 }
 
+/// Connection states to the cloud backend
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum MqttStatus {
@@ -24,6 +28,7 @@ pub enum MqttStatus {
     Unknown(String),
 }
 
+/// MQTT backend configuration
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct AccountBackend {
     /// MQTT server url to connect to
@@ -34,6 +39,7 @@ pub struct AccountBackend {
     pub ignore_server_cert: bool,
 }
 
+/// Client certificate types
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum ClientCertType {

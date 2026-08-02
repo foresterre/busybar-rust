@@ -1,5 +1,8 @@
+//! Input schemas
+
 use serde::{Deserialize, Serialize};
 
+/// Keys a press can be sent for
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum Key {

@@ -1,13 +1,17 @@
+//! Updater schemas
+
 use serde::{Deserialize, Serialize};
 
 use crate::types::time_of_day::TimeOfDay;
 
+/// Install and check status
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct UpdateStatus {
     pub install: Option<InstallStatus>,
     pub check: Option<CheckStatus>,
 }
 
+/// Progress of a firmware installation
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct InstallStatus {
     /// Whether update installation is allowed (battery check)
@@ -23,6 +27,7 @@ pub struct InstallStatus {
     pub download: Option<DownloadProgress>,
 }
 
+/// Progress of a firmware download
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct DownloadProgress {
     /// Current download speed in bytes per second
@@ -44,6 +49,7 @@ impl DownloadProgress {
     }
 }
 
+/// Events reported during an update
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum UpdateEvent {
@@ -58,6 +64,7 @@ pub enum UpdateEvent {
     Unknown(String),
 }
 
+/// Steps an update runs through
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum UpdateAction {
@@ -71,6 +78,7 @@ pub enum UpdateAction {
     Unknown(String),
 }
 
+/// Outcome of an installation
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum InstallResult {
@@ -92,6 +100,7 @@ pub enum InstallResult {
     Unknown(String),
 }
 
+/// Result of a check for available firmware
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct CheckStatus {
     /// Version of available update (empty if none)
@@ -110,6 +119,7 @@ impl CheckStatus {
     }
 }
 
+/// Events reported during a check
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum CheckEvent {
@@ -120,6 +130,7 @@ pub enum CheckEvent {
     Unknown(String),
 }
 
+/// Outcome of a check
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum CheckResult {

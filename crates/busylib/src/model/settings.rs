@@ -1,8 +1,11 @@
+//! Settings schemas
+
 use serde::{Deserialize, Serialize};
 
 use crate::types::access_key::AccessKey;
 use crate::types::device_name::DeviceName;
 
+/// How the HTTP API can be reached over Wi-Fi
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum HttpAccess {
     Disabled,
@@ -27,6 +30,7 @@ impl HttpAccess {
     }
 }
 
+/// Access modes of the HTTP API
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum AccessMode {
@@ -45,6 +49,7 @@ impl AccessMode {
     }
 }
 
+/// Reported HTTP API access configuration
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct HttpAccessInfo {
     /// Access mode

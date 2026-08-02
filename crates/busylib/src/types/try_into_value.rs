@@ -1,3 +1,5 @@
+//! Conversion into validated values
+
 use crate::types::invalid_value::InvalidValue;
 
 /// Conversion into a validated value, accepting raw and already validated inputs.

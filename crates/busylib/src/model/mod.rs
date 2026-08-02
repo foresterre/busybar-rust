@@ -1,3 +1,5 @@
+//! Request and response schemas
+
 pub mod account;
 pub mod audio;
 pub mod ble;

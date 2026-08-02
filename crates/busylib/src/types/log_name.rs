@@ -1,3 +1,5 @@
+//! Log file names
+
 crate::types::string_newtype!(
     /// Name of a log dump file, without extension.
     LogName,

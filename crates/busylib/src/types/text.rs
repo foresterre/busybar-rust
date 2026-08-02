@@ -1,3 +1,5 @@
+//! Display text
+
 crate::types::string_newtype!(
     /// Line of text to draw.
     Text,

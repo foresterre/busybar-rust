@@ -1,3 +1,5 @@
+//! Display schemas
+
 use serde::{Deserialize, Serialize};
 
 use crate::types::app_name::AppName;
@@ -11,6 +13,7 @@ use crate::types::stock_path::StockPath;
 use crate::types::text::Text;
 use crate::types::try_into_value::TryIntoValue;
 
+/// Draw request for one application
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct DisplayElements {
     /// Application ID for organizing assets
@@ -62,6 +65,7 @@ impl DisplayElements {
     }
 }
 
+/// Single element of a draw request
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct DisplayElement {
     /// Unique identifier for the element
@@ -99,6 +103,7 @@ impl DisplayElement {
     }
 }
 
+/// Builder for a [`DisplayElement`]
 #[derive(Debug, Clone)]
 pub struct DisplayElementBuilder {
     id: ElementId,
@@ -169,6 +174,7 @@ impl DisplayElementBuilder {
     }
 }
 
+/// How long an element stays on screen
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum Lifetime {
@@ -208,6 +214,7 @@ pub enum ElementKind {
     Rectangle(RectangleElement),
 }
 
+/// Text to draw
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct TextElement {
     /// Text content to display (printable ASCII only; fonts are bitmap ASCII)
@@ -270,6 +277,7 @@ impl TextElement {
     }
 }
 
+/// Where an image or animation is loaded from
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ImageSource {
@@ -291,6 +299,7 @@ impl ImageSource {
     }
 }
 
+/// Image to draw
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct ImageElement {
     #[serde(flatten)]
@@ -322,6 +331,7 @@ impl ImageElement {
     }
 }
 
+/// Animation to play
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct AnimationElement {
     #[serde(flatten)]
@@ -381,6 +391,7 @@ impl AnimationElement {
     }
 }
 
+/// Countdown to draw
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct CountdownElement {
     /// Seconds-based Unix UTC timestamp to count down or up to. Note: it's a number in a
@@ -412,6 +423,7 @@ impl CountdownElement {
     }
 }
 
+/// Rectangle to draw
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct RectangleElement {
     /// Width of the rectangle in pixels
@@ -485,6 +497,7 @@ impl RectangleElement {
     }
 }
 
+/// Fonts text can be drawn in
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum Font {
@@ -498,6 +511,7 @@ pub enum Font {
     Global,
 }
 
+/// Anchor points an element can be positioned by
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum Align {
@@ -512,6 +526,7 @@ pub enum Align {
     BottomRight,
 }
 
+/// Screens an element can be drawn on
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum Screen {
@@ -528,6 +543,7 @@ impl Screen {
     }
 }
 
+/// Fill styles of a rectangle
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum Fill {
@@ -537,6 +553,7 @@ pub enum Fill {
     GradientV,
 }
 
+/// Direction a countdown runs in
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum CountdownDirection {
@@ -544,6 +561,7 @@ pub enum CountdownDirection {
     TimeSince,
 }
 
+/// When a countdown shows hours
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum ShowHours {

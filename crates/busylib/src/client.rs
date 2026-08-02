@@ -1,3 +1,5 @@
+//! The HTTP client and builder
+
 use std::borrow::Cow;
 use std::fmt::Display;
 use std::time::Duration;
@@ -16,6 +18,7 @@ use crate::types::token::Token;
 use crate::types::try_into_value::TryIntoValue;
 use crate::{ApiError, api};
 
+/// Client for a single device
 #[derive(Debug, Clone)]
 pub struct Client<T> {
     transport: T,
@@ -230,6 +233,7 @@ impl<T: HttpTransport> Client<T> {
     }
 }
 
+/// Builder for a [`Client`]
 #[derive(Debug, Clone)]
 pub struct ClientBuilder {
     base_url: Url,

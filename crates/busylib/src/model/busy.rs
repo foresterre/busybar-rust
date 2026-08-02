@@ -1,11 +1,15 @@
+//! BUSY timer schemas
+
 use serde::{Deserialize, Serialize};
 
+/// Timer snapshot and the moment it was taken
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct BusySnapshot {
     pub snapshot: Snapshot,
     pub snapshot_timestamp_ms: u64,
 }
 
+/// Timer state and the bar settings it runs with
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Snapshot {
     #[serde(flatten)]
@@ -13,6 +17,7 @@ pub struct Snapshot {
     pub busy_bar_settings: BusyBarSettings,
 }
 
+/// What the timer is currently doing
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(tag = "type")]
 pub enum TimerState {
@@ -38,6 +43,7 @@ pub enum TimerState {
     },
 }
 
+/// Stored timer profile
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct BusyProfile {
     pub id: String,
@@ -48,6 +54,7 @@ pub struct BusyProfile {
     pub profile_timestamp_ms: u64,
 }
 
+/// Slot a profile is stored in
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum BusyProfileSlot {
@@ -64,6 +71,7 @@ impl BusyProfileSlot {
     }
 }
 
+/// How a timer counts
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(tag = "type")]
 pub enum TimerSettings {
@@ -91,6 +99,7 @@ impl TimerSettings {
     }
 }
 
+/// Work and rest intervals of an interval timer
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub struct BusyTimerIntervalSettings {
     pub interval_work_ms: u64,
@@ -99,6 +108,7 @@ pub struct BusyTimerIntervalSettings {
     pub is_autostart_enabled: bool,
 }
 
+/// How the bar presents a running timer
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct BusyBarSettings {
     pub theme: String,

@@ -1,8 +1,11 @@
+//! Transport backed by `reqwest`
+
 use bytes::Bytes;
 use http::{Request, Response};
 
 use super::{BoxFuture, HttpTransport, HttpTransportError, HttpTransportResult, Timeout};
 
+/// Transport backed by `reqwest`
 #[derive(Debug, Clone, Default)]
 pub struct ReqwestHttpTransport {
     client: reqwest::Client,

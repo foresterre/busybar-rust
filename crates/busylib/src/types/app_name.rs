@@ -1,3 +1,5 @@
+//! Application names
+
 crate::types::string_newtype!(
     /// Application name that groups assets and drawn elements.
     AppName,

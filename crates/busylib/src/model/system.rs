@@ -1,5 +1,8 @@
+//! System schemas
+
 use serde::{Deserialize, Serialize};
 
+/// Device, firmware, system and power information
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Status {
     pub device: Option<StatusDevice>,
@@ -8,6 +11,7 @@ pub struct Status {
     pub power: Option<StatusPower>,
 }
 
+/// Device information
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct StatusDevice {
     /// Device serial number
@@ -31,6 +35,7 @@ pub struct StatusDevice {
     pub firmware_security: FirmwareSecurity,
 }
 
+/// Firmware signature protection states
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum FirmwareSecurity {
@@ -42,6 +47,7 @@ pub enum FirmwareSecurity {
     Unrecognized(String),
 }
 
+/// Firmware information
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct StatusFirmware {
     /// Firmware version
@@ -63,6 +69,7 @@ pub struct StatusFirmware {
     pub matter_version: Option<String>,
 }
 
+/// System information
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct StatusSystem {
     /// API SemVer
@@ -75,6 +82,7 @@ pub struct StatusSystem {
     pub auto_update_enabled: bool,
 }
 
+/// Power and battery information
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct StatusPower {
     /// Power state
@@ -89,6 +97,7 @@ pub struct StatusPower {
     pub usb_voltage: i32,
 }
 
+/// Power states of the battery
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum PowerState {
@@ -99,6 +108,7 @@ pub enum PowerState {
     Unknown(String),
 }
 
+/// How the device is connected
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum TransportType {

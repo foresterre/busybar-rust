@@ -1,3 +1,5 @@
+//! Account endpoints
+
 use crate::client::Call;
 use crate::error::Result;
 use crate::model::account::{AccountBackend, AccountInfo, AccountStatus, MqttStatus};

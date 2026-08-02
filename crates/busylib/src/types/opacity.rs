@@ -1,3 +1,5 @@
+//! Opacity values
+
 crate::types::percentage_newtype!(
     /// Opacity, as a percentage.
     Opacity,

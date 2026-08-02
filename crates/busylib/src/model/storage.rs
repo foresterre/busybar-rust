@@ -1,3 +1,5 @@
+//! Storage schemas
+
 use serde::{Deserialize, Serialize};
 
 /// Element type
@@ -35,6 +37,7 @@ impl StorageListElement {
     }
 }
 
+/// Usage of the internal storage
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct StorageStatus {
     pub used_bytes: Option<u64>,

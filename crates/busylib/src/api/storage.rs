@@ -1,3 +1,5 @@
+//! Storage endpoints
+
 use bytes::Bytes;
 
 use crate::client::Call;

@@ -1,5 +1,8 @@
+//! BLE schemas
+
 use serde::{Deserialize, Serialize};
 
+/// Current BLE status
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct BleStatusResponse {
     pub status: BleState,
@@ -7,6 +10,7 @@ pub struct BleStatusResponse {
     pub address: Option<String>,
 }
 
+/// States the BLE module can be in
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum BleState {

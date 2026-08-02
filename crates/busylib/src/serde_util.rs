@@ -1,3 +1,5 @@
+//! Serde adapters for fields the device sends in, lets say, unusual shapes ;)
+
 pub(crate) mod string_u64 {
     use serde::de::Error as _;
     use serde::{Deserialize, Deserializer, Serializer};

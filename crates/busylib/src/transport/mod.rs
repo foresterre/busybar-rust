@@ -1,3 +1,5 @@
+//! The HTTP transport which the client sends its requests over
+
 use std::fmt;
 use std::future::Future;
 use std::pin::Pin;
@@ -14,14 +16,16 @@ mod timeout;
 pub use reqwest_transport::ReqwestHttpTransport;
 pub use timeout::Timeout;
 
-pub type BoxFuture<'a, T> = Pin<Box<dyn Future<Output = T> + Send + 'a>>;
+pub type BoxFuture<'a, T> = Pin<Box<dyn Future<Output=T> + Send + 'a>>;
 
 pub type HttpTransportResult = Result<Response<Bytes>, HttpTransportError>;
 
+/// The HTTP transport which the client sends its requests over
 pub trait HttpTransport: Send + Sync {
     fn execute(&self, request: Request<Bytes>) -> BoxFuture<'_, HttpTransportResult>;
 }
 
+/// Failure from the underlying transport
 pub struct HttpTransportError(Box<dyn std::error::Error + Send + Sync>);
 
 impl HttpTransportError {

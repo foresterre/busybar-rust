@@ -1,3 +1,5 @@
+//! Device names
+
 crate::types::string_newtype!(
     /// Name the device is known by.
     DeviceName,

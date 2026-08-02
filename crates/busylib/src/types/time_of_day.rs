@@ -1,3 +1,5 @@
+//! Times of day
+
 crate::types::string_newtype!(
     /// Time of day in `HH:MM`.
     TimeOfDay,

@@ -1,3 +1,5 @@
+//! Smart home endpoints
+
 use crate::client::Call;
 use crate::error::Result;
 use crate::model::smart_home::{

@@ -1,3 +1,5 @@
+//! Stock asset paths
+
 crate::types::string_newtype!(
     /// Path to a stock asset shipped with the device.
     StockPath,

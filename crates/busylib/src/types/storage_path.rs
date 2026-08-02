@@ -1,3 +1,5 @@
+//! Storage paths
+
 crate::types::string_newtype!(
     /// Path to a file or directory below `/ext`.
     StoragePath,

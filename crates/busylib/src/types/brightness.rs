@@ -1,3 +1,5 @@
+//! Display brightness values
+
 use std::fmt;
 use std::str::FromStr;
 

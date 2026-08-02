@@ -1,3 +1,5 @@
+//! Validation rules shared by the value types
+
 pub fn name(value: &str) -> bool {
     !value.is_empty() && value.chars().all(is_name_char)
 }

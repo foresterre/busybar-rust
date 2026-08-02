@@ -1,3 +1,9 @@
+//! Api endpoints
+//!
+//! Unlike the busy bar OpenAPI spec (23.0.0), it's grouped per path,
+//! so `/audio` and `/display` are their own structs, instead of sitting under
+//! `/assets`.
+
 mod account;
 mod assets;
 mod audio;

@@ -1,3 +1,5 @@
+//! Time endpoints
+
 use crate::client::Call;
 use crate::error::Result;
 use crate::model::time::{TimestampInfo, TimezoneInfo, TimezoneListResponse};

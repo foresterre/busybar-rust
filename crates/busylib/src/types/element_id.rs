@@ -1,3 +1,5 @@
+//! Element identifiers
+
 crate::types::string_newtype!(
     /// Identifier of a drawn element within an application.
     ElementId,

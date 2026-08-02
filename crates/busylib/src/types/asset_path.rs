@@ -1,3 +1,5 @@
+//! Asset paths
+
 crate::types::string_newtype!(
     /// Path to a file in an application's assets.
     AssetPath,

@@ -1,3 +1,5 @@
+//! Timestamps
+
 crate::types::string_newtype!(
     /// ISO 8601 timestamp with a time zone.
     Timestamp,
