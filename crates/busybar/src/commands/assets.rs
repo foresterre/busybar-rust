@@ -2,7 +2,9 @@ use std::path::PathBuf;
 
 use busylib::types::app_name::AppName;
 use busylib::types::asset_name::AssetName;
-use clap::Subcommand;
+use busylib::types::asset_path::AssetPath;
+use busylib::types::stock_path::StockPath;
+use clap::{ArgGroup, Subcommand};
 
 use crate::cli::Context;
 use crate::error::Result;
@@ -29,6 +31,39 @@ pub enum AssetsCommand {
         /// Application name
         #[arg(long, short = 'a', value_name = "NAME")]
         app: AppName,
+    },
+
+    /// Play a sound from an application's assets
+    #[command(group = ArgGroup::new("audio-source").required(true).args(["path", "stock"]))]
+    Play {
+        /// Application name
+        #[arg(long, short = 'a', value_name = "NAME")]
+        app: AppName,
+
+        /// Sound in the application's assets
+        #[arg(long, value_name = "PATH")]
+        path: Option<AssetPath>,
+
+        /// Stock sound
+        #[arg(long, value_name = "PATH")]
+        stock: Option<StockPath>,
+    },
+
+    /// Stop the playing sound
+    Stop,
+
+    /// Draw elements from a JSON payload
+    Draw {
+        /// JSON draw request, or - for stdin
+        #[arg(value_name = "FILE")]
+        file: PathBuf,
+    },
+
+    /// Clear drawn elements
+    Clear {
+        /// Only clear the elements of this application
+        #[arg(long, short = 'a', value_name = "NAME")]
+        app: Option<AppName>,
     },
 }
 

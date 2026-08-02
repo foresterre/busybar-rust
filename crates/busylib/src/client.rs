@@ -119,20 +119,12 @@ impl<T: HttpTransport> Client<T> {
         api::Assets::new(self)
     }
 
-    pub fn audio(&self) -> api::Audio<'_, T> {
-        api::Audio::new(self)
-    }
-
     pub fn ble(&self) -> api::Ble<'_, T> {
         api::Ble::new(self)
     }
 
     pub fn busy(&self) -> api::Busy<'_, T> {
         api::Busy::new(self)
-    }
-
-    pub fn display(&self) -> api::Display<'_, T> {
-        api::Display::new(self)
     }
 
     pub fn input(&self) -> api::Input<'_, T> {
@@ -149,6 +141,10 @@ impl<T: HttpTransport> Client<T> {
 
     pub fn storage(&self) -> api::Storage<'_, T> {
         api::Storage::new(self)
+    }
+
+    pub fn streaming(&self) -> api::Streaming<'_, T> {
+        api::Streaming::new(self)
     }
 
     pub fn system(&self) -> api::System<'_, T> {

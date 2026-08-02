@@ -1,11 +1,14 @@
-use busylib::model::audio::PlayAudio;
+use busylib::model::assets::{
+    DisplayElement, DisplayElements, Font, PlayAudio, Screen, TextElement,
+};
 use busylib::model::busy::BusyProfileSlot;
-use busylib::model::display::{DisplayElement, DisplayElements, Font, Screen, TextElement};
 use busylib::model::input::Key;
 use busylib::model::settings::HttpAccess;
 use busylib::model::system::TransportType;
+use busylib::types::app_name::AppName;
 use busylib::types::brightness::Brightness;
 use busylib::types::color::Color;
+use busylib::types::log_name::LogName;
 use busylib::types::volume::Volume;
 use busylib::{Client, ClientBuilder, Error, ReqwestHttpTransport};
 use serde_json::json;
@@ -124,7 +127,7 @@ async fn draws_on_the_display() {
                 .text(TextElement::new("busy", Font::Large).unwrap()),
         );
 
-    client.display().draw(&elements).await.unwrap();
+    client.assets().draw(&elements).await.unwrap();
 }
 
 #[tokio::test]
@@ -139,7 +142,11 @@ async fn clears_the_display_for_one_app() {
         .mount(&server)
         .await;
 
-    client.display().clear_app("my_app").await.unwrap();
+    client
+        .assets()
+        .clear(Some(AppName::new("my_app").unwrap()))
+        .await
+        .unwrap();
 }
 
 #[tokio::test]
@@ -161,12 +168,12 @@ async fn reads_and_sets_brightness() {
         .await;
 
     assert_eq!(
-        client.display().brightness().await.unwrap(),
+        client.settings().brightness().await.unwrap(),
         Brightness::Auto
     );
 
     client
-        .display()
+        .settings()
         .set_brightness(Brightness::level(40).unwrap())
         .await
         .unwrap();
@@ -184,7 +191,7 @@ async fn fetches_a_screen_frame_as_bytes() {
         .mount(&server)
         .await;
 
-    let frame = client.display().frame(Screen::Back).await.unwrap();
+    let frame = client.streaming().screen(Screen::Back).await.unwrap();
 
     assert_eq!(frame.as_ref(), b"BM\x00\x01");
 }
@@ -233,12 +240,12 @@ async fn plays_and_stops_audio() {
         .await;
 
     client
-        .audio()
+        .assets()
         .play(&PlayAudio::stock("my_app", "shared/beep.snd").unwrap())
         .await
         .unwrap();
 
-    client.audio().stop().await.unwrap();
+    client.assets().stop().await.unwrap();
 }
 
 #[tokio::test]
@@ -261,13 +268,13 @@ async fn sets_the_volume_silently() {
         .await;
 
     assert_eq!(
-        client.audio().volume().await.unwrap(),
+        client.settings().volume().await.unwrap(),
         Volume::new(50).unwrap()
     );
 
     client
-        .audio()
-        .set_volume_silently(Volume::new(35).unwrap())
+        .settings()
+        .set_volume(Volume::new(35).unwrap(), true)
         .await
         .unwrap();
 }
@@ -419,7 +426,7 @@ async fn sets_http_access_with_a_key() {
 
     client
         .settings()
-        .set_http_access(&HttpAccess::Key("12345678".parse().unwrap()))
+        .set_access(&HttpAccess::Key("12345678".parse().unwrap()))
         .await
         .unwrap();
 }
@@ -438,7 +445,7 @@ async fn sets_http_access_without_a_key() {
 
     client
         .settings()
-        .set_http_access(&HttpAccess::Disabled)
+        .set_access(&HttpAccess::Disabled)
         .await
         .unwrap();
 
@@ -478,7 +485,11 @@ async fn dumps_the_log_to_a_named_file() {
         .await;
 
     assert_eq!(
-        client.system().dump_log_as("dump").await.unwrap(),
+        client
+            .system()
+            .log_dump(Some(LogName::new("dump").unwrap()))
+            .await
+            .unwrap(),
         "/ext/dump.txt"
     );
 }

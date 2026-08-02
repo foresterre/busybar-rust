@@ -32,7 +32,7 @@ pub enum SystemCommand {
     StatusPower,
 
     /// Write the in-memory log to a file
-    DumpLog {
+    LogDump {
         /// Destination file name without extension
         #[arg(long, short = 'f', value_name = "NAME")]
         filename: Option<LogName>,
@@ -49,7 +49,7 @@ impl SystemCommand {
             SystemCommand::StatusFirmware => status_firmware(context).await,
             SystemCommand::StatusSystem => status_system(context).await,
             SystemCommand::StatusPower => status_power(context).await,
-            SystemCommand::DumpLog { .. } => todo!(),
+            SystemCommand::LogDump { .. } => todo!(),
         }
     }
 }
@@ -81,7 +81,7 @@ async fn status(context: &Context) -> Result<()> {
 }
 
 async fn status_device(context: &Context) -> Result<()> {
-    let device = context.client.system().device().await?;
+    let device = context.client.system().status_device().await?;
 
     context
         .reporter
@@ -91,7 +91,7 @@ async fn status_device(context: &Context) -> Result<()> {
 }
 
 async fn status_firmware(context: &Context) -> Result<()> {
-    let firmware = context.client.system().firmware().await?;
+    let firmware = context.client.system().status_firmware().await?;
 
     context
         .reporter
@@ -111,7 +111,7 @@ async fn status_system(context: &Context) -> Result<()> {
 }
 
 async fn status_power(context: &Context) -> Result<()> {
-    let power = context.client.system().power().await?;
+    let power = context.client.system().status_power().await?;
 
     context
         .reporter

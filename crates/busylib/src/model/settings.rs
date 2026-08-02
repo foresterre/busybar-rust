@@ -3,7 +3,9 @@
 use serde::{Deserialize, Serialize};
 
 use crate::types::access_key::AccessKey;
+use crate::types::brightness::Brightness;
 use crate::types::device_name::DeviceName;
+use crate::types::volume::Volume;
 
 /// How the HTTP API can be reached over Wi-Fi
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -62,4 +64,16 @@ pub struct HttpAccessInfo {
 pub(crate) struct NameInfo {
     /// Device name (letters, digits, spaces and common punctuation; no backtick or tilde)
     pub name: DeviceName,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Deserialize)]
+pub(crate) struct AudioVolumeInfo {
+    /// Audio volume value (0-100)
+    pub volume: Volume,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Deserialize)]
+pub(crate) struct DisplayBrightnessInfo {
+    /// Displays brightness (0-100/auto)
+    pub value: Brightness,
 }

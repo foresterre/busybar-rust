@@ -1,19 +1,18 @@
 //! Api endpoints
 //!
-//! Unlike the busy bar OpenAPI spec (23.0.0), it's grouped per path,
-//! so `/audio` and `/display` are their own structs, instead of sitting under
-//! `/assets`.
+//! Grouped by the tags of the busy bar OpenAPI spec rather than by path, so `/audio/play`
+//! and `/display/draw` sit under [`Assets`], `/audio/volume` and `/display/brightness`
+//! under [`Settings`], and `/screen` under [`Streaming`].
 
 mod account;
 mod assets;
-mod audio;
 mod ble;
 mod busy;
-mod display;
 mod input;
 mod settings;
 mod smart_home;
 mod storage;
+mod streaming;
 mod system;
 mod time;
 mod updater;
@@ -21,14 +20,13 @@ mod wifi;
 
 pub use account::Account;
 pub use assets::Assets;
-pub use audio::Audio;
 pub use ble::Ble;
 pub use busy::Busy;
-pub use display::Display;
 pub use input::Input;
 pub use settings::Settings;
 pub use smart_home::SmartHome;
 pub use storage::Storage;
+pub use streaming::Streaming;
 pub use system::System;
 pub use time::Time;
 pub use updater::Updater;

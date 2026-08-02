@@ -8,7 +8,6 @@ use crate::model::system::{
 };
 use crate::transport::HttpTransport;
 use crate::types::log_name::LogName;
-use crate::types::try_into_value::TryIntoValue;
 
 crate::api::endpoint!(
     /// System information and control
@@ -38,12 +37,12 @@ impl<T: HttpTransport> System<'_, T> {
     }
 
     /// Get device info
-    pub async fn device(&self) -> Result<StatusDevice> {
+    pub async fn status_device(&self) -> Result<StatusDevice> {
         self.client.json(Call::get("status/device")).await
     }
 
     /// Get firmware info
-    pub async fn firmware(&self) -> Result<StatusFirmware> {
+    pub async fn status_firmware(&self) -> Result<StatusFirmware> {
         self.client.json(Call::get("status/firmware")).await
     }
 
@@ -53,23 +52,15 @@ impl<T: HttpTransport> System<'_, T> {
     }
 
     /// Get power status
-    pub async fn power(&self) -> Result<StatusPower> {
+    pub async fn status_power(&self) -> Result<StatusPower> {
         self.client.json(Call::get("status/power")).await
     }
 
     /// Dump captured log
     ///
     /// Snapshot the in-memory log buffer to a file (defaults to /ext/log.txt)
-    pub async fn dump_log(&self) -> Result<String> {
-        let response: LogDumpResponse = self.client.json(Call::post("log_dump")).await?;
-        Ok(response.path)
-    }
-
-    /// Dump captured log
-    ///
-    /// Snapshot the in-memory log buffer to a file (defaults to /ext/log.txt)
-    pub async fn dump_log_as(&self, filename: impl TryIntoValue<LogName>) -> Result<String> {
-        let request = Call::post("log_dump").query("filename", filename.try_into_value()?);
+    pub async fn log_dump(&self, filename: Option<LogName>) -> Result<String> {
+        let request = Call::post("log_dump").maybe_query("filename", filename);
         let response: LogDumpResponse = self.client.json(request).await?;
         Ok(response.path)
     }

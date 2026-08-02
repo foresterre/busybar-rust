@@ -1,6 +1,6 @@
 use busylib::ApiPrefix;
+use busylib::model::assets::Screen;
 use busylib::model::busy::BusyProfileSlot;
-use busylib::model::display::{Align, Font, Screen};
 use busylib::model::input::Key;
 use busylib::model::settings::AccessMode;
 use busylib::model::smart_home::SwitchStartup;
@@ -73,64 +73,6 @@ impl From<ScreenArg> for Screen {
         match screen {
             ScreenArg::Front => Screen::Front,
             ScreenArg::Back => Screen::Back,
-        }
-    }
-}
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq, ValueEnum)]
-#[value(rename_all = "kebab-case")]
-pub enum FontArg {
-    Tiny,
-    Small,
-    Normal,
-    Condensed,
-    Bold,
-    Large,
-    ExtraLarge,
-    Global,
-}
-
-impl From<FontArg> for Font {
-    fn from(font: FontArg) -> Self {
-        match font {
-            FontArg::Tiny => Font::Tiny,
-            FontArg::Small => Font::Small,
-            FontArg::Normal => Font::Normal,
-            FontArg::Condensed => Font::Condensed,
-            FontArg::Bold => Font::Bold,
-            FontArg::Large => Font::Large,
-            FontArg::ExtraLarge => Font::ExtraLarge,
-            FontArg::Global => Font::Global,
-        }
-    }
-}
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq, ValueEnum)]
-#[value(rename_all = "kebab-case")]
-pub enum AlignArg {
-    TopLeft,
-    TopMid,
-    TopRight,
-    MidLeft,
-    Center,
-    MidRight,
-    BottomLeft,
-    BottomMid,
-    BottomRight,
-}
-
-impl From<AlignArg> for Align {
-    fn from(align: AlignArg) -> Self {
-        match align {
-            AlignArg::TopLeft => Align::TopLeft,
-            AlignArg::TopMid => Align::TopMid,
-            AlignArg::TopRight => Align::TopRight,
-            AlignArg::MidLeft => Align::MidLeft,
-            AlignArg::Center => Align::Center,
-            AlignArg::MidRight => Align::MidRight,
-            AlignArg::BottomLeft => Align::BottomLeft,
-            AlignArg::BottomMid => Align::BottomMid,
-            AlignArg::BottomRight => Align::BottomRight,
         }
     }
 }

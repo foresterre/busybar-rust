@@ -1,13 +1,13 @@
 use busylib::model::account::MqttStatus;
-use busylib::model::audio::PlayAudio;
+use busylib::model::assets::PlayAudio;
+use busylib::model::assets::{
+    Align, AnimationElement, CountdownDirection, CountdownElement, DisplayElement, DisplayElements,
+    Font, ImageElement, Lifetime, RectangleElement, Screen, ShowHours, TextElement,
+};
 use busylib::model::ble::{BleState, BleStatusResponse};
 use busylib::model::busy::{
     BusyBarSettings, BusyProfile, BusySnapshot, BusyTimerIntervalSettings, Snapshot, TimerSettings,
     TimerState,
-};
-use busylib::model::display::{
-    Align, AnimationElement, CountdownDirection, CountdownElement, DisplayElement, DisplayElements,
-    Font, ImageElement, Lifetime, RectangleElement, Screen, ShowHours, TextElement,
 };
 use busylib::model::smart_home::{SmartHomePairingPayload, SmartHomeSwitchState, SwitchStartup};
 use busylib::model::storage::StorageListElement;

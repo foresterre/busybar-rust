@@ -1,13 +1,12 @@
 mod account;
 mod assets;
-mod audio;
 mod ble;
 mod busy;
-mod display;
 mod input;
 mod settings;
 mod smart_home;
 mod storage;
+mod streaming;
 mod system;
 mod time;
 mod updater;
@@ -26,16 +25,10 @@ pub enum Command {
         command: account::AccountCommand,
     },
 
-    /// Application assets on the device
+    /// Application assets, audio playback and drawing
     Assets {
         #[command(subcommand)]
         command: assets::AssetsCommand,
-    },
-
-    /// Audio playback and volume
-    Audio {
-        #[command(subcommand)]
-        command: audio::AudioCommand,
     },
 
     /// Bluetooth Low Energy
@@ -50,19 +43,13 @@ pub enum Command {
         command: busy::BusyCommand,
     },
 
-    /// Drawing, brightness and screen capture
-    Display {
-        #[command(subcommand)]
-        command: display::DisplayCommand,
-    },
-
     /// Synthetic key presses
     Input {
         #[command(subcommand)]
         command: input::InputCommand,
     },
 
-    /// Device name and HTTP API access
+    /// Device name, HTTP API access, volume and brightness
     Settings {
         #[command(subcommand)]
         command: settings::SettingsCommand,
@@ -79,6 +66,12 @@ pub enum Command {
     Storage {
         #[command(subcommand)]
         command: storage::StorageCommand,
+    },
+
+    /// Screen capture
+    Streaming {
+        #[command(subcommand)]
+        command: streaming::StreamingCommand,
     },
 
     /// Device, firmware, system and power information
@@ -111,14 +104,13 @@ impl Command {
         match self {
             Command::Account { command } => command.run(context).await,
             Command::Assets { command } => command.run(context).await,
-            Command::Audio { command } => command.run(context).await,
             Command::Ble { command } => command.run(context).await,
             Command::Busy { command } => command.run(context).await,
-            Command::Display { command } => command.run(context).await,
             Command::Input { command } => command.run(context).await,
             Command::Settings { command } => command.run(context).await,
             Command::SmartHome { command } => command.run(context).await,
             Command::Storage { command } => command.run(context).await,
+            Command::Streaming { command } => command.run(context).await,
             Command::System { command } => command.run(context).await,
             Command::Time { command } => command.run(context).await,
             Command::Updater { command } => command.run(context).await,

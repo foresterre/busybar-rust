@@ -16,7 +16,7 @@ impl<T: HttpTransport> Updater<'_, T> {
     /// Update firmware
     ///
     /// Uploads a firmware update package (TAR file) and initiates the update process.
-    pub async fn upload_package(&self, package: impl Into<Bytes>) -> Result<()> {
+    pub async fn update(&self, package: impl Into<Bytes>) -> Result<()> {
         let request = Call::post("update").octet_stream(package);
         self.client.ok(request).await
     }

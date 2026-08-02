@@ -139,7 +139,7 @@ async fn sends_uploads_as_binary_bodies() {
 
     client
         .updater()
-        .upload_package(Bytes::from_static(b"tarball"))
+        .update(Bytes::from_static(b"tarball"))
         .await
         .unwrap();
 
@@ -202,7 +202,7 @@ async fn overrides_the_timeout_for_a_single_call() {
     client
         .with_timeout(Duration::from_secs(600))
         .updater()
-        .upload_package(Bytes::from_static(b"tarball"))
+        .update(Bytes::from_static(b"tarball"))
         .await
         .unwrap();
 

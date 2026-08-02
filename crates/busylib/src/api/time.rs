@@ -26,7 +26,7 @@ impl<T: HttpTransport> Time<'_, T> {
     ///
     /// Sets the RTC timestamp in ISO 8601 format. Time zone qualifier (e.g. Z of UTC or +hh:mm for
     /// local time) is required.
-    pub async fn set_now(&self, timestamp: impl TryIntoValue<Timestamp>) -> Result<()> {
+    pub async fn set_timestamp(&self, timestamp: impl TryIntoValue<Timestamp>) -> Result<()> {
         let request = Call::post("time/timestamp").query("timestamp", timestamp.try_into_value()?);
         self.client.ok(request).await
     }
@@ -49,7 +49,7 @@ impl<T: HttpTransport> Time<'_, T> {
     /// Get list of supported time zones
     ///
     /// Retrieves the list of time zones accepted by /api/time/timezone
-    pub async fn timezones(&self) -> Result<Vec<TimezoneInfo>> {
+    pub async fn tzlist(&self) -> Result<Vec<TimezoneInfo>> {
         let response: TimezoneListResponse = self.client.json(Call::get("time/tzlist")).await?;
         Ok(response.list)
     }

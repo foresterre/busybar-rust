@@ -1,5 +1,7 @@
 use busylib::types::access_key::AccessKey;
+use busylib::types::brightness::Brightness;
 use busylib::types::device_name::DeviceName;
+use busylib::types::volume::Volume;
 use clap::Subcommand;
 
 use crate::cli::Context;
@@ -30,6 +32,30 @@ pub enum SettingsCommand {
         /// New device name
         #[arg(value_name = "NAME")]
         name: DeviceName,
+    },
+
+    /// Show the audio volume
+    Volume,
+
+    /// Set the audio volume
+    SetVolume {
+        /// Volume between 0 and 100
+        #[arg(value_name = "PERCENT")]
+        volume: Volume,
+
+        /// Do not play the volume change sound
+        #[arg(long)]
+        silent: bool,
+    },
+
+    /// Show the display brightness
+    Brightness,
+
+    /// Set the display brightness
+    SetBrightness {
+        /// Percentage between 0 and 100, or auto
+        #[arg(value_name = "VALUE")]
+        value: Brightness,
     },
 }
 

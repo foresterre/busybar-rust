@@ -9,7 +9,7 @@ use crate::error::Result;
 #[derive(Debug, Subcommand)]
 pub enum UpdaterCommand {
     /// Upload a firmware package and start the update
-    Upload {
+    Update {
         /// Firmware TAR package
         #[arg(value_name = "FILE")]
         file: PathBuf,

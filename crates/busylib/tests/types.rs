@@ -195,10 +195,10 @@ fn parses_and_renders_colors() {
 fn accepts_owned_borrowed_and_typed_values() {
     let name = AppName::new("my_app").unwrap();
 
-    assert!(busylib::model::display::DisplayElements::new(&name).is_ok());
-    assert!(busylib::model::display::DisplayElements::new(name.clone()).is_ok());
-    assert!(busylib::model::display::DisplayElements::new("my_app".to_owned()).is_ok());
-    assert!(busylib::model::display::DisplayElements::new("my_app").is_ok());
+    assert!(busylib::model::assets::DisplayElements::new(&name).is_ok());
+    assert!(busylib::model::assets::DisplayElements::new(name.clone()).is_ok());
+    assert!(busylib::model::assets::DisplayElements::new("my_app".to_owned()).is_ok());
+    assert!(busylib::model::assets::DisplayElements::new("my_app").is_ok());
 
     assert_eq!(name.as_str(), "my_app");
 }

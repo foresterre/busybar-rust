@@ -11,7 +11,7 @@ pub enum TimeCommand {
     Now,
 
     /// Set the device clock
-    Set {
+    SetTimestamp {
         /// ISO 8601 timestamp with time zone
         #[arg(value_name = "TIMESTAMP")]
         timestamp: Timestamp,
@@ -28,7 +28,7 @@ pub enum TimeCommand {
     },
 
     /// List the supported time zones
-    Timezones,
+    Tzlist,
 }
 
 impl TimeCommand {

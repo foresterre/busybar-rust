@@ -58,7 +58,7 @@ impl<T: HttpTransport> Storage<'_, T> {
     /// Create a directory on internal storage
     ///
     /// Creates a new directory with a specified path
-    pub async fn create_dir(&self, path: impl TryIntoValue<StoragePath>) -> Result<()> {
+    pub async fn mkdir(&self, path: impl TryIntoValue<StoragePath>) -> Result<()> {
         let request = Call::post("storage/mkdir").query("path", path.try_into_value()?);
         self.client.ok(request).await
     }
