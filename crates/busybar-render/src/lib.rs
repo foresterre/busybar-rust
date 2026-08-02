@@ -267,7 +267,7 @@ impl RawImage {
     }
 }
 
-fn paint<P: image::Pixel<Subpixel=u8>>(
+fn paint<P: image::Pixel<Subpixel = u8>>(
     source: &image::ImageBuffer<P, Vec<u8>>,
     target: &mut image::ImageBuffer<P, Vec<u8>>,
     step: u32,
@@ -372,7 +372,7 @@ mod tests {
                 0xff, 0x00, 0x00, 0x00, 0xff, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, 0xff,
             ],
         )
-            .unwrap();
+        .unwrap();
 
         let raster = Raster::new(3, 1).unwrap();
         let rastered = image.with_raster(raster).unwrap();
