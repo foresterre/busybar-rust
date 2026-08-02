@@ -130,7 +130,7 @@ dependencies = [
 
 [[package]]
 name = "bookdoc"
-version = "0.0.8"
+version = "0.0.9"
 dependencies = [
  "busylib",
  "tokio",
@@ -144,7 +144,7 @@ checksum = "72f5acc6cb2ba439de613abc23857ec3d78374d8ed5ac84e9d11336e87da8649"
 
 [[package]]
 name = "busybar"
-version = "0.0.8"
+version = "0.0.9"
 dependencies = [
  "base64 0.23.0",
  "busybar-render",
@@ -160,7 +160,7 @@ dependencies = [
 
 [[package]]
 name = "busybar-render"
-version = "0.0.8"
+version = "0.0.9"
 dependencies = [
  "base64 0.23.0",
  "image",
@@ -169,7 +169,7 @@ dependencies = [
 
 [[package]]
 name = "busylib"
-version = "0.0.8"
+version = "0.0.9"
 dependencies = [
  "busylib-proto",
  "bytes",
@@ -188,7 +188,7 @@ dependencies = [
 
 [[package]]
 name = "busylib-proto"
-version = "0.0.8"
+version = "0.0.9"
 dependencies = [
  "base64 0.23.0",
  "prost",
@@ -197,7 +197,7 @@ dependencies = [
 
 [[package]]
 name = "busylib-proto-build"
-version = "0.0.8"
+version = "0.0.9"
 dependencies = [
  "prost-build",
  "protox",
