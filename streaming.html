@@ -35,7 +35,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-7f2d53ce.js";
+            window.path_to_searchindex_js = "searchindex-3e38330a.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0565151d.js"></script>
@@ -176,6 +176,9 @@
                     <main>
                         <h1 id="streaming"><a class="header" href="#streaming">Streaming</a></h1>
 <h2 id="screen"><a class="header" href="#screen">screen</a></h2>
+<p>Frames come off the device as base64 text. The front screen is 72x16 BGR888. The backscreen is 80x80 8-bit grayscale
+(despite that the screen on the device itself seems wider).</p>
+<p>This is what “raw” means wrt the image format. Note that the API states the content-type is BMP, but this is not true.</p>
 <h3>API client</h3>
 
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
@@ -192,6 +195,10 @@ let frame = client.streaming().screen(Screen::Front).await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
+<p>An <code>--output</code> path ending in <code>.bmp</code>, <code>.jpg</code> or <code>.png</code> converts the frame to that image format. If the output path
+extension is not one of these, you instead get raw bytes.</p>
+<pre><code class="language-console">busybar streaming screen front --output ./frame.png
+</code></pre>
 <pre><code class="language-console">busybar streaming screen front --output ./frame.raw
 </code></pre>
 <h2 id="status_ws"><a class="header" href="#status_ws">status_ws</a></h2>
