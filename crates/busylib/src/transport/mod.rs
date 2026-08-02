@@ -11,10 +11,16 @@ use http::{Request, Response};
 #[cfg(feature = "reqwest")]
 mod reqwest_transport;
 mod timeout;
+#[cfg(feature = "ws")]
+mod tungstenite_transport;
+mod ws;
 
 #[cfg(feature = "reqwest")]
 pub use reqwest_transport::ReqwestHttpTransport;
 pub use timeout::Timeout;
+#[cfg(feature = "ws")]
+pub use tungstenite_transport::TungsteniteWsTransport;
+pub use ws::{WsConnection, WsMessage, WsTransport, WsTransportError, WsTransportResult};
 
 pub type BoxFuture<'a, T> = Pin<Box<dyn Future<Output = T> + Send + 'a>>;
 

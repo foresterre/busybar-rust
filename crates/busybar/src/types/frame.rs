@@ -1,12 +1,9 @@
-use std::fmt;
-use std::io::Cursor;
-use std::path::Path;
-
 use base64::Engine as _;
 use base64::engine::general_purpose::STANDARD;
-use image::{DynamicImage, GrayImage, RgbImage};
+use busybar_render::{ImageFormat, PixelLayout, Raster, RawImage, RenderError};
+use busylib::proto::bsb_frame::{Encoding, Frame as StreamedFrame, PixelFormat, Screen};
 
-use crate::values::ScreenArg;
+use crate::types::screen_arg::ScreenArg;
 
 #[derive(Debug, thiserror::Error)]
 pub enum FrameError {
@@ -17,95 +14,24 @@ pub enum FrameError {
         source: base64::DecodeError,
     },
 
-    #[error(
-        "expected {expected} bytes of pixel data for the {screen} screen, but the device sent {actual}"
-    )]
-    UnexpectedSize {
-        screen: ScreenArg,
-        expected: usize,
-        actual: usize,
+    #[error("the device streamed a {encoding} frame, which is not supported yet")]
+    UnsupportedEncoding { encoding: &'static str },
+
+    #[error("the device streamed a {encoding} frame in {format}, which is not supported yet")]
+    UnsupportedCombination {
+        encoding: &'static str,
+        format: &'static str,
     },
 
-    #[error("could not encode the {screen} screen frame as {format}")]
-    Encode {
-        screen: ScreenArg,
-        format: ImageFormat,
-        #[source]
-        source: image::ImageError,
-    },
-}
+    #[error("the run-length data ends mid-run, {offset} bytes in")]
+    TruncatedRunLength { offset: usize },
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum ImageFormat {
-    Bmp,
-    Jpeg,
-    Png,
-}
-
-impl ImageFormat {
-    pub fn from_path(path: &Path) -> Option<Self> {
-        let extension = path.extension()?.to_str()?.to_ascii_lowercase();
-
-        match extension.as_str() {
-            "bmp" => Some(Self::Bmp),
-            "jpg" | "jpeg" => Some(Self::Jpeg),
-            "png" => Some(Self::Png),
-            _ => None,
-        }
-    }
-
-    fn encoding(self) -> image::ImageFormat {
-        match self {
-            Self::Bmp => image::ImageFormat::Bmp,
-            Self::Jpeg => image::ImageFormat::Jpeg,
-            Self::Png => image::ImageFormat::Png,
-        }
-    }
-}
-
-impl fmt::Display for ImageFormat {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        match self {
-            Self::Bmp => f.write_str("bmp"),
-            Self::Jpeg => f.write_str("jpeg"),
-            Self::Png => f.write_str("png"),
-        }
-    }
-}
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-enum PixelLayout {
-    Bgr888 { width: u32, height: u32 },
-    Gray8 { width: u32, height: u32 },
-}
-
-impl PixelLayout {
-    const fn of(screen: ScreenArg) -> Self {
-        match screen {
-            ScreenArg::Front => Self::Bgr888 {
-                width: 72,
-                height: 16,
-            },
-            ScreenArg::Back => Self::Gray8 {
-                width: 80,
-                height: 80,
-            },
-        }
-    }
-
-    const fn byte_len(self) -> usize {
-        match self {
-            Self::Bgr888 { width, height } => (width as usize) * (height as usize) * 3,
-            Self::Gray8 { width, height } => (width as usize) * (height as usize),
-        }
-    }
+    #[error(transparent)]
+    Render(#[from] RenderError),
 }
 
 #[derive(Debug, Clone, PartialEq)]
-pub struct Frame {
-    screen: ScreenArg,
-    image: DynamicImage,
-}
+pub struct Frame(RawImage);
 
 impl Frame {
     pub fn decode(screen: ScreenArg, body: &[u8]) -> Result<Self, FrameError> {
@@ -117,53 +43,131 @@ impl Frame {
     }
 
     pub fn from_pixels(screen: ScreenArg, pixels: &[u8]) -> Result<Self, FrameError> {
-        let layout = PixelLayout::of(screen);
-        let expected = layout.byte_len();
-
-        if pixels.len() != expected {
-            return Err(FrameError::UnexpectedSize {
-                screen,
-                expected,
-                actual: pixels.len(),
-            });
-        }
-
-        let image = match layout {
-            PixelLayout::Bgr888 { width, height } => {
-                let mut buffer = Vec::with_capacity(pixels.len());
-
-                for pixel in pixels.chunks_exact(3) {
-                    buffer.extend_from_slice(&[pixel[2], pixel[1], pixel[0]]);
-                }
-
-                let buffer = RgbImage::from_raw(width, height, buffer)
-                    .expect("buffer holds width * height * 3 bytes");
-
-                DynamicImage::ImageRgb8(buffer)
-            }
-            PixelLayout::Gray8 { width, height } => {
-                let buffer = GrayImage::from_raw(width, height, pixels.to_vec())
-                    .expect("buffer holds width * height bytes");
-
-                DynamicImage::ImageLuma8(buffer)
-            }
+        let (width, height, layout) = match screen {
+            ScreenArg::Front => (72, 16, PixelLayout::Bgr888),
+            ScreenArg::Back => (80, 80, PixelLayout::Gray8),
         };
 
-        Ok(Self { screen, image })
+        Ok(Self(RawImage::new(width, height, layout, pixels)?))
+    }
+
+    pub fn from_streamed(frame: &StreamedFrame) -> Result<Self, FrameError> {
+        let pixels = self::decode_pixels(frame)?;
+
+        let layout = match frame.pixel_format() {
+            PixelFormat::Rgb888 => PixelLayout::Bgr888,
+            PixelFormat::L8 | PixelFormat::L4 => PixelLayout::Gray8,
+        };
+
+        Ok(Self(RawImage::new(
+            frame.width,
+            frame.height,
+            layout,
+            &pixels,
+        )?))
+    }
+
+    pub fn with_raster(&self, raster: Raster) -> Result<Self, FrameError> {
+        Ok(Self(self.0.with_raster(raster)?))
     }
 
     pub fn encode(&self, format: ImageFormat) -> Result<Vec<u8>, FrameError> {
-        let mut buffer = Cursor::new(Vec::new());
+        Ok(self.0.encode(format)?)
+    }
 
-        self.image
-            .write_to(&mut buffer, format.encoding())
-            .map_err(|source| FrameError::Encode {
-                screen: self.screen,
-                format,
-                source,
-            })?;
+    pub fn encode_base64(&self, format: ImageFormat) -> Result<String, FrameError> {
+        Ok(self.0.encode_base64(format)?)
+    }
+}
 
-        Ok(buffer.into_inner())
+fn decode_pixels(frame: &StreamedFrame) -> Result<Vec<u8>, FrameError> {
+    let bytes_per_pixel = match frame.pixel_format() {
+        PixelFormat::Rgb888 => 3,
+        PixelFormat::L8 => 1,
+        PixelFormat::L4 => 0,
+    };
+
+    match (frame.encoding(), bytes_per_pixel) {
+        (Encoding::Plain, 0) => Ok(self::expand_nibbles(&frame.data)),
+        (Encoding::Plain, _) => Ok(frame.data.clone()),
+        (Encoding::RunLength, 0) => Err(FrameError::UnsupportedCombination {
+            encoding: self::encoding_name(Encoding::RunLength),
+            format: self::format_name(PixelFormat::L4),
+        }),
+        (Encoding::RunLength, size) => self::run_length(&frame.data, size),
+        (encoding @ (Encoding::Deflate | Encoding::DeflateRunLength), _) => {
+            Err(FrameError::UnsupportedEncoding {
+                encoding: self::encoding_name(encoding),
+            })
+        }
+    }
+}
+
+fn run_length(data: &[u8], bytes_per_pixel: usize) -> Result<Vec<u8>, FrameError> {
+    let mut pixels = Vec::with_capacity(data.len());
+    let mut offset = 0;
+
+    while offset < data.len() {
+        let control = data[offset];
+        offset += 1;
+
+        let count = usize::from(control & 0x7F);
+        let span = if control & 0x80 == 0 {
+            bytes_per_pixel
+        } else {
+            count * bytes_per_pixel
+        };
+
+        let Some(chunk) = data.get(offset..offset + span) else {
+            return Err(FrameError::TruncatedRunLength { offset });
+        };
+
+        if control & 0x80 == 0 {
+            for _ in 0..count {
+                pixels.extend_from_slice(chunk);
+            }
+        } else {
+            pixels.extend_from_slice(chunk);
+        }
+
+        offset += span;
+    }
+
+    Ok(pixels)
+}
+
+fn expand_nibbles(data: &[u8]) -> Vec<u8> {
+    let mut pixels = Vec::with_capacity(data.len() * 2);
+
+    for byte in data {
+        pixels.push((byte >> 4) * 17);
+        pixels.push((byte & 0x0F) * 17);
+    }
+
+    pixels
+}
+
+pub fn encoding_name(encoding: Encoding) -> &'static str {
+    match encoding {
+        Encoding::Plain => "plain",
+        Encoding::RunLength => "run-length",
+        Encoding::Deflate => "deflate",
+        Encoding::DeflateRunLength => "deflate+run-length",
+    }
+}
+
+pub fn format_name(format: PixelFormat) -> &'static str {
+    match format {
+        PixelFormat::Rgb888 => "rgb888",
+        PixelFormat::L8 => "l8",
+        PixelFormat::L4 => "l4",
+    }
+}
+
+pub fn screen_name(screen: Screen) -> &'static str {
+    match screen {
+        Screen::Front => "front",
+        Screen::Back => "back",
     }
 }
 
@@ -171,60 +175,40 @@ impl Frame {
 mod tests {
     use super::*;
 
+    fn streamed(
+        encoding: Encoding,
+        format: PixelFormat,
+        width: u32,
+        height: u32,
+        data: Vec<u8>,
+    ) -> StreamedFrame {
+        StreamedFrame {
+            screen: Screen::Front as i32,
+            width,
+            height,
+            encoding: encoding as i32,
+            pixel_format: format as i32,
+            data,
+        }
+    }
+
     fn front_pixels() -> Vec<u8> {
         let mut pixels = vec![0u8; 72 * 16 * 3];
         pixels[0..3].copy_from_slice(&[0x11, 0x22, 0x33]);
         pixels
     }
 
-    fn back_pixels() -> Vec<u8> {
-        let mut pixels = vec![0u8; 80 * 80];
-        pixels[0] = 0x7f;
-        pixels
-    }
-
     #[test]
-    fn picks_a_format_from_the_file_extension() {
-        assert_eq!(
-            ImageFormat::from_path(Path::new("frame.bmp")),
-            Some(ImageFormat::Bmp)
-        );
-        assert_eq!(
-            ImageFormat::from_path(Path::new("frame.jpg")),
-            Some(ImageFormat::Jpeg)
-        );
-        assert_eq!(
-            ImageFormat::from_path(Path::new("frame.JPEG")),
-            Some(ImageFormat::Jpeg)
-        );
-        assert_eq!(
-            ImageFormat::from_path(Path::new("./out/frame.png")),
-            Some(ImageFormat::Png)
-        );
-        assert_eq!(ImageFormat::from_path(Path::new("frame.raw")), None);
-        assert_eq!(ImageFormat::from_path(Path::new("frame")), None);
-    }
-
-    #[test]
-    fn decodes_a_front_frame_as_rgb() {
+    fn decodes_a_front_frame() {
         let body = STANDARD.encode(front_pixels());
         let frame = Frame::decode(ScreenArg::Front, body.as_bytes()).unwrap();
 
-        let image = frame.image.as_rgb8().unwrap();
-
-        assert_eq!(image.dimensions(), (72, 16));
-        assert_eq!(image.get_pixel(0, 0).0, [0x33, 0x22, 0x11]);
-    }
-
-    #[test]
-    fn decodes_a_back_frame_as_grayscale() {
-        let body = STANDARD.encode(back_pixels());
-        let frame = Frame::decode(ScreenArg::Back, body.as_bytes()).unwrap();
-
-        let image = frame.image.as_luma8().unwrap();
-
-        assert_eq!(image.dimensions(), (80, 80));
-        assert_eq!(image.get_pixel(0, 0).0, [0x7f]);
+        assert!(
+            frame
+                .encode(ImageFormat::Png)
+                .unwrap()
+                .starts_with(b"\x89PNG")
+        );
     }
 
     #[test]
@@ -238,7 +222,6 @@ mod tests {
     fn rejects_a_body_which_is_not_base64() {
         let error = Frame::decode(ScreenArg::Front, b"not base64!").unwrap_err();
 
-        assert!(matches!(error, FrameError::Base64 { .. }));
         assert_eq!(
             error.to_string(),
             "the front screen frame is not valid base64"
@@ -251,55 +234,190 @@ mod tests {
 
         assert_eq!(
             error.to_string(),
-            "expected 3456 bytes of pixel data for the front screen, but the device sent 16"
+            "72x16 in bgr888 needs 3456 bytes, but 16 were given"
         );
     }
 
     #[test]
-    fn encodes_a_front_frame_in_every_format() {
-        let frame = Frame::from_pixels(ScreenArg::Front, &front_pixels()).unwrap();
+    fn a_run_length_frame_decodes_to_the_same_pixels_as_a_plain_one() {
+        let mut runs = Vec::new();
+        for _ in 0..9 {
+            runs.extend_from_slice(&[0x7f, 0x11, 0x22, 0x33]);
+        }
+        runs.extend_from_slice(&[0x09, 0x44, 0x55, 0x66]);
+
+        let mut plain = Vec::new();
+        for _ in 0..1143 {
+            plain.extend_from_slice(&[0x11, 0x22, 0x33]);
+        }
+        for _ in 0..9 {
+            plain.extend_from_slice(&[0x44, 0x55, 0x66]);
+        }
+
+        let encoded = Frame::from_streamed(&self::streamed(
+            Encoding::RunLength,
+            PixelFormat::Rgb888,
+            72,
+            16,
+            runs,
+        ))
+        .unwrap()
+        .encode(ImageFormat::Png)
+        .unwrap();
+
+        let expected = Frame::from_streamed(&self::streamed(
+            Encoding::Plain,
+            PixelFormat::Rgb888,
+            72,
+            16,
+            plain,
+        ))
+        .unwrap()
+        .encode(ImageFormat::Png)
+        .unwrap();
+
+        assert_eq!(encoded, expected);
+    }
+
+    #[test]
+    fn a_literal_span_decodes_to_the_pixels_it_carries() {
+        let mut runs = vec![0x82, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06];
+        runs.extend_from_slice(&[0x7e, 0, 0, 0]);
+        runs.extend_from_slice(&[0x7e, 0, 0, 0]);
+        runs.extend_from_slice(&[0x06, 0, 0, 0]);
+
+        let mut plain = vec![0x01, 0x02, 0x03, 0x04, 0x05, 0x06];
+        plain.extend(std::iter::repeat_n(0, 258 * 3));
+
+        let encoded = Frame::from_streamed(&self::streamed(
+            Encoding::RunLength,
+            PixelFormat::Rgb888,
+            26,
+            10,
+            runs,
+        ))
+        .unwrap()
+        .encode(ImageFormat::Png)
+        .unwrap();
+
+        let expected = Frame::from_streamed(&self::streamed(
+            Encoding::Plain,
+            PixelFormat::Rgb888,
+            26,
+            10,
+            plain,
+        ))
+        .unwrap()
+        .encode(ImageFormat::Png)
+        .unwrap();
+
+        assert_eq!(encoded, expected);
+    }
+
+    #[test]
+    fn decodes_a_plain_grayscale_frame() {
+        let frame = Frame::from_streamed(&self::streamed(
+            Encoding::Plain,
+            PixelFormat::L8,
+            80,
+            80,
+            vec![0x7f; 6400],
+        ))
+        .unwrap();
 
         assert!(frame.encode(ImageFormat::Bmp).unwrap().starts_with(b"BM"));
-        assert!(
-            frame
-                .encode(ImageFormat::Jpeg)
-                .unwrap()
-                .starts_with(&[0xff, 0xd8])
-        );
-        assert!(
-            frame
-                .encode(ImageFormat::Png)
-                .unwrap()
-                .starts_with(b"\x89PNG")
+    }
+
+    #[test]
+    fn expands_four_bit_grayscale_before_rendering() {
+        let frame = Frame::from_streamed(&self::streamed(
+            Encoding::Plain,
+            PixelFormat::L4,
+            2,
+            1,
+            vec![0xf0],
+        ))
+        .unwrap();
+
+        let expected = Frame::from_streamed(&self::streamed(
+            Encoding::Plain,
+            PixelFormat::L8,
+            2,
+            1,
+            vec![0xff, 0x00],
+        ))
+        .unwrap();
+
+        assert_eq!(
+            frame.encode(ImageFormat::Png).unwrap(),
+            expected.encode(ImageFormat::Png).unwrap()
         );
     }
 
     #[test]
-    fn encodes_a_back_frame_in_every_format() {
-        let frame = Frame::from_pixels(ScreenArg::Back, &back_pixels()).unwrap();
+    fn encodes_to_base64() {
+        let frame = Frame::from_streamed(&self::streamed(
+            Encoding::Plain,
+            PixelFormat::L8,
+            2,
+            1,
+            vec![0x00, 0xff],
+        ))
+        .unwrap();
 
-        assert!(frame.encode(ImageFormat::Bmp).unwrap().starts_with(b"BM"));
-        assert!(
-            frame
-                .encode(ImageFormat::Jpeg)
-                .unwrap()
-                .starts_with(&[0xff, 0xd8])
-        );
-        assert!(
-            frame
-                .encode(ImageFormat::Png)
-                .unwrap()
-                .starts_with(b"\x89PNG")
+        assert_eq!(
+            STANDARD
+                .decode(frame.encode_base64(ImageFormat::Png).unwrap())
+                .unwrap(),
+            frame.encode(ImageFormat::Png).unwrap()
         );
     }
 
     #[test]
-    fn round_trips_a_png_back_to_the_original_pixels() {
-        let frame = Frame::from_pixels(ScreenArg::Front, &front_pixels()).unwrap();
-        let png = frame.encode(ImageFormat::Png).unwrap();
+    fn rejects_an_encoding_it_cannot_decode() {
+        let error = Frame::from_streamed(&self::streamed(
+            Encoding::Deflate,
+            PixelFormat::Rgb888,
+            72,
+            16,
+            vec![0],
+        ))
+        .unwrap_err();
 
-        let decoded = image::load_from_memory_with_format(&png, image::ImageFormat::Png).unwrap();
+        assert_eq!(
+            error.to_string(),
+            "the device streamed a deflate frame, which is not supported yet"
+        );
+    }
 
-        assert_eq!(decoded, frame.image);
+    #[test]
+    fn rejects_run_length_data_which_ends_mid_run() {
+        let error = Frame::from_streamed(&self::streamed(
+            Encoding::RunLength,
+            PixelFormat::Rgb888,
+            72,
+            16,
+            vec![0x7f, 0x11],
+        ))
+        .unwrap_err();
+
+        assert!(matches!(error, FrameError::TruncatedRunLength { .. }));
+    }
+
+    #[test]
+    fn rejects_a_frame_which_does_not_fill_its_geometry() {
+        let error = Frame::from_streamed(&self::streamed(
+            Encoding::RunLength,
+            PixelFormat::Rgb888,
+            72,
+            16,
+            vec![0x01, 0x11, 0x22, 0x33],
+        ))
+        .unwrap_err();
+
+        assert_eq!(
+            error.to_string(),
+            "72x16 in bgr888 needs 3456 bytes, but 3 were given"
+        );
     }
 }

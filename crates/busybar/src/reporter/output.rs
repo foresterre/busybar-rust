@@ -30,7 +30,7 @@ impl Output {
     pub fn write_line(&self, line: &str) {
         let mut writer = self.writer.lock().unwrap_or_else(PoisonError::into_inner);
 
-        if let Err(error) = writeln!(writer, "{line}") {
+        if let Err(error) = writeln!(writer, "{line}").and_then(|()| writer.flush()) {
             drop(writer);
             self.record_error(error.into());
         }

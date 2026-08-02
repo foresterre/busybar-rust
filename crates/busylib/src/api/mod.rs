@@ -26,7 +26,7 @@ pub use input::Input;
 pub use settings::Settings;
 pub use smart_home::SmartHome;
 pub use storage::Storage;
-pub use streaming::Streaming;
+pub use streaming::{StatusStream, Streaming};
 pub use system::System;
 pub use time::Time;
 pub use updater::Updater;

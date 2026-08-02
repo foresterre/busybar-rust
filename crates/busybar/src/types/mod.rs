@@ -1,1 +1,10 @@
+pub mod access_mode_arg;
+pub mod api_prefix_arg;
 pub mod frame;
+pub mod image_format_arg;
+pub mod key_arg;
+pub mod output_format;
+pub mod screen_arg;
+pub mod slot_arg;
+pub mod switch_startup_arg;
+pub mod switch_state_arg;

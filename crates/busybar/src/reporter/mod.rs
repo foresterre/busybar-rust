@@ -12,17 +12,18 @@ use storyteller::{
 
 use crate::reporter::human::HumanHandler;
 use crate::reporter::json::JsonHandler;
-use crate::values::OutputFormat;
+use crate::types::output_format::OutputFormatArg;
 
 pub use crate::reporter::events::{
     AccountBackendEvent, AccountInfoEvent, AccountStatusEvent, BleStatusEvent, BusyProfileEvent,
-    BusySnapshotEvent, CliEvent, OkEvent, Payload, SettingsAccessEvent, SettingsBrightnessEvent,
-    SettingsNameEvent, SettingsVolumeEvent, SmartHomePairingEvent, SmartHomeStartPairingEvent,
-    SmartHomeSwitchEvent, StorageListEvent, StorageReadEvent, StorageStatusEvent,
-    StreamingScreenEvent, SystemLogDumpEvent, SystemStatusDeviceEvent, SystemStatusEvent,
-    SystemStatusFirmwareEvent, SystemStatusPowerEvent, SystemStatusSystemEvent,
-    SystemTransportEvent, SystemVersionEvent, TimeNowEvent, TimeTimezoneEvent, TimeTzlistEvent,
-    UpdaterAutoupdateEvent, UpdaterChangelogEvent, UpdaterStatusEvent, WifiStatusEvent,
+    BusySnapshotEvent, CliEvent, FramePayload, OkEvent, Payload, SettingsAccessEvent,
+    SettingsBrightnessEvent, SettingsNameEvent, SettingsVolumeEvent, SmartHomePairingEvent,
+    SmartHomeStartPairingEvent, SmartHomeSwitchEvent, StorageListEvent, StorageReadEvent,
+    StorageStatusEvent, StreamingScreenEvent, StreamingStatusEvent, SystemLogDumpEvent,
+    SystemStatusDeviceEvent, SystemStatusEvent, SystemStatusFirmwareEvent, SystemStatusPowerEvent,
+    SystemStatusSystemEvent, SystemTransportEvent, SystemVersionEvent, TimeNowEvent,
+    TimeTimezoneEvent, TimeTzlistEvent, UpdaterAutoupdateEvent, UpdaterChangelogEvent,
+    UpdaterStatusEvent, WifiStatusEvent,
 };
 pub use crate::reporter::output::{Output, OutputError};
 
@@ -45,19 +46,19 @@ pub struct Reporter {
 }
 
 impl Reporter {
-    pub fn new(format: OutputFormat) -> Self {
+    pub fn new(format: OutputFormatArg) -> Self {
         Self::with_output(format, Arc::new(Output::stdout()))
     }
 
-    pub fn with_output(format: OutputFormat, output: Arc<Output>) -> Self {
+    pub fn with_output(format: OutputFormatArg, output: Arc<Output>) -> Self {
         let (sender, receiver) = event_channel::<CliEvent>();
         let listener = ChannelEventListener::new(receiver);
 
         let guard = match format {
-            OutputFormat::Text => {
+            OutputFormatArg::Text => {
                 listener.run_handler(Arc::new(HumanHandler::new(Arc::clone(&output))))
             }
-            OutputFormat::Json => {
+            OutputFormatArg::Json => {
                 listener.run_handler(Arc::new(JsonHandler::new(Arc::clone(&output))))
             }
         };
@@ -132,7 +133,7 @@ mod tests {
     fn human_reporter_finishes_without_events() {
         let buffer = SharedBuffer::default();
         let output = Arc::new(Output::new(buffer.clone()));
-        let reporter = Reporter::with_output(OutputFormat::Text, output);
+        let reporter = Reporter::with_output(OutputFormatArg::Text, output);
 
         reporter.finish().unwrap();
 
@@ -143,7 +144,7 @@ mod tests {
     fn json_reporter_finishes_without_events() {
         let buffer = SharedBuffer::default();
         let output = Arc::new(Output::new(buffer.clone()));
-        let reporter = Reporter::with_output(OutputFormat::Json, output);
+        let reporter = Reporter::with_output(OutputFormatArg::Json, output);
 
         reporter.finish().unwrap();
 
@@ -162,7 +163,7 @@ mod tests {
         }))
     }
 
-    fn render(format: OutputFormat, event: CliEvent) -> String {
+    fn render(format: OutputFormatArg, event: CliEvent) -> String {
         let buffer = SharedBuffer::default();
         let output = Arc::new(Output::new(buffer.clone()));
         let reporter = Reporter::with_output(format, output);
@@ -178,7 +179,7 @@ mod tests {
         let event = sample_event();
 
         assert_eq!(
-            render(OutputFormat::Text, event.clone()),
+            render(OutputFormatArg::Text, event.clone()),
             format!("{event}\n")
         );
     }
@@ -188,7 +189,7 @@ mod tests {
         let event = sample_event();
 
         assert_eq!(
-            render(OutputFormat::Json, event.clone()),
+            render(OutputFormatArg::Json, event.clone()),
             format!("{}\n", serde_json::to_string(&event).unwrap())
         );
     }

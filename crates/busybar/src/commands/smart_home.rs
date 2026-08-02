@@ -6,7 +6,8 @@ use crate::error::Result;
 use crate::reporter::{
     OkEvent, SmartHomePairingEvent, SmartHomeStartPairingEvent, SmartHomeSwitchEvent,
 };
-use crate::values::{SwitchStartupArg, SwitchStateArg};
+use crate::types::switch_startup_arg::SwitchStartupArg;
+use crate::types::switch_state_arg::SwitchStateArg;
 
 #[derive(Debug, Subcommand)]
 pub enum SmartHomeCommand {

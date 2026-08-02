@@ -10,18 +10,34 @@ readme = { workspace = true }
 rust-version = "1.86"
 
 [features]
-default = ["reqwest"]
+default = ["reqwest", "ws"]
 reqwest = ["dep:reqwest"]
+ws = [
+    "dep:busylib-proto",
+    "dep:futures-util",
+    "dep:prost",
+    "dep:tokio",
+    "dep:tokio-tungstenite",
+]
 
 [dependencies]
+# this workspace
+busylib-proto = { workspace = true, optional = true }
+
+# external
 bytes.workspace = true
+futures-util = { workspace = true, optional = true }
 http.workspace = true
+prost = { workspace = true, optional = true }
 reqwest = { workspace = true, optional = true }
 serde.workspace = true
 serde_json.workspace = true
 thiserror.workspace = true
+tokio = { workspace = true, optional = true }
+tokio-tungstenite = { workspace = true, optional = true }
 url.workspace = true
 
 [dev-dependencies]
-tokio.workspace = true
+tokio = { workspace = true, features = ["net"] }
+tokio-tungstenite.workspace = true
 wiremock.workspace = true

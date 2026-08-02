@@ -7,7 +7,7 @@ use crate::cli::Context;
 use crate::error::Result;
 use crate::io::Io;
 use crate::reporter::{BusyProfileEvent, BusySnapshotEvent, OkEvent};
-use crate::values::SlotArg;
+use crate::types::slot_arg::SlotArg;
 
 #[derive(Debug, Subcommand)]
 pub enum BusyCommand {

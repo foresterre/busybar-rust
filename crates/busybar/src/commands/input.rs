@@ -3,7 +3,7 @@ use clap::Subcommand;
 use crate::cli::Context;
 use crate::error::Result;
 use crate::reporter::OkEvent;
-use crate::values::KeyArg;
+use crate::types::key_arg::KeyArg;
 
 #[derive(Debug, Subcommand)]
 pub enum InputCommand {

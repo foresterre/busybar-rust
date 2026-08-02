@@ -153,28 +153,31 @@ impl fmt::Display for SystemTransportEvent {
     }
 }
 
+pub fn status_fields(status: &Status) -> Vec<Field> {
+    let mut fields = Vec::new();
+
+    if let Some(device) = &status.device {
+        fields.extend(prefixed("device", device_fields(device)));
+    }
+
+    if let Some(firmware) = &status.firmware {
+        fields.extend(prefixed("firmware", firmware_fields(firmware)));
+    }
+
+    if let Some(system) = &status.system {
+        fields.extend(prefixed("system", system_fields(system)));
+    }
+
+    if let Some(power) = &status.power {
+        fields.extend(prefixed("power", power_fields(power)));
+    }
+
+    fields
+}
+
 impl fmt::Display for SystemStatusEvent {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let status = &self.0;
-        let mut fields = Vec::new();
-
-        if let Some(device) = &status.device {
-            fields.extend(prefixed("device", device_fields(device)));
-        }
-
-        if let Some(firmware) = &status.firmware {
-            fields.extend(prefixed("firmware", firmware_fields(firmware)));
-        }
-
-        if let Some(system) = &status.system {
-            fields.extend(prefixed("system", system_fields(system)));
-        }
-
-        if let Some(power) = &status.power {
-            fields.extend(prefixed("power", power_fields(power)));
-        }
-
-        write_fields(f, &fields)
+        write_fields(f, &status_fields(&self.0))
     }
 }
 

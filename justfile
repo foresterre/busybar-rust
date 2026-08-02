@@ -26,3 +26,7 @@ precommit: fmt check clippy test
 
 book:
     mdbook serve --open book
+
+proto-update *dir:
+    cargo run -p busylib-proto-build -- {{dir}}
+    cargo fmt --all

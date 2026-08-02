@@ -109,7 +109,7 @@ impl<T> Client<T> {
         }
     }
 
-    fn resolve_path(&self, path: &str) -> String {
+    pub(crate) fn resolve_path(&self, path: &str) -> String {
         format!(
             "/{}/{}",
             self.api_prefix.as_str(),
@@ -302,6 +302,29 @@ impl<T: HttpTransport> Client<T> {
                 .map_err(Into::into),
             None => builder.body(Bytes::new()).map_err(Into::into),
         }
+    }
+}
+
+impl<T: HttpTransport> Client<T> {
+    // create a websocket req.
+    pub(crate) fn ws_request(&self, path: &str) -> Result<Request<()>, BuildRequestError> {
+        let mut url = self.base_url.join(path.trim_start_matches('/'))?;
+
+        let scheme = match url.scheme() {
+            "https" | "wss" => "wss",
+            _ => "ws",
+        };
+
+        url.set_scheme(scheme)
+            .map_err(|()| BuildRequestError::WsScheme(url.to_string()))?;
+
+        let mut builder = Request::builder().uri(Uri::try_from(url.as_str())?);
+
+        if let Some(token) = &self.token {
+            builder = builder.header(AUTHORIZATION, format!("Bearer {}", token.as_str()));
+        }
+
+        builder.body(()).map_err(Into::into)
     }
 }
 

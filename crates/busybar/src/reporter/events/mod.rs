@@ -33,7 +33,9 @@ pub use crate::reporter::events::smart_home::{
 pub use crate::reporter::events::storage::{
     StorageListEvent, StorageReadEvent, StorageStatusEvent,
 };
-pub use crate::reporter::events::streaming::StreamingScreenEvent;
+pub use crate::reporter::events::streaming::{
+    FramePayload, StreamingScreenEvent, StreamingStatusEvent,
+};
 pub use crate::reporter::events::system::{
     SystemLogDumpEvent, SystemStatusDeviceEvent, SystemStatusEvent, SystemStatusFirmwareEvent,
     SystemStatusPowerEvent, SystemStatusSystemEvent, SystemTransportEvent, SystemVersionEvent,
@@ -44,7 +46,7 @@ pub use crate::reporter::events::updater::{
 };
 pub use crate::reporter::events::wifi::WifiStatusEvent;
 
-#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
+#[derive(Debug, Clone, PartialEq, Serialize)]
 #[serde(tag = "event", rename_all = "snake_case")]
 pub enum CliEvent {
     Ok(OkEvent),
@@ -72,6 +74,7 @@ pub enum CliEvent {
     StorageRead(StorageReadEvent),
 
     StreamingScreen(StreamingScreenEvent),
+    StreamingStatus(Box<StreamingStatusEvent>),
 
     SystemVersion(SystemVersionEvent),
     SystemTransport(SystemTransportEvent),
@@ -114,6 +117,7 @@ impl fmt::Display for CliEvent {
             CliEvent::StorageStatus(event) => event.fmt(f),
             CliEvent::StorageRead(event) => event.fmt(f),
             CliEvent::StreamingScreen(event) => event.fmt(f),
+            CliEvent::StreamingStatus(event) => event.fmt(f),
             CliEvent::SystemVersion(event) => event.fmt(f),
             CliEvent::SystemTransport(event) => event.fmt(f),
             CliEvent::SystemStatus(event) => event.fmt(f),

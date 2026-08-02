@@ -1,6 +1,6 @@
 [package]
-name = "busybar"
-description = "BUSY Bar CLI"
+name = "busybar-render"
+description = "Re-encodes BUSY Bar screen frames into more common image formats"
 version = { workspace = true }
 authors = { workspace = true }
 license = { workspace = true }
@@ -11,12 +11,5 @@ rust-version = "1.88"
 
 [dependencies]
 base64.workspace = true
-busybar-render.workspace = true
-busylib.workspace = true
-bytes.workspace = true
-clap.workspace = true
-serde.workspace = true
-serde_json.workspace = true
-storyteller.workspace = true
+image.workspace = true
 thiserror.workspace = true
-tokio = { workspace = true, features = ["signal"] }

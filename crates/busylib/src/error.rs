@@ -5,7 +5,7 @@ use std::fmt;
 use http::{Method, StatusCode};
 use serde::Deserialize;
 
-use crate::transport::HttpTransportError;
+use crate::transport::{HttpTransportError, WsTransportError};
 use crate::types::invalid_value::InvalidValue;
 
 pub type Result<T, E = Error> = std::result::Result<T, E>;
@@ -55,6 +55,25 @@ pub enum Error {
         body: Body,
     },
 
+    #[cfg(feature = "ws")]
+    #[error("{path} sent a message which is not a valid protobuf State: {body}")]
+    DecodeProto {
+        path: String,
+        body: Body,
+        #[source]
+        source: prost::DecodeError,
+    },
+
+    #[error("{path} sent a text message where a protobuf one was expected: {body}")]
+    UnexpectedMessage { path: String, body: Body },
+
+    #[error("{path} websocket stream failed")]
+    Ws {
+        path: String,
+        #[source]
+        source: WsTransportError,
+    },
+
     #[error("{method} {path} returned a response that does not match the API: {body}")]
     Decode {
         method: Method,
@@ -69,6 +88,7 @@ impl Error {
     pub fn status(&self) -> Option<StatusCode> {
         match self {
             Error::Api { status, .. } | Error::UnexpectedStatus { status, .. } => Some(*status),
+            Error::Ws { source, .. } => source.status(),
             _ => None,
         }
     }
@@ -117,6 +137,8 @@ pub enum BuildRequestError {
     Http(#[from] http::Error),
     #[error("could not serialize the request body")]
     Body(#[from] serde_json::Error),
+    #[error("could not derive a websocket URL from `{0}`")]
+    WsScheme(String),
 }
 
 /// Error reported by the device

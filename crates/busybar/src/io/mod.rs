@@ -6,7 +6,7 @@ use serde::de::DeserializeOwned;
 
 use crate::error::Result;
 use crate::reporter::Payload;
-use crate::values::OutputFormat;
+use crate::types::output_format::OutputFormatArg;
 
 const STDIO: &str = "-";
 
@@ -28,6 +28,10 @@ impl Io {
         Ok(serde_json::from_slice(&bytes)?)
     }
 
+    pub fn create_dir(path: &Path) -> Result<()> {
+        Ok(fs::create_dir_all(path)?)
+    }
+
     pub fn write_bytes(path: &Path, data: &[u8]) -> Result<()> {
         Ok(fs::write(path, data)?)
     }
@@ -45,7 +49,7 @@ impl Io {
     ///
     /// Returns the payload to report for events, or `None` when the bytes went to stdout.
     pub fn output_binary_data(
-        format: OutputFormat,
+        format: OutputFormatArg,
         data: &[u8],
         output: Option<&Path>,
     ) -> Result<Option<Payload>> {
@@ -55,8 +59,8 @@ impl Io {
                 Ok(Some(Payload::written(data, path.display().to_string())))
             }
             None => match format {
-                OutputFormat::Json => Ok(Some(Payload::inline(data))),
-                OutputFormat::Text => {
+                OutputFormatArg::Json => Ok(Some(Payload::inline(data))),
+                OutputFormatArg::Text => {
                     Self::write_stdout(data)?;
                     Ok(None)
                 }

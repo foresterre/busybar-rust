@@ -10,7 +10,7 @@ use crate::error::{CliError, Result};
 use crate::reporter::{
     OkEvent, SettingsAccessEvent, SettingsBrightnessEvent, SettingsNameEvent, SettingsVolumeEvent,
 };
-use crate::values::AccessModeArg;
+use crate::types::access_mode_arg::AccessModeArg;
 
 #[derive(Debug, Subcommand)]
 pub enum SettingsCommand {

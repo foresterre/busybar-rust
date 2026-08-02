@@ -4,7 +4,9 @@ use clap::Parser;
 use crate::commands::Command;
 use crate::error::Result;
 use crate::reporter::Reporter;
-use crate::values::{ApiPrefixArg, OutputFormat};
+use crate::types::api_prefix_arg::ApiPrefixArg;
+use crate::types::image_format_arg::ImageFormatArg;
+use crate::types::output_format::OutputFormatArg;
 
 /// Control a BUSY Bar over its HTTP API, using this CLI <3
 #[derive(Debug, Parser)]
@@ -33,8 +35,12 @@ pub struct Cli {
     token: Option<String>,
 
     /// The output format, i.e. how to print thje result
-    #[arg(long, short = 'o', value_enum, default_value_t = OutputFormat::Text)]
-    output_format: OutputFormat,
+    #[arg(long, short = 'o', value_enum, default_value_t = OutputFormatArg::Text)]
+    output_format: OutputFormatArg,
+
+    /// Format that frames are written and reported in, `raw` passes the device bytes through
+    #[arg(long, value_enum, default_value_t = ImageFormatArg::Png)]
+    image_format: ImageFormatArg,
 
     #[command(subcommand)]
     command: Command,
@@ -47,6 +53,7 @@ impl Cli {
             api_prefix,
             token,
             output_format,
+            image_format,
             command,
         } = self;
 
@@ -59,6 +66,7 @@ impl Cli {
             client: builder.build_reqwest(),
             reporter: Reporter::new(output_format),
             output_format,
+            image_format,
         };
 
         let result = command.run(&context).await;
@@ -72,5 +80,6 @@ impl Cli {
 pub struct Context {
     pub client: Client<ReqwestHttpTransport>,
     pub reporter: Reporter,
-    pub output_format: OutputFormat,
+    pub output_format: OutputFormatArg,
+    pub image_format: ImageFormatArg,
 }
