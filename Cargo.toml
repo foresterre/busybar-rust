@@ -3,7 +3,7 @@ members = ["crates/busybar", "crates/busylib"]
 resolver = "3"
 
 [workspace.package]
-version = "0.0.4"
+version = "0.0.5"
 authors = ["Martijn Gribnau <garm@ilumeo.com>"]
 license = "Apache-2.0 OR MIT"
 edition = "2024"
@@ -12,10 +12,10 @@ readme = "README.md"
 
 [workspace.dependencies]
 # this workspace
-busylib = { path = "crates/busylib", version = "0.0.4" }
+busylib = { path = "crates/busylib", version = "0.0.5" }
 
 # external
-base64 = "0.22"
+base64 = "0.23.0"
 bytes = "1"
 clap = { version = "4.5", features = ["derive", "env", "wrap_help"] }
 http = "1"
