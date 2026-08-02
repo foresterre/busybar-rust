@@ -97,7 +97,7 @@ checksum = "b588b76d00fde79687d7646a9b5bdf3cc0f655e0bbd080335a95d7e96f3587da"
 
 [[package]]
 name = "bookdoc"
-version = "0.0.6"
+version = "0.0.7"
 dependencies = [
  "busylib",
  "tokio",
@@ -111,7 +111,7 @@ checksum = "72f5acc6cb2ba439de613abc23857ec3d78374d8ed5ac84e9d11336e87da8649"
 
 [[package]]
 name = "busybar"
-version = "0.0.6"
+version = "0.0.7"
 dependencies = [
  "base64 0.23.0",
  "busylib",
@@ -125,7 +125,7 @@ dependencies = [
 
 [[package]]
 name = "busylib"
-version = "0.0.6"
+version = "0.0.7"
 dependencies = [
  "bytes",
  "http",
