@@ -36,7 +36,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-3e38330a.js";
+            window.path_to_searchindex_js = "searchindex-6a2986a8.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0565151d.js"></script>
@@ -178,7 +178,7 @@
                         <h1 id="api-client"><a class="header" href="#api-client">API client</a></h1>
 <p>Add to your crate by running <code>cargo add busylib</code> or adding <code>busylib</code> to your dependencies, e.g.</p>
 <pre><code class="language-toml">[dependencies]
-busylib = "0.0.8" # check latest version https://crates.io/crates/busylib
+busylib = "0.0.9" # check latest version https://crates.io/crates/busylib
 </code></pre>
 <p>For the Rust docs, see <a href="https://docs.rs/busylib">docs.rs</a>.</p>
 <div style="break-before: page; page-break-before: always;"></div>
@@ -961,23 +961,42 @@ extension is not one of these, you instead get raw bytes.</p>
 <pre><code class="language-console">busybar streaming screen front --output ./frame.raw
 </code></pre>
 <h2 id="status_ws"><a class="header" href="#status_ws">status_ws</a></h2>
-<p>⚠️ <em>not implemented yet</em></p>
 <h3>API client</h3>
 
+<p>The stream is enabled as soon as it opens, and ends when the device hangs up.
+The WebSocket transport is passed per call, since the client itself currently only carries an HTTP transport.</p>
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
-</span>use busylib::ClientBuilder;
+</span>use busylib::{ClientBuilder, TungsteniteWsTransport};
 
 let client = ClientBuilder::new("http://10.0.4.20")?.build_reqwest();
-client.streaming().status_ws().await?;
+let mut stream = client
+    .streaming()
+    .status_ws(&amp;TungsteniteWsTransport::new())
+    .await?;
+
+while let Some(message) = stream.next().await {
+    let message = message?;
+}
 
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
+<p>Prints one numbered line per message as it arrives, until interrupted with ctrl-c. With
+<code>--output-format json</code> each line is a JSON object (aka jsonlines), so the stream can for example be piped into <code>jq</code>.</p>
 <pre><code class="language-console">busybar streaming status-ws
+</code></pre>
+<p>If you provide a <code>--frame-dir &lt;dir&gt;</code> option, <code>busybar</code> as a side effect, will decode the streamed frames and write
+them as images to the given folder.</p>
+<p>By default, front frames are rendered with a black raster to mimic the
+matrix display of the actual device. This can be disabled by providing the <code>--no-image-raster</code> flag.</p>
+<pre><code class="language-console">busybar streaming status-ws --frame-dir ./frames
+</code></pre>
+<p>Reported events carry the frame inline as base64, in the same <code>--image-format</code> the files use.</p>
+<pre><code class="language-console">busybar --image-format jpg -o json streaming status-ws
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="system"><a class="header" href="#system">System</a></h1>
