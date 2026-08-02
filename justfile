@@ -14,12 +14,12 @@ clippy:
     cargo clippy --workspace
 
 msrv-verify:
-    cargo msrv verify -- cargo check -p busylib
-    cargo msrv verify -- cargo check -p busybar
+    cargo msrv verify --manifest-path crates/busylib/Cargo.toml
+    cargo msrv verify --manifest-path crates/busybar/Cargo.toml
 
 msrv-find:
-    cargo msrv find -- cargo check -p busylib
-    cargo msrv find -- cargo check -p busybar
+    cargo msrv find --min 1.85 --manifest-path crates/busylib/Cargo.toml --write-msrv -- cargo check -p busylib
+    cargo msrv find --min 1.85 --manifest-path crates/busybar/Cargo.toml --write-msrv -- cargo check -p busybar
 
 precommit: fmt check clippy test
     just msrv-verify || { just msrv-find; exit 1; }
