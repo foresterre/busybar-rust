@@ -24,6 +24,7 @@ pub struct InstallStatus {
     pub status: Option<InstallResult>,
     /// Optional status detail string
     pub detail: Option<String>,
+    /// Optional donwload progress
     pub download: Option<DownloadProgress>,
 }
 

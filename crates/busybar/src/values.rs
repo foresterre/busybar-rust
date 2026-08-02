@@ -1,3 +1,5 @@
+use std::fmt;
+
 use busylib::ApiPrefix;
 use busylib::model::assets::Screen;
 use busylib::model::busy::BusyProfileSlot;
@@ -66,6 +68,15 @@ impl From<KeyArg> for Key {
 pub enum ScreenArg {
     Front,
     Back,
+}
+
+impl fmt::Display for ScreenArg {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            ScreenArg::Front => f.write_str("front"),
+            ScreenArg::Back => f.write_str("back"),
+        }
+    }
 }
 
 impl From<ScreenArg> for Screen {

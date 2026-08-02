@@ -1,3 +1,4 @@
+use std::borrow::Cow;
 use std::path::PathBuf;
 
 use clap::Subcommand;
@@ -8,6 +9,7 @@ use crate::cli::Context;
 use crate::error::Result;
 use crate::io::Io;
 use crate::reporter::StreamingScreenEvent;
+use crate::types::frame::{Frame, ImageFormat};
 use crate::values::ScreenArg;
 
 #[derive(Debug, Subcommand)]
@@ -18,7 +20,10 @@ pub enum StreamingCommand {
         #[arg(value_enum, default_value_t = ScreenArg::Front)]
         screen: ScreenArg,
 
-        /// Write the frame here instead of stdout
+        /// Write the frame to disk instead of stdout.
+        ///
+        /// If the output path ends in a .bmp, .jpg or .png extension, then the raw frame
+        /// is converted to that format respectively.
         #[arg(long, short = 'O', value_name = "FILE")]
         output: Option<PathBuf>,
     },
@@ -40,7 +45,12 @@ impl StreamingCommand {
 }
 
 async fn screen(context: &Context, screen: ScreenArg, output: Option<&Path>) -> Result<()> {
-    let frame = context.client.streaming().screen(screen.into()).await?;
+    let body = context.client.streaming().screen(screen.into()).await?;
+
+    let frame = match output.and_then(ImageFormat::from_path) {
+        Some(format) => Cow::Owned(Frame::decode(screen, &body)?.encode(format)?),
+        None => Cow::Borrowed(body.as_ref()),
+    };
 
     if let Some(payload) = Io::output_binary_data(context.output_format, &frame, output)? {
         context

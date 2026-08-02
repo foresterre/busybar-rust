@@ -3,6 +3,7 @@ mod commands;
 mod error;
 mod io;
 mod reporter;
+pub mod types;
 mod values;
 
 use std::process::ExitCode;

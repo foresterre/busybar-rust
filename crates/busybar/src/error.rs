@@ -1,4 +1,5 @@
 use crate::reporter;
+use crate::types::frame::FrameError;
 
 pub type Result<T> = std::result::Result<T, CliError>;
 
@@ -12,6 +13,9 @@ pub enum CliError {
 
     #[error("could not read or write a local file")]
     Io(#[from] std::io::Error),
+
+    #[error(transparent)]
+    Frame(#[from] FrameError),
 
     #[error("{0}")]
     Usage(&'static str),

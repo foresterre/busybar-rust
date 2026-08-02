@@ -119,10 +119,10 @@ fn install_fields(install: &InstallStatus) -> Vec<Field> {
         fields.push(field("status", install_result_label(status)));
     }
 
-    if let Some(detail) = &install.detail {
-        if !detail.is_empty() {
-            fields.push(field("detail", detail));
-        }
+    if let Some(detail) = &install.detail
+        && !detail.is_empty()
+    {
+        fields.push(field("detail", detail));
     }
 
     if let Some(download) = &install.download {
