@@ -2,8 +2,9 @@ use std::collections::VecDeque;
 use std::sync::{Arc, Mutex};
 use std::time::Duration;
 
+use busylib::types::path_prefix::PathPrefix;
 use busylib::{
-    BoxFuture, Client, ClientBuilder, Error, HttpTransport, HttpTransportError,
+    ApiPrefix, BoxFuture, Client, ClientBuilder, Error, HttpTransport, HttpTransportError,
     HttpTransportResult, Timeout,
 };
 use bytes::Bytes;
@@ -69,7 +70,7 @@ async fn drives_the_api_through_a_shared_transport() {
     assert_eq!(requests[0].method(), Method::GET);
     assert_eq!(
         requests[0].uri().to_string(),
-        "http://busy.local/busybar/version"
+        "http://busy.local/api/version"
     );
     assert_eq!(requests[0].headers()[AUTHORIZATION], "Bearer secret");
     assert!(requests[0].body().is_empty());
@@ -93,7 +94,7 @@ async fn drives_the_api_through_a_boxed_transport() {
     assert_eq!(requests[0].method(), Method::POST);
     assert_eq!(
         requests[0].uri().to_string(),
-        "http://busy.local/busybar/ble/enable"
+        "http://busy.local/api/ble/enable"
     );
 }
 
@@ -125,7 +126,7 @@ async fn percent_encodes_query_parameters() {
     assert_eq!(data.as_ref(), b"payload");
     assert_eq!(
         transport.requests()[0].uri().to_string(),
-        "http://busy.local/busybar/storage/read?path=%2Fext%2Fdir%2Ftest.png"
+        "http://busy.local/api/storage/read?path=%2Fext%2Fdir%2Ftest.png"
     );
 }
 
@@ -228,6 +229,57 @@ async fn surfaces_transport_failures_with_their_source() {
     };
 
     assert_eq!(source.to_string(), "no response queued");
+    assert_eq!(
+        error.to_string(),
+        "GET /api/wifi/status unable to reach device"
+    );
+}
+
+#[tokio::test]
+async fn mounts_the_api_under_the_configured_prefix() {
+    let transport = StubTransport::new();
+
+    let device = ClientBuilder::new("http://busy.local")
+        .unwrap()
+        .build(Arc::clone(&transport));
+    let cloud = ClientBuilder::new("https://api.busy.app")
+        .unwrap()
+        .api_prefix(ApiPrefix::Cloud)
+        .build(Arc::clone(&transport));
+    let proxied = ClientBuilder::new("http://gateway.local/bars/one/")
+        .unwrap()
+        .api_prefix(ApiPrefix::Custom(PathPrefix::new("busy-bar/api").unwrap()))
+        .build(Arc::clone(&transport));
+
+    for client in [&device, &cloud, &proxied] {
+        transport.queue_json(200, r#"{"api_semver":"25.0.0"}"#);
+        client.system().version().await.unwrap();
+    }
+
+    let requests = transport.requests();
+    let uris: Vec<String> = requests.iter().map(|r| r.uri().to_string()).collect();
+
+    assert_eq!(
+        uris,
+        [
+            "http://busy.local/api/version",
+            "https://api.busy.app/busybar/version",
+            "http://gateway.local/bars/one/busy-bar/api/version",
+        ]
+    );
+    assert_eq!(device.api_prefix(), ApiPrefix::Device);
+}
+
+#[tokio::test]
+async fn reports_the_resolved_path_when_a_call_fails() {
+    let transport = StubTransport::new();
+    let client = ClientBuilder::new("https://api.busy.app")
+        .unwrap()
+        .api_prefix(ApiPrefix::Cloud)
+        .build(Arc::clone(&transport));
+
+    let error = client.wifi().status().await.unwrap_err();
+
     assert_eq!(
         error.to_string(),
         "GET /busybar/wifi/status unable to reach device"

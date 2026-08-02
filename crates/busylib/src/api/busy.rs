@@ -15,14 +15,14 @@ impl<T: HttpTransport> Busy<'_, T> {
     ///
     /// Gets the current state of the BUSY timer in snapshot form
     pub async fn snapshot(&self) -> Result<BusySnapshot> {
-        self.client.json(Call::get("/busybar/busy/snapshot")).await
+        self.client.json(Call::get("busy/snapshot")).await
     }
 
     /// Set BUSY timer snapshot
     ///
     /// Run the timer starting from the given snapshot
     pub async fn set_snapshot(&self, snapshot: &BusySnapshot) -> Result<()> {
-        let request = Call::put("/busybar/busy/snapshot").json(snapshot)?;
+        let request = Call::put("busy/snapshot").json(snapshot)?;
         self.client.ok(request).await
     }
 
@@ -44,7 +44,7 @@ impl<T: HttpTransport> Busy<'_, T> {
 
 fn profile_path(slot: BusyProfileSlot) -> &'static str {
     match slot {
-        BusyProfileSlot::Busy => "/busybar/busy/profiles/busy",
-        BusyProfileSlot::Custom => "/busybar/busy/profiles/custom",
+        BusyProfileSlot::Busy => "busy/profiles/busy",
+        BusyProfileSlot::Custom => "busy/profiles/custom",
     }
 }

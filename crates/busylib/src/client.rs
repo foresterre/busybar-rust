@@ -14,15 +14,50 @@ use url::Url;
 use crate::error::{BaseUrlError, Body, BuildRequestError, Error, Result};
 use crate::transport::{HttpTransport, Timeout};
 use crate::types::invalid_value::InvalidValue;
+use crate::types::path_prefix::PathPrefix;
 use crate::types::token::Token;
 use crate::types::try_into_value::TryIntoValue;
 use crate::{ApiError, api};
+
+/// Path the API is mounted under.
+///
+/// A bar serves the API under `/api`, while BUSY Cloud proxies the same API under
+/// `/busybar`, which is the prefix the OpenAPI specification documents.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+pub enum ApiPrefix {
+    /// `/api`, as served by a bar itself
+    #[default]
+    Device,
+
+    /// `/busybar`, as served by BUSY Cloud
+    Cloud,
+
+    /// Anything else, for a bar behind a reverse proxy
+    Custom(PathPrefix),
+}
+
+impl ApiPrefix {
+    pub fn as_str(&self) -> &'static str {
+        match self {
+            ApiPrefix::Device => "api",
+            ApiPrefix::Cloud => "busybar",
+            ApiPrefix::Custom(prefix) => prefix.as_str(),
+        }
+    }
+}
+
+impl Display for ApiPrefix {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.write_str(self.as_str())
+    }
+}
 
 /// Client for a single device
 #[derive(Debug, Clone)]
 pub struct Client<T> {
     transport: T,
     base_url: Url,
+    api_prefix: ApiPrefix,
     token: Option<Token>,
     timeout: Option<Timeout>,
 }
@@ -30,6 +65,10 @@ pub struct Client<T> {
 impl<T> Client<T> {
     pub fn base_url(&self) -> &Url {
         &self.base_url
+    }
+
+    pub fn api_prefix(&self) -> ApiPrefix {
+        self.api_prefix
     }
 
     pub fn transport(&self) -> &T {
@@ -52,9 +91,18 @@ impl<T> Client<T> {
         Client {
             transport: &self.transport,
             base_url: self.base_url.clone(),
+            api_prefix: self.api_prefix,
             token: self.token.clone(),
             timeout,
         }
+    }
+
+    fn resolve_path(&self, path: &str) -> String {
+        format!(
+            "/{}/{}",
+            self.api_prefix.as_str(),
+            path.trim_start_matches('/')
+        )
     }
 }
 
@@ -121,7 +169,7 @@ impl<T: HttpTransport> Client<T> {
 
     pub(crate) async fn json<R: DeserializeOwned>(&self, request: Call) -> Result<R> {
         let method = request.method.clone();
-        let path = request.path.to_string();
+        let path = self.resolve_path(&request.path);
 
         let body = self.send(request).await?;
 
@@ -139,7 +187,7 @@ impl<T: HttpTransport> Client<T> {
 
     pub(crate) async fn ok(&self, request: Call) -> Result<()> {
         let method = request.method.clone();
-        let path = request.path.to_string();
+        let path = self.resolve_path(&request.path);
 
         let body = self.send(request).await?;
 
@@ -159,13 +207,15 @@ impl<T: HttpTransport> Client<T> {
 
     async fn send(&self, request: Call) -> Result<Bytes> {
         let method = request.method.clone();
-        let path = request.path.to_string();
+        let path = self.resolve_path(&request.path);
 
-        let request = self.build(request).map_err(|source| Error::BuildRequest {
-            method: method.clone(),
-            path: path.clone(),
-            source,
-        })?;
+        let request = self
+            .build(request, &path)
+            .map_err(|source| Error::BuildRequest {
+                method: method.clone(),
+                path: path.clone(),
+                source,
+            })?;
 
         let response =
             self.transport
@@ -200,8 +250,8 @@ impl<T: HttpTransport> Client<T> {
         })
     }
 
-    fn build(&self, request: Call) -> Result<Request<Bytes>, BuildRequestError> {
-        let mut url = self.base_url.join(request.path.trim_start_matches('/'))?;
+    fn build(&self, request: Call, path: &str) -> Result<Request<Bytes>, BuildRequestError> {
+        let mut url = self.base_url.join(path.trim_start_matches('/'))?;
 
         if !request.query.is_empty() {
             let mut pairs = url.query_pairs_mut();
@@ -237,6 +287,7 @@ impl<T: HttpTransport> Client<T> {
 #[derive(Debug, Clone)]
 pub struct ClientBuilder {
     base_url: Url,
+    api_prefix: ApiPrefix,
     token: Option<Token>,
     timeout: Option<Timeout>,
 }
@@ -250,9 +301,15 @@ impl ClientBuilder {
         })?;
         Ok(Self {
             base_url: parsed,
+            api_prefix: ApiPrefix::default(),
             token: None,
             timeout: None,
         })
+    }
+
+    pub fn api_prefix(mut self, prefix: ApiPrefix) -> Self {
+        self.api_prefix = prefix;
+        self
     }
 
     pub fn token(mut self, token: impl TryIntoValue<Token>) -> Result<Self, InvalidValue> {
@@ -269,6 +326,7 @@ impl ClientBuilder {
         Client {
             transport,
             base_url: self.base_url,
+            api_prefix: self.api_prefix,
             token: self.token,
             timeout: self.timeout,
         }

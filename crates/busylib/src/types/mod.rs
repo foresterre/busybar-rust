@@ -11,6 +11,7 @@ pub mod element_id;
 pub mod invalid_value;
 pub mod log_name;
 pub mod opacity;
+pub mod path_prefix;
 pub mod priority;
 pub mod stock_path;
 pub mod storage_path;

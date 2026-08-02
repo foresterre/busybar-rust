@@ -15,12 +15,12 @@ crate::api::endpoint!(
 impl<T: HttpTransport> Settings<'_, T> {
     /// Get HTTP API access over Wi-Fi configuration
     pub async fn http_access(&self) -> Result<HttpAccessInfo> {
-        self.client.json(Call::get("/busybar/access")).await
+        self.client.json(Call::get("access")).await
     }
 
     /// Set HTTP API access over Wi-Fi configuration
     pub async fn set_http_access(&self, access: &HttpAccess) -> Result<()> {
-        let request = Call::post("/busybar/access")
+        let request = Call::post("access")
             .query("mode", access.mode().as_str())
             .maybe_query("key", access.key().map(|key| key.as_str()));
         self.client.ok(request).await
@@ -28,7 +28,7 @@ impl<T: HttpTransport> Settings<'_, T> {
 
     /// Get current device name
     pub async fn name(&self) -> Result<DeviceName> {
-        let response: NameInfo = self.client.json(Call::get("/busybar/name")).await?;
+        let response: NameInfo = self.client.json(Call::get("name")).await?;
         Ok(response.name)
     }
 
@@ -37,7 +37,7 @@ impl<T: HttpTransport> Settings<'_, T> {
         let body = NameInfo {
             name: name.try_into_value()?,
         };
-        let request = Call::post("/busybar/name").json(&body)?;
+        let request = Call::post("name").json(&body)?;
         self.client.ok(request).await
     }
 }

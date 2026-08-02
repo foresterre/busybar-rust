@@ -17,7 +17,7 @@ impl<T: HttpTransport> Audio<'_, T> {
     /// Plays an audio file from the assets directory.
     /// Supported formats include .snd files.
     pub async fn play(&self, audio: &PlayAudio) -> Result<()> {
-        let request = Call::post("/busybar/audio/play").json(audio)?;
+        let request = Call::post("audio/play").json(audio)?;
         self.client.ok(request).await
     }
 
@@ -25,15 +25,14 @@ impl<T: HttpTransport> Audio<'_, T> {
     ///
     /// Stops any currently playing audio
     pub async fn stop(&self) -> Result<()> {
-        self.client.ok(Call::delete("/busybar/audio/play")).await
+        self.client.ok(Call::delete("audio/play")).await
     }
 
     /// Get audio volume
     ///
     /// Get audio volume value
     pub async fn volume(&self) -> Result<Volume> {
-        let response: AudioVolumeInfo =
-            self.client.json(Call::get("/busybar/audio/volume")).await?;
+        let response: AudioVolumeInfo = self.client.json(Call::get("audio/volume")).await?;
         Ok(response.volume)
     }
 
@@ -52,7 +51,7 @@ impl<T: HttpTransport> Audio<'_, T> {
     }
 
     async fn set(&self, volume: Volume, silent: bool) -> Result<()> {
-        let request = Call::post("/busybar/audio/volume")
+        let request = Call::post("audio/volume")
             .query("volume", volume.percent())
             .query("silent", u8::from(silent));
         self.client.ok(request).await

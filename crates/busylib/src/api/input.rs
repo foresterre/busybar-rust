@@ -15,7 +15,7 @@ impl<T: HttpTransport> Input<'_, T> {
     ///
     /// Send single key press event
     pub async fn press(&self, key: Key) -> Result<()> {
-        let request = Call::post("/busybar/input").query("key", key.as_str());
+        let request = Call::post("input").query("key", key.as_str());
         self.client.ok(request).await
     }
 }

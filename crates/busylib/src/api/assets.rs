@@ -24,7 +24,7 @@ impl<T: HttpTransport> Assets<'_, T> {
         file: impl TryIntoValue<AssetName>,
         data: impl Into<Bytes>,
     ) -> Result<()> {
-        let request = Call::post("/busybar/assets/upload")
+        let request = Call::post("assets/upload")
             .query("application_name", application_name.try_into_value()?)
             .query("file", file.try_into_value()?)
             .octet_stream(data);
@@ -35,7 +35,7 @@ impl<T: HttpTransport> Assets<'_, T> {
     ///
     /// Deletes all assets for a specific app ID
     pub async fn delete(&self, application_name: impl TryIntoValue<AppName>) -> Result<()> {
-        let request = Call::delete("/busybar/assets/upload")
+        let request = Call::delete("assets/upload")
             .query("application_name", application_name.try_into_value()?);
         self.client.ok(request).await
     }

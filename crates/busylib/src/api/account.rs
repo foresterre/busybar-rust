@@ -15,17 +15,14 @@ impl<T: HttpTransport> Account<'_, T> {
     ///
     /// Retrieves linked account data
     pub async fn info(&self) -> Result<AccountInfo> {
-        self.client.json(Call::get("/busybar/account/info")).await
+        self.client.json(Call::get("account/info")).await
     }
 
     /// Get MQTT status info
     ///
     /// Retrieves MQTT status
     pub async fn status(&self) -> Result<MqttStatus> {
-        let response: AccountStatus = self
-            .client
-            .json(Call::get("/busybar/account/status"))
-            .await?;
+        let response: AccountStatus = self.client.json(Call::get("account/status")).await?;
         Ok(response.status)
     }
 
@@ -33,8 +30,6 @@ impl<T: HttpTransport> Account<'_, T> {
     ///
     /// Retrieves MQTT backend configuration
     pub async fn backend(&self) -> Result<AccountBackend> {
-        self.client
-            .json(Call::get("/busybar/account/backend"))
-            .await
+        self.client.json(Call::get("account/backend")).await
     }
 }

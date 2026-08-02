@@ -43,6 +43,13 @@ pub fn storage_path(value: &str) -> bool {
         .all(|segment| segment.chars().all(is_name_char))
 }
 
+pub fn path_prefix(value: &str) -> bool {
+    !value.is_empty()
+        && value
+            .split('/')
+            .all(|segment| !segment.is_empty() && segment.chars().all(is_name_char))
+}
+
 pub fn device_name(value: &str) -> bool {
     let length = value.chars().count();
     (1..=20).contains(&length)

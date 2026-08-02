@@ -23,7 +23,7 @@ impl<T: HttpTransport> Storage<'_, T> {
         path: impl TryIntoValue<StoragePath>,
         data: impl Into<Bytes>,
     ) -> Result<()> {
-        let request = Call::post("/busybar/storage/write")
+        let request = Call::post("storage/write")
             .query("path", path.try_into_value()?)
             .octet_stream(data);
         self.client.ok(request).await
@@ -33,7 +33,7 @@ impl<T: HttpTransport> Storage<'_, T> {
     ///
     /// Downloads a file from a specified path
     pub async fn read(&self, path: impl TryIntoValue<StoragePath>) -> Result<Bytes> {
-        let request = Call::get("/busybar/storage/read").query("path", path.try_into_value()?);
+        let request = Call::get("storage/read").query("path", path.try_into_value()?);
         self.client.bytes(request).await
     }
 
@@ -42,7 +42,7 @@ impl<T: HttpTransport> Storage<'_, T> {
         &self,
         path: impl TryIntoValue<StoragePath>,
     ) -> Result<Vec<StorageListElement>> {
-        let request = Call::get("/busybar/storage/list").query("path", path.try_into_value()?);
+        let request = Call::get("storage/list").query("path", path.try_into_value()?);
         let response: StorageList = self.client.json(request).await?;
         Ok(response.list)
     }
@@ -51,7 +51,7 @@ impl<T: HttpTransport> Storage<'_, T> {
     ///
     /// Removes a file with a specified path
     pub async fn remove(&self, path: impl TryIntoValue<StoragePath>) -> Result<()> {
-        let request = Call::delete("/busybar/storage/remove").query("path", path.try_into_value()?);
+        let request = Call::delete("storage/remove").query("path", path.try_into_value()?);
         self.client.ok(request).await
     }
 
@@ -59,7 +59,7 @@ impl<T: HttpTransport> Storage<'_, T> {
     ///
     /// Creates a new directory with a specified path
     pub async fn create_dir(&self, path: impl TryIntoValue<StoragePath>) -> Result<()> {
-        let request = Call::post("/busybar/storage/mkdir").query("path", path.try_into_value()?);
+        let request = Call::post("storage/mkdir").query("path", path.try_into_value()?);
         self.client.ok(request).await
     }
 
@@ -71,7 +71,7 @@ impl<T: HttpTransport> Storage<'_, T> {
         path: impl TryIntoValue<StoragePath>,
         new_path: impl TryIntoValue<StoragePath>,
     ) -> Result<()> {
-        let request = Call::post("/busybar/storage/rename")
+        let request = Call::post("storage/rename")
             .query("path", path.try_into_value()?)
             .query("new_path", new_path.try_into_value()?);
         self.client.ok(request).await
@@ -79,6 +79,6 @@ impl<T: HttpTransport> Storage<'_, T> {
 
     /// Show storage usage
     pub async fn status(&self) -> Result<StorageStatus> {
-        self.client.json(Call::get("/busybar/storage/status")).await
+        self.client.json(Call::get("storage/status")).await
     }
 }

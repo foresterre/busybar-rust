@@ -18,7 +18,7 @@ impl<T: HttpTransport> Time<'_, T> {
     ///
     /// Retrieves the current timestamp from RTC with timezone in ISO 8601 format
     pub async fn now(&self) -> Result<Timestamp> {
-        let response: TimestampInfo = self.client.json(Call::get("/busybar/time")).await?;
+        let response: TimestampInfo = self.client.json(Call::get("time")).await?;
         Ok(response.timestamp)
     }
 
@@ -27,8 +27,7 @@ impl<T: HttpTransport> Time<'_, T> {
     /// Sets the RTC timestamp in ISO 8601 format. Time zone qualifier (e.g. Z of UTC or +hh:mm for
     /// local time) is required.
     pub async fn set_now(&self, timestamp: impl TryIntoValue<Timestamp>) -> Result<()> {
-        let request =
-            Call::post("/busybar/time/timestamp").query("timestamp", timestamp.try_into_value()?);
+        let request = Call::post("time/timestamp").query("timestamp", timestamp.try_into_value()?);
         self.client.ok(request).await
     }
 
@@ -36,15 +35,14 @@ impl<T: HttpTransport> Time<'_, T> {
     ///
     /// Get current timezone name
     pub async fn timezone(&self) -> Result<TimezoneInfo> {
-        self.client.json(Call::get("/busybar/time/timezone")).await
+        self.client.json(Call::get("time/timezone")).await
     }
 
     /// Set timezone
     ///
     /// Sets the timezone name. Use /api/time/tzlist to get available names list.
     pub async fn set_timezone(&self, timezone: impl TryIntoValue<TimezoneName>) -> Result<()> {
-        let request =
-            Call::post("/busybar/time/timezone").query("timezone", timezone.try_into_value()?);
+        let request = Call::post("time/timezone").query("timezone", timezone.try_into_value()?);
         self.client.ok(request).await
     }
 
@@ -52,8 +50,7 @@ impl<T: HttpTransport> Time<'_, T> {
     ///
     /// Retrieves the list of time zones accepted by /api/time/timezone
     pub async fn timezones(&self) -> Result<Vec<TimezoneInfo>> {
-        let response: TimezoneListResponse =
-            self.client.json(Call::get("/busybar/time/tzlist")).await?;
+        let response: TimezoneListResponse = self.client.json(Call::get("time/tzlist")).await?;
         Ok(response.list)
     }
 }

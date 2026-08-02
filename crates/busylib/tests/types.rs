@@ -7,6 +7,7 @@ use busylib::types::device_name::DeviceName;
 use busylib::types::element_id::ElementId;
 use busylib::types::log_name::LogName;
 use busylib::types::opacity::Opacity;
+use busylib::types::path_prefix::PathPrefix;
 use busylib::types::priority::Priority;
 use busylib::types::stock_path::StockPath;
 use busylib::types::storage_path::StoragePath;
@@ -34,6 +35,9 @@ fn accepts_valid_names_and_paths() {
     assert!(Text::new("Hello, World!").is_ok());
     assert!(LogName::new("dump-1").is_ok());
     assert!(TimezoneName::new("Europe Amsterdam").is_ok());
+
+    assert!(PathPrefix::new("api").is_ok());
+    assert!(PathPrefix::new("bars/one/api").is_ok());
 }
 
 #[test]
@@ -58,6 +62,13 @@ fn rejects_invalid_names_and_paths() {
     assert!(Text::new("caf\u{e9}").is_err());
     assert!(LogName::new("dump.txt").is_err());
     assert!(TimezoneName::new("1Berlin").is_err());
+
+    assert!(PathPrefix::new("").is_err());
+    assert!(PathPrefix::new("/api").is_err());
+    assert!(PathPrefix::new("api/").is_err());
+    assert!(PathPrefix::new("bars//api").is_err());
+    assert!(PathPrefix::new("api?x=1").is_err());
+    assert!(PathPrefix::new("api#frag").is_err());
 }
 
 #[test]

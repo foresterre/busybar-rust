@@ -35,7 +35,7 @@ async fn gets_account_info_with_a_bearer_token() {
     let (server, client) = device().await;
 
     Mock::given(method("GET"))
-        .and(path("/busybar/account/info"))
+        .and(path("/api/account/info"))
         .and(header("authorization", format!("Bearer {TOKEN}").as_str()))
         .respond_with(ResponseTemplate::new(200).set_body_json(json!({
             "linked": true,
@@ -58,19 +58,19 @@ async fn unwraps_single_field_responses() {
     let (server, client) = device().await;
 
     Mock::given(method("GET"))
-        .and(path("/busybar/version"))
+        .and(path("/api/version"))
         .respond_with(ResponseTemplate::new(200).set_body_json(json!({"api_semver": "25.0.0"})))
         .mount(&server)
         .await;
 
     Mock::given(method("GET"))
-        .and(path("/busybar/transport"))
+        .and(path("/api/transport"))
         .respond_with(ResponseTemplate::new(200).set_body_json(json!({"type": "usb"})))
         .mount(&server)
         .await;
 
     Mock::given(method("GET"))
-        .and(path("/busybar/time"))
+        .and(path("/api/time"))
         .respond_with(
             ResponseTemplate::new(200)
                 .set_body_json(json!({"timestamp": "2025-10-02T14:30:45+04:00"})),
@@ -96,7 +96,7 @@ async fn draws_on_the_display() {
     let (server, client) = device().await;
 
     Mock::given(method("POST"))
-        .and(path("/busybar/display/draw"))
+        .and(path("/api/display/draw"))
         .and(header("content-type", "application/json"))
         .and(body_json(json!({
             "application_name": "my_app",
@@ -132,7 +132,7 @@ async fn clears_the_display_for_one_app() {
     let (server, client) = device().await;
 
     Mock::given(method("DELETE"))
-        .and(path("/busybar/display/draw"))
+        .and(path("/api/display/draw"))
         .and(query_param("application_name", "my_app"))
         .respond_with(ok())
         .expect(1)
@@ -147,13 +147,13 @@ async fn reads_and_sets_brightness() {
     let (server, client) = device().await;
 
     Mock::given(method("GET"))
-        .and(path("/busybar/display/brightness"))
+        .and(path("/api/display/brightness"))
         .respond_with(ResponseTemplate::new(200).set_body_json(json!({"value": "auto"})))
         .mount(&server)
         .await;
 
     Mock::given(method("POST"))
-        .and(path("/busybar/display/brightness"))
+        .and(path("/api/display/brightness"))
         .and(query_param("value", "40"))
         .respond_with(ok())
         .expect(1)
@@ -177,7 +177,7 @@ async fn fetches_a_screen_frame_as_bytes() {
     let (server, client) = device().await;
 
     Mock::given(method("GET"))
-        .and(path("/busybar/screen"))
+        .and(path("/api/screen"))
         .and(query_param("display", "1"))
         .respond_with(ResponseTemplate::new(200).set_body_raw(b"BM\x00\x01".to_vec(), "image/bmp"))
         .expect(1)
@@ -194,7 +194,7 @@ async fn uploads_an_asset_as_a_binary_body() {
     let (server, client) = device().await;
 
     Mock::given(method("POST"))
-        .and(path("/busybar/assets/upload"))
+        .and(path("/api/assets/upload"))
         .and(query_param("application_name", "my_app"))
         .and(query_param("file", "data.png"))
         .and(header("content-type", "application/octet-stream"))
@@ -216,7 +216,7 @@ async fn plays_and_stops_audio() {
     let (server, client) = device().await;
 
     Mock::given(method("POST"))
-        .and(path("/busybar/audio/play"))
+        .and(path("/api/audio/play"))
         .and(body_json(
             json!({"application_name": "my_app", "stock_path": "shared/beep.snd"}),
         ))
@@ -226,7 +226,7 @@ async fn plays_and_stops_audio() {
         .await;
 
     Mock::given(method("DELETE"))
-        .and(path("/busybar/audio/play"))
+        .and(path("/api/audio/play"))
         .respond_with(ok())
         .expect(1)
         .mount(&server)
@@ -246,13 +246,13 @@ async fn sets_the_volume_silently() {
     let (server, client) = device().await;
 
     Mock::given(method("GET"))
-        .and(path("/busybar/audio/volume"))
+        .and(path("/api/audio/volume"))
         .respond_with(ResponseTemplate::new(200).set_body_json(json!({"volume": 50})))
         .mount(&server)
         .await;
 
     Mock::given(method("POST"))
-        .and(path("/busybar/audio/volume"))
+        .and(path("/api/audio/volume"))
         .and(query_param("volume", "35"))
         .and(query_param("silent", "1"))
         .respond_with(ok())
@@ -277,7 +277,7 @@ async fn sends_an_input_event() {
     let (server, client) = device().await;
 
     Mock::given(method("POST"))
-        .and(path("/busybar/input"))
+        .and(path("/api/input"))
         .and(query_param("key", "ok"))
         .respond_with(ok())
         .expect(1)
@@ -292,7 +292,7 @@ async fn walks_the_storage_endpoints() {
     let (server, client) = device().await;
 
     Mock::given(method("POST"))
-        .and(path("/busybar/storage/write"))
+        .and(path("/api/storage/write"))
         .and(query_param("path", "/ext/test.png"))
         .and(body_bytes(b"data".to_vec()))
         .respond_with(ok())
@@ -301,7 +301,7 @@ async fn walks_the_storage_endpoints() {
         .await;
 
     Mock::given(method("GET"))
-        .and(path("/busybar/storage/read"))
+        .and(path("/api/storage/read"))
         .and(query_param("path", "/ext/test.png"))
         .respond_with(
             ResponseTemplate::new(200).set_body_raw(b"data".to_vec(), "application/octet-stream"),
@@ -311,7 +311,7 @@ async fn walks_the_storage_endpoints() {
         .await;
 
     Mock::given(method("GET"))
-        .and(path("/busybar/storage/list"))
+        .and(path("/api/storage/list"))
         .and(query_param("path", "/ext"))
         .respond_with(ResponseTemplate::new(200).set_body_json(json!({
             "list": [{"type": "file", "name": "test.png", "size": 4}, {"type": "dir", "name": "sub"}]
@@ -321,7 +321,7 @@ async fn walks_the_storage_endpoints() {
         .await;
 
     Mock::given(method("POST"))
-        .and(path("/busybar/storage/rename"))
+        .and(path("/api/storage/rename"))
         .and(query_param("path", "/ext/test.png"))
         .and(query_param("new_path", "/ext/sub/test.png"))
         .respond_with(ok())
@@ -330,7 +330,7 @@ async fn walks_the_storage_endpoints() {
         .await;
 
     Mock::given(method("DELETE"))
-        .and(path("/busybar/storage/remove"))
+        .and(path("/api/storage/remove"))
         .and(query_param("path", "/ext/sub/test.png"))
         .respond_with(ok())
         .expect(1)
@@ -338,7 +338,7 @@ async fn walks_the_storage_endpoints() {
         .await;
 
     Mock::given(method("GET"))
-        .and(path("/busybar/storage/status"))
+        .and(path("/api/storage/status"))
         .respond_with(ResponseTemplate::new(200).set_body_json(
             json!({"used_bytes": 123456, "free_bytes": 654321, "total_bytes": 777777}),
         ))
@@ -378,7 +378,7 @@ async fn reads_a_busy_profile_from_its_slot() {
     let (server, client) = device().await;
 
     Mock::given(method("GET"))
-        .and(path("/busybar/busy/profiles/custom"))
+        .and(path("/api/busy/profiles/custom"))
         .respond_with(ResponseTemplate::new(200).set_body_json(json!({
             "sort_order": -1,
             "title": "study",
@@ -409,7 +409,7 @@ async fn sets_http_access_with_a_key() {
     let (server, client) = device().await;
 
     Mock::given(method("POST"))
-        .and(path("/busybar/access"))
+        .and(path("/api/access"))
         .and(query_param("mode", "key"))
         .and(query_param("key", "12345678"))
         .respond_with(ok())
@@ -429,7 +429,7 @@ async fn sets_http_access_without_a_key() {
     let (server, client) = device().await;
 
     Mock::given(method("POST"))
-        .and(path("/busybar/access"))
+        .and(path("/api/access"))
         .and(query_param("mode", "disabled"))
         .respond_with(ok())
         .expect(1)
@@ -452,7 +452,7 @@ async fn renames_the_device() {
     let (server, client) = device().await;
 
     Mock::given(method("POST"))
-        .and(path("/busybar/name"))
+        .and(path("/api/name"))
         .and(body_json(json!({"name": "BUSY bar"})))
         .respond_with(ok())
         .expect(1)
@@ -467,7 +467,7 @@ async fn dumps_the_log_to_a_named_file() {
     let (server, client) = device().await;
 
     Mock::given(method("POST"))
-        .and(path("/busybar/log_dump"))
+        .and(path("/api/log_dump"))
         .and(query_param("filename", "dump"))
         .respond_with(
             ResponseTemplate::new(200)
@@ -488,7 +488,7 @@ async fn accepts_an_empty_success_body() {
     let (server, client) = device().await;
 
     Mock::given(method("POST"))
-        .and(path("/busybar/update/abort_download"))
+        .and(path("/api/update/abort_download"))
         .respond_with(ResponseTemplate::new(200))
         .expect(1)
         .mount(&server)
@@ -506,7 +506,7 @@ async fn keeps_a_path_prefix_from_the_base_url() {
         .build_reqwest();
 
     Mock::given(method("GET"))
-        .and(path("/proxy/busybar/version"))
+        .and(path("/proxy/api/version"))
         .respond_with(ResponseTemplate::new(200).set_body_json(json!({"api_semver": "25.0.0"})))
         .expect(1)
         .mount(&server)
@@ -520,7 +520,7 @@ async fn reports_api_errors_with_their_code() {
     let (server, client) = device().await;
 
     Mock::given(method("POST"))
-        .and(path("/busybar/input"))
+        .and(path("/api/input"))
         .respond_with(
             ResponseTemplate::new(400)
                 .set_body_json(json!({"error": "Invalid parameter", "code": 400})),
@@ -543,7 +543,7 @@ async fn reports_api_errors_with_their_code() {
     assert_eq!(api_error.code, Some(400));
     assert_eq!(
         error.to_string(),
-        "POST /busybar/input was rejected with 400 Bad Request: Invalid parameter (code 400)"
+        "POST /api/input was rejected with 400 Bad Request: Invalid parameter (code 400)"
     );
 }
 
@@ -552,7 +552,7 @@ async fn reports_unauthorized_requests() {
     let (server, client) = device().await;
 
     Mock::given(method("GET"))
-        .and(path("/busybar/status"))
+        .and(path("/api/status"))
         .respond_with(ResponseTemplate::new(401).set_body_json(json!({"error": "Unauthorized"})))
         .mount(&server)
         .await;
@@ -571,7 +571,7 @@ async fn reports_non_json_failures_with_a_body_snippet() {
     let (server, client) = device().await;
 
     Mock::given(method("GET"))
-        .and(path("/busybar/wifi/status"))
+        .and(path("/api/wifi/status"))
         .respond_with(ResponseTemplate::new(503).set_body_string("<html>gateway down</html>"))
         .mount(&server)
         .await;
@@ -581,7 +581,7 @@ async fn reports_non_json_failures_with_a_body_snippet() {
     assert!(matches!(error, Error::UnexpectedStatus { .. }));
     assert_eq!(
         error.to_string(),
-        "GET /busybar/wifi/status returned an unexpected 503 Service Unavailable response: <html>gateway down</html>"
+        "GET /api/wifi/status returned an unexpected 503 Service Unavailable response: <html>gateway down</html>"
     );
 }
 
@@ -590,7 +590,7 @@ async fn reports_responses_that_do_not_match_the_api() {
     let (server, client) = device().await;
 
     Mock::given(method("GET"))
-        .and(path("/busybar/account/backend"))
+        .and(path("/api/account/backend"))
         .respond_with(ResponseTemplate::new(200).set_body_json(json!({"server_url": "default"})))
         .mount(&server)
         .await;
@@ -600,7 +600,7 @@ async fn reports_responses_that_do_not_match_the_api() {
     assert!(matches!(error, Error::Decode { .. }));
     assert!(
         error.to_string().starts_with(
-            "GET /busybar/account/backend returned a response that does not match the API:"
+            "GET /api/account/backend returned a response that does not match the API:"
         ),
         "unexpected message: {error}"
     );
@@ -622,7 +622,7 @@ async fn gives_up_on_a_slow_device_when_a_timeout_is_set() {
         .build_reqwest();
 
     Mock::given(method("GET"))
-        .and(path("/busybar/version"))
+        .and(path("/api/version"))
         .respond_with(
             ResponseTemplate::new(200)
                 .set_delay(std::time::Duration::from_secs(5))
@@ -634,10 +634,7 @@ async fn gives_up_on_a_slow_device_when_a_timeout_is_set() {
     let error = client.system().version().await.unwrap_err();
 
     assert!(matches!(error, Error::Transport { .. }), "{error:?}");
-    assert_eq!(
-        error.to_string(),
-        "GET /busybar/version unable to reach device"
-    );
+    assert_eq!(error.to_string(), "GET /api/version unable to reach device");
 }
 
 #[tokio::test]
@@ -647,10 +644,7 @@ async fn reports_transport_failures() {
     let error = client.system().version().await.unwrap_err();
 
     assert!(matches!(error, Error::Transport { .. }));
-    assert_eq!(
-        error.to_string(),
-        "GET /busybar/version unable to reach device"
-    );
+    assert_eq!(error.to_string(), "GET /api/version unable to reach device");
     assert!(std::error::Error::source(&error).is_some());
 }
 
