@@ -1,9 +1,15 @@
 use serde::{Deserialize, Serialize};
 
-use crate::types::{
-    AppName, AssetPath, Color, ElementId, InvalidValue, Opacity, Priority, StockPath, Text,
-    TryIntoValue,
-};
+use crate::types::app_name::AppName;
+use crate::types::asset_path::AssetPath;
+use crate::types::color::Color;
+use crate::types::element_id::ElementId;
+use crate::types::invalid_value::InvalidValue;
+use crate::types::opacity::Opacity;
+use crate::types::priority::Priority;
+use crate::types::stock_path::StockPath;
+use crate::types::text::Text;
+use crate::types::try_into_value::TryIntoValue;
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct DisplayElements {
@@ -548,5 +554,5 @@ pub enum ShowHours {
 #[derive(Debug, Clone, PartialEq, Eq, Deserialize)]
 pub(crate) struct DisplayBrightnessInfo {
     /// Displays brightness (0-100/auto)
-    pub value: crate::types::Brightness,
+    pub value: crate::types::brightness::Brightness,
 }

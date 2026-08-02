@@ -1,4 +1,5 @@
-use busylib::{Timestamp, TimezoneName};
+use busylib::types::timestamp::Timestamp;
+use busylib::types::timezone_name::TimezoneName;
 use clap::Subcommand;
 
 use crate::cli::Context;

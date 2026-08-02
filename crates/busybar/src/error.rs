@@ -14,8 +14,8 @@ pub enum CliError {
     Reporter(#[from] reporter::ReporterError),
 }
 
-impl From<busylib::InvalidValue> for CliError {
-    fn from(error: busylib::InvalidValue) -> Self {
+impl From<busylib::types::invalid_value::InvalidValue> for CliError {
+    fn from(error: busylib::types::invalid_value::InvalidValue) -> Self {
         Self::Api(busylib::Error::Value(error))
     }
 }

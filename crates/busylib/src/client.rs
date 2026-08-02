@@ -11,7 +11,9 @@ use url::Url;
 
 use crate::error::{BaseUrlError, Body, BuildRequestError, Error, Result};
 use crate::transport::{HttpTransport, Timeout};
-use crate::types::{InvalidValue, Token, TryIntoValue};
+use crate::types::invalid_value::InvalidValue;
+use crate::types::token::Token;
+use crate::types::try_into_value::TryIntoValue;
 use crate::{ApiError, api};
 
 #[derive(Debug, Clone)]

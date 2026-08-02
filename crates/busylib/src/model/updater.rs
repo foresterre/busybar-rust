@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::types::TimeOfDay;
+use crate::types::time_of_day::TimeOfDay;
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct UpdateStatus {

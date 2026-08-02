@@ -1,6 +1,7 @@
 use std::path::PathBuf;
 
-use busylib::{AppName, AssetName};
+use busylib::types::app_name::AppName;
+use busylib::types::asset_name::AssetName;
 use clap::Subcommand;
 
 use crate::cli::Context;

@@ -5,7 +5,8 @@ use crate::model::system::{
     StatusSystem, TransportType, VersionInfo,
 };
 use crate::transport::HttpTransport;
-use crate::types::{LogName, TryIntoValue};
+use crate::types::log_name::LogName;
+use crate::types::try_into_value::TryIntoValue;
 
 crate::api::endpoint!(
     /// System information and control

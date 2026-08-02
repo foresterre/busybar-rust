@@ -1,6 +1,10 @@
 use std::path::PathBuf;
 
-use busylib::{AppName, Brightness, Color, Priority, Text};
+use busylib::types::app_name::AppName;
+use busylib::types::brightness::Brightness;
+use busylib::types::color::Color;
+use busylib::types::priority::Priority;
+use busylib::types::text::Text;
 use clap::Subcommand;
 
 use crate::cli::Context;

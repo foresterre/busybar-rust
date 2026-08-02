@@ -2,7 +2,9 @@ use crate::client::Call;
 use crate::error::Result;
 use crate::model::time::{TimestampInfo, TimezoneInfo, TimezoneListResponse};
 use crate::transport::HttpTransport;
-use crate::types::{Timestamp, TimezoneName, TryIntoValue};
+use crate::types::timestamp::Timestamp;
+use crate::types::timezone_name::TimezoneName;
+use crate::types::try_into_value::TryIntoValue;
 
 crate::api::endpoint!(
     /// Time-related methods

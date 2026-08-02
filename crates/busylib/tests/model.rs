@@ -13,7 +13,10 @@ use busylib::model::smart_home::{SmartHomePairingPayload, SmartHomeSwitchState, 
 use busylib::model::storage::StorageListElement;
 use busylib::model::updater::{AutoupdateSettings, UpdateStatus};
 use busylib::model::wifi::{StatusResponse, WifiSecurityMethod, WifiState};
-use busylib::{Color, Opacity, Priority, TimeOfDay};
+use busylib::types::color::Color;
+use busylib::types::opacity::Opacity;
+use busylib::types::priority::Priority;
+use busylib::types::time_of_day::TimeOfDay;
 use serde_json::json;
 
 #[test]

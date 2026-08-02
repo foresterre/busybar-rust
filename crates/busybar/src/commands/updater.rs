@@ -1,6 +1,6 @@
 use std::path::PathBuf;
 
-use busylib::TimeOfDay;
+use busylib::types::time_of_day::TimeOfDay;
 use clap::Subcommand;
 
 use crate::cli::Context;

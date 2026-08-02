@@ -4,7 +4,9 @@ use crate::client::Call;
 use crate::error::Result;
 use crate::model::display::{DisplayBrightnessInfo, DisplayElements, Screen};
 use crate::transport::HttpTransport;
-use crate::types::{AppName, Brightness, TryIntoValue};
+use crate::types::app_name::AppName;
+use crate::types::brightness::Brightness;
+use crate::types::try_into_value::TryIntoValue;
 
 crate::api::endpoint!(
     /// Display control

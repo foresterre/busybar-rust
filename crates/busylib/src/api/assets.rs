@@ -3,7 +3,9 @@ use bytes::Bytes;
 use crate::client::Call;
 use crate::error::Result;
 use crate::transport::HttpTransport;
-use crate::types::{AppName, AssetName, TryIntoValue};
+use crate::types::app_name::AppName;
+use crate::types::asset_name::AssetName;
+use crate::types::try_into_value::TryIntoValue;
 
 crate::api::endpoint!(
     /// Asset file management

@@ -1,4 +1,4 @@
-use busylib::LogName;
+use busylib::types::log_name::LogName;
 use clap::Subcommand;
 
 use crate::cli::Context;

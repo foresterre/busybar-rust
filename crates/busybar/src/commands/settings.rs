@@ -1,4 +1,5 @@
-use busylib::{AccessKey, DeviceName};
+use busylib::types::access_key::AccessKey;
+use busylib::types::device_name::DeviceName;
 use clap::Subcommand;
 
 use crate::cli::Context;

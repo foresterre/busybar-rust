@@ -4,7 +4,10 @@ use busylib::model::display::{DisplayElement, DisplayElements, Font, Screen, Tex
 use busylib::model::input::Key;
 use busylib::model::settings::HttpAccess;
 use busylib::model::system::TransportType;
-use busylib::{Brightness, Client, ClientBuilder, Color, Error, ReqwestHttpTransport, Volume};
+use busylib::types::brightness::Brightness;
+use busylib::types::color::Color;
+use busylib::types::volume::Volume;
+use busylib::{Client, ClientBuilder, Error, ReqwestHttpTransport};
 use serde_json::json;
 use wiremock::matchers::{body_bytes, body_json, header, method, path, query_param};
 use wiremock::{Mock, MockServer, ResponseTemplate};

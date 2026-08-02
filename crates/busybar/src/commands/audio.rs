@@ -1,4 +1,7 @@
-use busylib::{AppName, AssetPath, StockPath, Volume};
+use busylib::types::app_name::AppName;
+use busylib::types::asset_path::AssetPath;
+use busylib::types::stock_path::StockPath;
+use busylib::types::volume::Volume;
 use clap::{ArgGroup, Subcommand};
 
 use crate::cli::Context;

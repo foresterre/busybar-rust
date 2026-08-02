@@ -1,6 +1,7 @@
 use serde::{Deserialize, Serialize};
 
-use crate::types::{AccessKey, DeviceName};
+use crate::types::access_key::AccessKey;
+use crate::types::device_name::DeviceName;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum HttpAccess {

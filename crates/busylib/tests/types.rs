@@ -1,8 +1,22 @@
-use busylib::{
-    AccessKey, AppName, AssetPath, Brightness, ClientBuilder, Color, DeviceName, ElementId, Error,
-    LogName, Opacity, Priority, StockPath, StoragePath, Text, TimeOfDay, Timestamp, TimezoneName,
-    Token, Volume,
-};
+use busylib::types::access_key::AccessKey;
+use busylib::types::app_name::AppName;
+use busylib::types::asset_path::AssetPath;
+use busylib::types::brightness::Brightness;
+use busylib::types::color::Color;
+use busylib::types::device_name::DeviceName;
+use busylib::types::element_id::ElementId;
+use busylib::types::log_name::LogName;
+use busylib::types::opacity::Opacity;
+use busylib::types::priority::Priority;
+use busylib::types::stock_path::StockPath;
+use busylib::types::storage_path::StoragePath;
+use busylib::types::text::Text;
+use busylib::types::time_of_day::TimeOfDay;
+use busylib::types::timestamp::Timestamp;
+use busylib::types::timezone_name::TimezoneName;
+use busylib::types::token::Token;
+use busylib::types::volume::Volume;
+use busylib::{ClientBuilder, Error};
 
 #[test]
 fn accepts_valid_names_and_paths() {

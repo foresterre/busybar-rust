@@ -2,7 +2,8 @@ use crate::client::Call;
 use crate::error::Result;
 use crate::model::settings::{HttpAccess, HttpAccessInfo, NameInfo};
 use crate::transport::HttpTransport;
-use crate::types::{DeviceName, TryIntoValue};
+use crate::types::device_name::DeviceName;
+use crate::types::try_into_value::TryIntoValue;
 
 crate::api::endpoint!(
     /// Device settings

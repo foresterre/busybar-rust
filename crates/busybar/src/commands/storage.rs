@@ -1,6 +1,6 @@
 use std::path::PathBuf;
 
-use busylib::StoragePath;
+use busylib::types::storage_path::StoragePath;
 use clap::Subcommand;
 
 use crate::cli::Context;

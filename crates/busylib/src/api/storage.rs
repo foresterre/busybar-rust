@@ -4,7 +4,8 @@ use crate::client::Call;
 use crate::error::Result;
 use crate::model::storage::{StorageList, StorageListElement, StorageStatus};
 use crate::transport::HttpTransport;
-use crate::types::{StoragePath, TryIntoValue};
+use crate::types::storage_path::StoragePath;
+use crate::types::try_into_value::TryIntoValue;
 
 crate::api::endpoint!(
     /// File storage operations

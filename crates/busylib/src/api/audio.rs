@@ -2,7 +2,7 @@ use crate::client::Call;
 use crate::error::Result;
 use crate::model::audio::{AudioVolumeInfo, PlayAudio};
 use crate::transport::HttpTransport;
-use crate::types::Volume;
+use crate::types::volume::Volume;
 
 crate::api::endpoint!(
     /// Audio controls

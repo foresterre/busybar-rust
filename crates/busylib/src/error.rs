@@ -4,7 +4,7 @@ use http::{Method, StatusCode};
 use serde::Deserialize;
 
 use crate::transport::HttpTransportError;
-use crate::types::InvalidValue;
+use crate::types::invalid_value::InvalidValue;
 
 pub type Result<T, E = Error> = std::result::Result<T, E>;
 
