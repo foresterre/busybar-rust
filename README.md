@@ -7,7 +7,7 @@ For the Rust docs, see [docs.rs](https://docs.rs/busylib). Add to your crate by 
 
 ```toml
 [dependencies]
-busylib = "0.0.5" # check latest version https://crates.io/crates/busylib
+busylib = "0.0.6" # check latest version https://crates.io/crates/busylib
 ```
 
 To install the CLI, run `cargo install busybar --locked` (and run `busybar help` to see the available commands).
