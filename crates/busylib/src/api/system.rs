@@ -48,7 +48,7 @@ impl<T: HttpTransport> System<'_, T> {
     }
 
     /// Get system status
-    pub async fn system_info(&self) -> Result<StatusSystem> {
+    pub async fn status_system(&self) -> Result<StatusSystem> {
         self.client.json(Call::get("status/system")).await
     }
 

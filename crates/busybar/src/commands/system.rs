@@ -3,6 +3,10 @@ use clap::Subcommand;
 
 use crate::cli::Context;
 use crate::error::Result;
+use crate::reporter::{
+    SystemStatusDeviceEvent, SystemStatusEvent, SystemStatusFirmwareEvent, SystemStatusPowerEvent,
+    SystemStatusSystemEvent, SystemTransportEvent, SystemVersionEvent,
+};
 
 #[derive(Debug, Subcommand)]
 pub enum SystemCommand {
@@ -16,16 +20,16 @@ pub enum SystemCommand {
     Status,
 
     /// Show device information
-    Device,
+    StatusDevice,
 
     /// Show firmware information
-    Firmware,
+    StatusFirmware,
 
     /// Show system information
-    Info,
+    StatusSystem,
 
     /// Show power and battery information
-    Power,
+    StatusPower,
 
     /// Write the in-memory log to a file
     DumpLog {
@@ -36,7 +40,82 @@ pub enum SystemCommand {
 }
 
 impl SystemCommand {
-    pub async fn run(self, _context: &Context) -> Result<()> {
-        todo!()
+    pub async fn run(self, context: &Context) -> Result<()> {
+        match self {
+            SystemCommand::Version => version(context).await,
+            SystemCommand::Transport => transport(context).await,
+            SystemCommand::Status => status(context).await,
+            SystemCommand::StatusDevice => status_device(context).await,
+            SystemCommand::StatusFirmware => status_firmware(context).await,
+            SystemCommand::StatusSystem => status_system(context).await,
+            SystemCommand::StatusPower => status_power(context).await,
+            SystemCommand::DumpLog { .. } => todo!(),
+        }
     }
+}
+
+async fn version(context: &Context) -> Result<()> {
+    let version = context.client.system().version().await?;
+
+    context.reporter.report(SystemVersionEvent::new(version))?;
+
+    Ok(())
+}
+
+async fn transport(context: &Context) -> Result<()> {
+    let transport = context.client.system().transport().await?;
+
+    context
+        .reporter
+        .report(SystemTransportEvent::new(transport))?;
+
+    Ok(())
+}
+
+async fn status(context: &Context) -> Result<()> {
+    let status = context.client.system().status().await?;
+
+    context.reporter.report(SystemStatusEvent::new(status))?;
+
+    Ok(())
+}
+
+async fn status_device(context: &Context) -> Result<()> {
+    let device = context.client.system().device().await?;
+
+    context
+        .reporter
+        .report(SystemStatusDeviceEvent::new(device))?;
+
+    Ok(())
+}
+
+async fn status_firmware(context: &Context) -> Result<()> {
+    let firmware = context.client.system().firmware().await?;
+
+    context
+        .reporter
+        .report(SystemStatusFirmwareEvent::new(firmware))?;
+
+    Ok(())
+}
+
+async fn status_system(context: &Context) -> Result<()> {
+    let system = context.client.system().status_system().await?;
+
+    context
+        .reporter
+        .report(SystemStatusSystemEvent::new(system))?;
+
+    Ok(())
+}
+
+async fn status_power(context: &Context) -> Result<()> {
+    let power = context.client.system().power().await?;
+
+    context
+        .reporter
+        .report(SystemStatusPowerEvent::new(power))?;
+
+    Ok(())
 }

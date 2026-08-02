@@ -14,7 +14,11 @@ use crate::reporter::human::HumanHandler;
 use crate::reporter::json::JsonHandler;
 use crate::values::OutputFormat;
 
-pub use crate::reporter::events::{CliEvent, WifiStatusEvent};
+pub use crate::reporter::events::{
+    CliEvent, SystemStatusDeviceEvent, SystemStatusEvent, SystemStatusFirmwareEvent,
+    SystemStatusPowerEvent, SystemStatusSystemEvent, SystemTransportEvent, SystemVersionEvent,
+    WifiStatusEvent,
+};
 pub use crate::reporter::output::{Output, OutputError};
 
 #[derive(Debug, thiserror::Error)]
