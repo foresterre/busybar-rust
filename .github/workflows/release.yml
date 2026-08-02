@@ -1,0 +1,102 @@
+name: publish-release
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-release
+  cancel-in-progress: false
+
+jobs:
+  version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      publish: ${{ steps.published.outputs.publish }}
+    steps:
+      - uses: actions/checkout@v7
+      - id: version
+        run: |
+          version="$(cargo metadata --format-version 1 --no-deps | jq -r '.packages[] | select(.name == "busybar") | .version')"
+          test -n "$version"
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+      - id: published
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if gh release view "v${{ steps.version.outputs.version }}" > /dev/null 2>&1; then
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+          fi
+
+  build:
+    needs: version
+    if: needs.version.outputs.publish == 'true'
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            archive: tar.gz
+          - os: macos-latest
+            target: aarch64-apple-darwin
+            archive: tar.gz
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+            archive: zip
+    steps:
+      - uses: actions/checkout@v7
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+      - run: cargo build --release --locked --package busybar --target ${{ matrix.target }}
+      - shell: bash
+        run: |
+          name="busybar-${{ needs.version.outputs.version }}-${{ matrix.target }}"
+          mkdir -p "dist/${name}"
+          if [ "${{ matrix.archive }}" = "zip" ]; then
+            cp "target/${{ matrix.target }}/release/busybar.exe" "dist/${name}/"
+          else
+            cp "target/${{ matrix.target }}/release/busybar" "dist/${name}/"
+          fi
+          cp LICENSE-APACHE LICENSE-MIT README.md "dist/${name}/"
+          cd dist
+          if [ "${{ matrix.archive }}" = "zip" ]; then
+            7z a "${name}.zip" "${name}"
+          else
+            tar czf "${name}.tar.gz" "${name}"
+          fi
+      - uses: actions/upload-artifact@v7
+        with:
+          name: ${{ matrix.target }}
+          path: dist/*.${{ matrix.archive }}
+          if-no-files-found: error
+
+  release:
+    needs:
+      - version
+      - build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v8
+        with:
+          path: dist
+          merge-multiple: true
+      - env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "v${{ needs.version.outputs.version }}" \
+            --target "${{ github.sha }}" \
+            --title "v${{ needs.version.outputs.version }}" \
+            --generate-notes \
+            dist/*
