@@ -6,7 +6,10 @@ use crate::model::display::{DisplayBrightnessInfo, DisplayElements, Screen};
 use crate::transport::HttpTransport;
 use crate::types::{AppName, Brightness, TryIntoValue};
 
-crate::api::endpoint!(Display);
+crate::api::endpoint!(
+    /// Display control
+    Display
+);
 
 impl<T: HttpTransport> Display<'_, T> {
     /// Draw on display

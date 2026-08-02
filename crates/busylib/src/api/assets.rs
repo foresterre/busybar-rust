@@ -5,7 +5,10 @@ use crate::error::Result;
 use crate::transport::HttpTransport;
 use crate::types::{AppName, AssetName, TryIntoValue};
 
-crate::api::endpoint!(Assets);
+crate::api::endpoint!(
+    /// Asset file management
+    Assets
+);
 
 impl<T: HttpTransport> Assets<'_, T> {
     /// Upload asset file with app ID

@@ -3,7 +3,10 @@ use crate::error::Result;
 use crate::model::busy::{BusyProfile, BusyProfileSlot, BusySnapshot};
 use crate::transport::HttpTransport;
 
-crate::api::endpoint!(Busy);
+crate::api::endpoint!(
+    /// BUSY timer control
+    Busy
+);
 
 impl<T: HttpTransport> Busy<'_, T> {
     /// Get BUSY timer snapshot

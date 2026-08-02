@@ -5,7 +5,10 @@ use crate::model::smart_home::{
 };
 use crate::transport::HttpTransport;
 
-crate::api::endpoint!(SmartHome);
+crate::api::endpoint!(
+    /// Smart Home event handling
+    SmartHome
+);
 
 impl<T: HttpTransport> SmartHome<'_, T> {
     /// Smart home commissioning status

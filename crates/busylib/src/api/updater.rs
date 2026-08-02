@@ -5,7 +5,10 @@ use crate::error::Result;
 use crate::model::updater::{AutoupdateSettings, ChangelogResponse, UpdateStatus};
 use crate::transport::HttpTransport;
 
-crate::api::endpoint!(Updater);
+crate::api::endpoint!(
+    /// Firmware update control
+    Updater
+);
 
 impl<T: HttpTransport> Updater<'_, T> {
     /// Update firmware

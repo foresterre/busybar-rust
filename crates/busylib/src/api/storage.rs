@@ -6,7 +6,10 @@ use crate::model::storage::{StorageList, StorageListElement, StorageStatus};
 use crate::transport::HttpTransport;
 use crate::types::{StoragePath, TryIntoValue};
 
-crate::api::endpoint!(Storage);
+crate::api::endpoint!(
+    /// File storage operations
+    Storage
+);
 
 impl<T: HttpTransport> Storage<'_, T> {
     /// Upload file to internal storage

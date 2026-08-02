@@ -29,7 +29,8 @@ pub use updater::Updater;
 pub use wifi::Wifi;
 
 macro_rules! endpoint {
-    ($name:ident) => {
+    ($(#[$meta:meta])* $name:ident) => {
+        $(#[$meta])*
         pub struct $name<'a, T> {
             client: &'a crate::client::Client<T>,
         }

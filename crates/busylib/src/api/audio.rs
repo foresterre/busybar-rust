@@ -4,7 +4,10 @@ use crate::model::audio::{AudioVolumeInfo, PlayAudio};
 use crate::transport::HttpTransport;
 use crate::types::Volume;
 
-crate::api::endpoint!(Audio);
+crate::api::endpoint!(
+    /// Audio controls
+    Audio
+);
 
 impl<T: HttpTransport> Audio<'_, T> {
     /// Play audio file

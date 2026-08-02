@@ -4,7 +4,10 @@ use crate::model::time::{TimestampInfo, TimezoneInfo, TimezoneListResponse};
 use crate::transport::HttpTransport;
 use crate::types::{Timestamp, TimezoneName, TryIntoValue};
 
-crate::api::endpoint!(Time);
+crate::api::endpoint!(
+    /// Time-related methods
+    Time
+);
 
 impl<T: HttpTransport> Time<'_, T> {
     /// Get current timestamp with timezone

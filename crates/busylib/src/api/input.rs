@@ -3,7 +3,10 @@ use crate::error::Result;
 use crate::model::input::Key;
 use crate::transport::HttpTransport;
 
-crate::api::endpoint!(Input);
+crate::api::endpoint!(
+    /// Input events
+    Input
+);
 
 impl<T: HttpTransport> Input<'_, T> {
     /// Send input event

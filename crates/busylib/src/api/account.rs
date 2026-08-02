@@ -3,7 +3,10 @@ use crate::error::Result;
 use crate::model::account::{AccountBackend, AccountInfo, AccountStatus, MqttStatus};
 use crate::transport::HttpTransport;
 
-crate::api::endpoint!(Account);
+crate::api::endpoint!(
+    /// Account linking and MQTT status
+    Account
+);
 
 impl<T: HttpTransport> Account<'_, T> {
     /// Get linked account info

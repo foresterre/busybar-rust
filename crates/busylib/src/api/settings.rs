@@ -4,7 +4,10 @@ use crate::model::settings::{HttpAccess, HttpAccessInfo, NameInfo};
 use crate::transport::HttpTransport;
 use crate::types::{DeviceName, TryIntoValue};
 
-crate::api::endpoint!(Settings);
+crate::api::endpoint!(
+    /// Device settings
+    Settings
+);
 
 impl<T: HttpTransport> Settings<'_, T> {
     /// Get HTTP API access over Wi-Fi configuration

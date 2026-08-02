@@ -3,7 +3,10 @@ use crate::error::Result;
 use crate::model::wifi::StatusResponse;
 use crate::transport::HttpTransport;
 
-crate::api::endpoint!(Wifi);
+crate::api::endpoint!(
+    /// Allows to operate with Wi-Fi
+    Wifi
+);
 
 impl<T: HttpTransport> Wifi<'_, T> {
     /// Returns current Wi-Fi status

@@ -3,7 +3,10 @@ use crate::error::Result;
 use crate::model::ble::BleStatusResponse;
 use crate::transport::HttpTransport;
 
-crate::api::endpoint!(Ble);
+crate::api::endpoint!(
+    /// Allows to operate with BLE
+    Ble
+);
 
 impl<T: HttpTransport> Ble<'_, T> {
     /// Enable BLE

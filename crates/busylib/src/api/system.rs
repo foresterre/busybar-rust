@@ -7,7 +7,10 @@ use crate::model::system::{
 use crate::transport::HttpTransport;
 use crate::types::{LogName, TryIntoValue};
 
-crate::api::endpoint!(System);
+crate::api::endpoint!(
+    /// System information and control
+    System
+);
 
 impl<T: HttpTransport> System<'_, T> {
     /// Get API version information
