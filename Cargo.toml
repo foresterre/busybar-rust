@@ -3,7 +3,7 @@ members = ["crates/busybar", "crates/busylib"]
 resolver = "3"
 
 [workspace.package]
-version = "0.0.1"
+version = "0.0.2"
 authors = ["Martijn Gribnau <garm@ilumeo.com>"]
 license = "Apache-2.0 OR MIT"
 edition = "2024"
@@ -11,7 +11,7 @@ repository = "https://github.com/foresterre/busybar-rust"
 
 [workspace.dependencies]
 # this workspace
-busylib = { path = "crates/busylib", version = "0.0.1" }
+busylib = { path = "crates/busylib", version = "0.0.2" }
 
 # external
 bytes = "1"

@@ -16,7 +16,7 @@ mod timeout;
 pub use reqwest_transport::ReqwestHttpTransport;
 pub use timeout::Timeout;
 
-pub type BoxFuture<'a, T> = Pin<Box<dyn Future<Output=T> + Send + 'a>>;
+pub type BoxFuture<'a, T> = Pin<Box<dyn Future<Output = T> + Send + 'a>>;
 
 pub type HttpTransportResult = Result<Response<Bytes>, HttpTransportError>;
 
