@@ -1,8 +1,10 @@
-use busylib::{
-    Brightness, BusyProfileSlot, Client, ClientBuilder, Color, DisplayElements, Element, Error,
-    Font, HttpAccess, Key, PlayAudio, ReqwestHttpTransport, Screen, TextElement, TransportType,
-    Volume,
-};
+use busylib::model::audio::PlayAudio;
+use busylib::model::busy::BusyProfileSlot;
+use busylib::model::display::{DisplayElement, DisplayElements, Font, Screen, TextElement};
+use busylib::model::input::Key;
+use busylib::model::settings::HttpAccess;
+use busylib::model::system::TransportType;
+use busylib::{Brightness, Client, ClientBuilder, Color, Error, ReqwestHttpTransport, Volume};
 use serde_json::json;
 use wiremock::matchers::{body_bytes, body_json, header, method, path, query_param};
 use wiremock::{Mock, MockServer, ResponseTemplate};
@@ -113,7 +115,7 @@ async fn draws_on_the_display() {
         .unwrap()
         .led_notification_color(Color::RED)
         .element(
-            Element::builder("0")
+            DisplayElement::builder("0")
                 .unwrap()
                 .timeout_secs(5)
                 .text(TextElement::new("busy", Font::Large).unwrap()),

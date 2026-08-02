@@ -1,6 +1,6 @@
 use crate::client::Call;
 use crate::error::Result;
-use crate::model::Key;
+use crate::model::input::Key;
 use crate::transport::HttpTransport;
 
 crate::api::endpoint!(Input);

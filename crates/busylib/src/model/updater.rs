@@ -10,18 +10,26 @@ pub struct UpdateStatus {
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct InstallStatus {
+    /// Whether update installation is allowed (battery check)
     pub is_allowed: Option<bool>,
+    /// Current update event
     pub event: Option<UpdateEvent>,
+    /// Current update action
     pub action: Option<UpdateAction>,
+    /// Current or last operation status
     pub status: Option<InstallResult>,
+    /// Optional status detail string
     pub detail: Option<String>,
     pub download: Option<DownloadProgress>,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct DownloadProgress {
+    /// Current download speed in bytes per second
     pub speed_bytes_per_sec: Option<u64>,
+    /// Bytes received so far
     pub received_bytes: Option<u64>,
+    /// Total download size in bytes
     pub total_bytes: Option<u64>,
 }
 
@@ -86,8 +94,11 @@ pub enum InstallResult {
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct CheckStatus {
+    /// Version of available update (empty if none)
     pub available_version: Option<String>,
+    /// Current check event
     pub event: Option<CheckEvent>,
+    /// Check result status
     pub status: Option<CheckResult>,
 }
 
@@ -120,12 +131,16 @@ pub enum CheckResult {
     Unknown(String),
 }
 
+/// Autoupdate configuration settings. All fields are optional for POST requests.
 #[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
 pub struct AutoupdateSettings {
+    /// Whether automatic updates are enabled
     #[serde(skip_serializing_if = "Option::is_none")]
     pub is_enabled: Option<bool>,
+    /// Start of autoupdate window in HH:MM format (e.g., "08:00")
     #[serde(skip_serializing_if = "Option::is_none")]
     pub interval_start: Option<TimeOfDay>,
+    /// End of autoupdate window in HH:MM format (e.g., "23:59")
     #[serde(skip_serializing_if = "Option::is_none")]
     pub interval_end: Option<TimeOfDay>,
 }

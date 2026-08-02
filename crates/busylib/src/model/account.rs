@@ -26,8 +26,11 @@ pub enum MqttStatus {
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct AccountBackend {
+    /// MQTT server url to connect to
     pub server_url: String,
+    /// Client certificate type to use
     pub client_cert_type: ClientCertType,
+    /// Whether to ignore the server certificate
     pub ignore_server_cert: bool,
 }
 
@@ -42,6 +45,6 @@ pub enum ClientCertType {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Deserialize)]
-pub(crate) struct AccountStatusResponse {
+pub(crate) struct AccountStatus {
     pub status: MqttStatus,
 }

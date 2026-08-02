@@ -1,6 +1,6 @@
 use crate::client::Call;
 use crate::error::Result;
-use crate::model::{AudioVolumeResponse, PlayAudio};
+use crate::model::audio::{AudioVolumeInfo, PlayAudio};
 use crate::transport::HttpTransport;
 use crate::types::Volume;
 
@@ -17,7 +17,7 @@ impl<T: HttpTransport> Audio<'_, T> {
     }
 
     pub async fn volume(&self) -> Result<Volume> {
-        let response: AudioVolumeResponse =
+        let response: AudioVolumeInfo =
             self.client.json(Call::get("/busybar/audio/volume")).await?;
         Ok(response.volume)
     }

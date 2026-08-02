@@ -1,6 +1,6 @@
 use crate::client::Call;
 use crate::error::Result;
-use crate::model::{HttpAccess, HttpAccessInfo, NameInfo};
+use crate::model::settings::{HttpAccess, HttpAccessInfo, NameInfo};
 use crate::transport::HttpTransport;
 use crate::types::{DeviceName, TryIntoValue};
 

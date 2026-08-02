@@ -1,8 +1,8 @@
 use crate::client::Call;
 use crate::error::Result;
-use crate::model::{
-    DeviceInfo, DeviceStatus, FirmwareInfo, LogDumpResponse, NetworkInterfaceInfo, PowerInfo,
-    SystemInfo, TransportType, VersionInfo,
+use crate::model::system::{
+    LogDumpResponse, NetworkInterfaceInfo, Status, StatusDevice, StatusFirmware, StatusPower,
+    StatusSystem, TransportType, VersionInfo,
 };
 use crate::transport::HttpTransport;
 use crate::types::{LogName, TryIntoValue};
@@ -21,25 +21,25 @@ impl<T: HttpTransport> System<'_, T> {
         Ok(response.r#type)
     }
 
-    pub async fn status(&self) -> Result<DeviceStatus> {
+    pub async fn status(&self) -> Result<Status> {
         self.client.json(Call::get("/busybar/status")).await
     }
 
-    pub async fn device(&self) -> Result<DeviceInfo> {
+    pub async fn device(&self) -> Result<StatusDevice> {
         self.client.json(Call::get("/busybar/status/device")).await
     }
 
-    pub async fn firmware(&self) -> Result<FirmwareInfo> {
+    pub async fn firmware(&self) -> Result<StatusFirmware> {
         self.client
             .json(Call::get("/busybar/status/firmware"))
             .await
     }
 
-    pub async fn system_info(&self) -> Result<SystemInfo> {
+    pub async fn system_info(&self) -> Result<StatusSystem> {
         self.client.json(Call::get("/busybar/status/system")).await
     }
 
-    pub async fn power(&self) -> Result<PowerInfo> {
+    pub async fn power(&self) -> Result<StatusPower> {
         self.client.json(Call::get("/busybar/status/power")).await
     }
 

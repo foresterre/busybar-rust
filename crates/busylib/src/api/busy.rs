@@ -1,6 +1,6 @@
 use crate::client::Call;
 use crate::error::Result;
-use crate::model::{BusyProfile, BusyProfileSlot, BusySnapshot};
+use crate::model::busy::{BusyProfile, BusyProfileSlot, BusySnapshot};
 use crate::transport::HttpTransport;
 
 crate::api::endpoint!(Busy);

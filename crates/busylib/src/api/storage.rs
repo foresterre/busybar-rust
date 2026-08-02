@@ -2,7 +2,7 @@ use bytes::Bytes;
 
 use crate::client::Call;
 use crate::error::Result;
-use crate::model::{StorageEntry, StorageListResponse, StorageStatus};
+use crate::model::storage::{StorageList, StorageListElement, StorageStatus};
 use crate::transport::HttpTransport;
 use crate::types::{StoragePath, TryIntoValue};
 
@@ -25,9 +25,12 @@ impl<T: HttpTransport> Storage<'_, T> {
         self.client.bytes(request).await
     }
 
-    pub async fn list(&self, path: impl TryIntoValue<StoragePath>) -> Result<Vec<StorageEntry>> {
+    pub async fn list(
+        &self,
+        path: impl TryIntoValue<StoragePath>,
+    ) -> Result<Vec<StorageListElement>> {
         let request = Call::get("/busybar/storage/list").query("path", path.try_into_value()?);
-        let response: StorageListResponse = self.client.json(request).await?;
+        let response: StorageList = self.client.json(request).await?;
         Ok(response.list)
     }
 

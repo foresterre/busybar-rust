@@ -1,6 +1,6 @@
 use crate::client::Call;
 use crate::error::Result;
-use crate::model::BleStatus;
+use crate::model::ble::BleStatusResponse;
 use crate::transport::HttpTransport;
 
 crate::api::endpoint!(Ble);
@@ -18,7 +18,7 @@ impl<T: HttpTransport> Ble<'_, T> {
         self.client.ok(Call::delete("/busybar/ble/pairing")).await
     }
 
-    pub async fn status(&self) -> Result<BleStatus> {
+    pub async fn status(&self) -> Result<BleStatusResponse> {
         self.client.json(Call::get("/busybar/ble/status")).await
     }
 }

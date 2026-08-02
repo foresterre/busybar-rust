@@ -1,6 +1,6 @@
 use crate::client::Call;
 use crate::error::Result;
-use crate::model::{TimestampInfo, TimezoneInfo, TimezoneListResponse};
+use crate::model::time::{TimestampInfo, TimezoneInfo, TimezoneListResponse};
 use crate::transport::HttpTransport;
 use crate::types::{Timestamp, TimezoneName, TryIntoValue};
 

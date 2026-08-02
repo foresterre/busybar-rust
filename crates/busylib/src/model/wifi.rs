@@ -1,17 +1,27 @@
 use serde::{Deserialize, Serialize};
 
+/// Wi-Fi status. Only `state` is always present.
+///
+/// Fields `ssid`, `bssid`, `channel`, `rssi`, `security`, and `ip_config` are only included
+/// when state is "connected".
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
-pub struct WifiStatus {
+pub struct StatusResponse {
     pub state: WifiState,
+    /// Only present when connected
     pub ssid: Option<String>,
+    /// Only present when connected
     pub bssid: Option<String>,
+    /// Only present when connected
     pub channel: Option<u16>,
+    /// Only present when connected
     pub rssi: Option<i32>,
-    pub security: Option<WifiSecurity>,
+    /// Only present when connected
+    pub security: Option<WifiSecurityMethod>,
+    /// Only present when connected
     pub ip_config: Option<WifiIpConfig>,
 }
 
-impl WifiStatus {
+impl StatusResponse {
     pub fn is_connected(&self) -> bool {
         matches!(self.state, WifiState::Connected)
     }
@@ -31,7 +41,7 @@ pub enum WifiState {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
-pub enum WifiSecurity {
+pub enum WifiSecurityMethod {
     Open,
     #[serde(rename = "WPA")]
     Wpa,

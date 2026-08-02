@@ -2,7 +2,7 @@ use bytes::Bytes;
 
 use crate::client::Call;
 use crate::error::Result;
-use crate::model::{AutoupdateSettings, ChangelogResponse, UpdateStatus};
+use crate::model::updater::{AutoupdateSettings, ChangelogResponse, UpdateStatus};
 use crate::transport::HttpTransport;
 
 crate::api::endpoint!(Updater);

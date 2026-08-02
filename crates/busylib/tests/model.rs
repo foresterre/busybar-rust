@@ -1,11 +1,19 @@
-use busylib::{
-    Align, AnimationElement, AutoupdateSettings, BleState, BleStatus, BusyBarSettings, BusyProfile,
-    BusySnapshot, Color, CountdownDirection, CountdownElement, DisplayElements, Element, Font,
-    ImageElement, IntervalSettings, Lifetime, MqttStatus, Opacity, PlayAudio, Priority,
-    RectangleElement, Screen, ShowHours, SmartHomePairing, SmartHomeSwitch, Snapshot, StorageEntry,
-    SwitchStartup, TextElement, TimeOfDay, TimerSettings, TimerState, UpdateStatus, WifiSecurity,
-    WifiState, WifiStatus,
+use busylib::model::account::MqttStatus;
+use busylib::model::audio::PlayAudio;
+use busylib::model::ble::{BleState, BleStatusResponse};
+use busylib::model::busy::{
+    BusyBarSettings, BusyProfile, BusySnapshot, BusyTimerIntervalSettings, Snapshot, TimerSettings,
+    TimerState,
 };
+use busylib::model::display::{
+    Align, AnimationElement, CountdownDirection, CountdownElement, DisplayElement, DisplayElements,
+    Font, ImageElement, Lifetime, RectangleElement, Screen, ShowHours, TextElement,
+};
+use busylib::model::smart_home::{SmartHomePairingPayload, SmartHomeSwitchState, SwitchStartup};
+use busylib::model::storage::StorageListElement;
+use busylib::model::updater::{AutoupdateSettings, UpdateStatus};
+use busylib::model::wifi::{StatusResponse, WifiSecurityMethod, WifiState};
+use busylib::{Color, Opacity, Priority, TimeOfDay};
 use serde_json::json;
 
 #[test]
@@ -15,7 +23,7 @@ fn serializes_display_elements_like_the_api_example() {
         .priority(Priority::new(50).unwrap())
         .led_notification_color(Color::RED)
         .element(
-            Element::builder("0")
+            DisplayElement::builder("0")
                 .unwrap()
                 .timeout_secs(10)
                 .align(Align::Center)
@@ -32,7 +40,7 @@ fn serializes_display_elements_like_the_api_example() {
                 ),
         )
         .element(
-            Element::builder("2")
+            DisplayElement::builder("2")
                 .unwrap()
                 .timeout_secs(6)
                 .at(0, 0)
@@ -80,7 +88,7 @@ fn serializes_display_elements_like_the_api_example() {
 #[test]
 fn omits_absent_element_fields() {
     let elements = DisplayElements::new("my_app").unwrap().element(
-        Element::builder("bare")
+        DisplayElement::builder("bare")
             .unwrap()
             .text(TextElement::new("hi", Font::Tiny).unwrap()),
     );
@@ -99,19 +107,19 @@ fn round_trips_every_element_kind() {
     let elements = DisplayElements::new("my_app")
         .unwrap()
         .element(
-            Element::builder("text")
+            DisplayElement::builder("text")
                 .unwrap()
                 .text(TextElement::new("hi", Font::ExtraLarge).unwrap()),
         )
         .element(
-            Element::builder("image").unwrap().image(
+            DisplayElement::builder("image").unwrap().image(
                 ImageElement::stock("shared/icon.png")
                     .unwrap()
                     .opacity(Opacity::new(40).unwrap()),
             ),
         )
         .element(
-            Element::builder("animation")
+            DisplayElement::builder("animation")
                 .unwrap()
                 .display_until(1_761_582_532)
                 .animation(
@@ -123,7 +131,7 @@ fn round_trips_every_element_kind() {
                 ),
         )
         .element(
-            Element::builder("countdown").unwrap().countdown(
+            DisplayElement::builder("countdown").unwrap().countdown(
                 CountdownElement::new(
                     1_761_582_532,
                     CountdownDirection::TimeLeft,
@@ -133,7 +141,7 @@ fn round_trips_every_element_kind() {
             ),
         )
         .element(
-            Element::builder("rectangle").unwrap().rectangle(
+            DisplayElement::builder("rectangle").unwrap().rectangle(
                 RectangleElement::new(20, 10)
                     .radius(2)
                     .horizontal_gradient(Color::WHITE, Color::TRANSPARENT)
@@ -149,7 +157,7 @@ fn round_trips_every_element_kind() {
 
 #[test]
 fn serializes_animation_loop_as_loop() {
-    let element = Element::builder("a").unwrap().animation(
+    let element = DisplayElement::builder("a").unwrap().animation(
         AnimationElement::stock("shared/wave.anim")
             .unwrap()
             .repeat(true),
@@ -294,7 +302,7 @@ fn round_trips_a_busy_profile() {
         id: "00000000-0000-0000-0000-000000000000".to_owned(),
         title: "study".to_owned(),
         sort_order: -1,
-        timer_settings: TimerSettings::interval(IntervalSettings {
+        timer_settings: TimerSettings::interval(BusyTimerIntervalSettings {
             interval_work_ms: 120_000,
             interval_rest_ms: 60_000,
             interval_work_cycles_count: 3,
@@ -320,7 +328,7 @@ fn round_trips_a_busy_profile() {
 
 #[test]
 fn parses_storage_entries() {
-    let entries: Vec<StorageEntry> = serde_json::from_value(json!([
+    let entries: Vec<StorageListElement> = serde_json::from_value(json!([
         {"type": "file", "name": "test.png", "size": 65535},
         {"type": "dir", "name": "assets"}
     ]))
@@ -336,7 +344,7 @@ fn parses_storage_entries() {
 
 #[test]
 fn parses_a_connected_wifi_status() {
-    let status: WifiStatus = serde_json::from_value(json!({
+    let status: StatusResponse = serde_json::from_value(json!({
         "state": "connected",
         "ssid": "home",
         "bssid": "EC:5A:00:0B:55:1D",
@@ -348,7 +356,7 @@ fn parses_a_connected_wifi_status() {
     .unwrap();
 
     assert!(status.is_connected());
-    assert_eq!(status.security, Some(WifiSecurity::Wpa2Wpa3));
+    assert_eq!(status.security, Some(WifiSecurityMethod::Wpa2Wpa3));
     assert_eq!(
         status
             .ip_config
@@ -360,7 +368,7 @@ fn parses_a_connected_wifi_status() {
 
 #[test]
 fn parses_a_disconnected_wifi_status() {
-    let status: WifiStatus = serde_json::from_value(json!({"state": "disconnected"})).unwrap();
+    let status: StatusResponse = serde_json::from_value(json!({"state": "disconnected"})).unwrap();
 
     assert_eq!(status.state, WifiState::Disconnected);
     assert!(!status.is_connected());
@@ -369,11 +377,12 @@ fn parses_a_disconnected_wifi_status() {
 
 #[test]
 fn keeps_unknown_enum_values() {
-    let status: WifiStatus = serde_json::from_value(json!({"state": "scanning"})).unwrap();
+    let status: StatusResponse = serde_json::from_value(json!({"state": "scanning"})).unwrap();
 
     assert_eq!(status.state, WifiState::Unrecognized("scanning".to_owned()));
 
-    let ble: BleStatus = serde_json::from_value(json!({"status": "internal error"})).unwrap();
+    let ble: BleStatusResponse =
+        serde_json::from_value(json!({"status": "internal error"})).unwrap();
 
     assert_eq!(ble.status, BleState::InternalError);
 
@@ -439,19 +448,19 @@ fn serializes_only_the_autoupdate_fields_that_are_set() {
 #[test]
 fn serializes_the_smart_home_switch() {
     assert_eq!(
-        serde_json::to_value(SmartHomeSwitch::on()).unwrap(),
+        serde_json::to_value(SmartHomeSwitchState::on()).unwrap(),
         json!({"state": true})
     );
 
     assert_eq!(
-        serde_json::to_value(SmartHomeSwitch::off().startup(SwitchStartup::Last)).unwrap(),
+        serde_json::to_value(SmartHomeSwitchState::off().startup(SwitchStartup::Last)).unwrap(),
         json!({"state": false, "startup": "last"})
     );
 }
 
 #[test]
 fn parses_the_smart_home_pairing_payload() {
-    let pairing: SmartHomePairing = serde_json::from_value(json!({
+    let pairing: SmartHomePairingPayload = serde_json::from_value(json!({
         "available_until": "1769437579000",
         "qr_code": "MT:YNDA0-O913..VV7I000",
         "manual_code": "1155-360-0377"

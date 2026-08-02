@@ -2,6 +2,8 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct SmartHomePairingInfo {
+    /// Number of smart homes (Matter "fabrics") that this device is paired with ("commissioned
+    /// into")
     pub fabric_count: Option<u32>,
     pub latest_pairing_status: Option<PairingStatusInfo>,
 }
@@ -14,7 +16,12 @@ impl SmartHomePairingInfo {
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct PairingStatusInfo {
+    /// Latest state of smart home pairing (Matter "commissioning") process. Note:
+    /// "never_started" only refers to the current power cycle of the device; this status is not
+    /// recorded across reboots.
     pub value: PairingStatus,
+    /// UTC Unix second timestamp of latest state update. Only present when a status update has
+    /// occurred.
     pub timestamp: Option<u64>,
 }
 
@@ -29,23 +36,31 @@ pub enum PairingStatus {
     Unknown(String),
 }
 
+/// Set of information for pairing with a Matter smart home
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
-pub struct SmartHomePairing {
+pub struct SmartHomePairingPayload {
+    /// Pairing with ("commissioning into") a Matter smart home using the provided payload is
+    /// possible before this UTC Unix millisecond timestamp. Note: it's a number in a string.
     #[serde(default, with = "crate::serde_util::option_string_u64")]
     pub available_until: Option<u64>,
+    /// Payload of the QR code for pairing with ("commissioning into") a smart home
     pub qr_code: Option<String>,
+    /// Manual code for pairing with ("commissioning into") a smart home
     pub manual_code: Option<String>,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Default, Serialize, Deserialize)]
-pub struct SmartHomeSwitch {
+pub struct SmartHomeSwitchState {
+    /// State of emulated switch.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub state: Option<bool>,
+    /// State of emulated switch on startup. Never sent by the server, but can be specified by
+    /// the client.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub startup: Option<SwitchStartup>,
 }
 
-impl SmartHomeSwitch {
+impl SmartHomeSwitchState {
     pub fn on() -> Self {
         Self {
             state: Some(true),

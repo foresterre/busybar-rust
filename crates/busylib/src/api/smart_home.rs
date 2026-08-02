@@ -1,6 +1,8 @@
 use crate::client::Call;
 use crate::error::Result;
-use crate::model::{SmartHomePairing, SmartHomePairingInfo, SmartHomeSwitch};
+use crate::model::smart_home::{
+    SmartHomePairingInfo, SmartHomePairingPayload, SmartHomeSwitchState,
+};
 use crate::transport::HttpTransport;
 
 crate::api::endpoint!(SmartHome);
@@ -12,7 +14,7 @@ impl<T: HttpTransport> SmartHome<'_, T> {
             .await
     }
 
-    pub async fn start_pairing(&self) -> Result<SmartHomePairing> {
+    pub async fn start_pairing(&self) -> Result<SmartHomePairingPayload> {
         self.client
             .json(Call::post("/busybar/smart_home/pairing"))
             .await
@@ -24,13 +26,13 @@ impl<T: HttpTransport> SmartHome<'_, T> {
             .await
     }
 
-    pub async fn switch(&self) -> Result<SmartHomeSwitch> {
+    pub async fn switch(&self) -> Result<SmartHomeSwitchState> {
         self.client
             .json(Call::get("/busybar/smart_home/switch"))
             .await
     }
 
-    pub async fn set_switch(&self, switch: &SmartHomeSwitch) -> Result<()> {
+    pub async fn set_switch(&self, switch: &SmartHomeSwitchState) -> Result<()> {
         let request = Call::post("/busybar/smart_home/switch").json(switch)?;
         self.client.ok(request).await
     }

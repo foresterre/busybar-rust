@@ -34,7 +34,7 @@ pub enum TimerState {
         current_interval_time_left_ms: u64,
         is_paused: bool,
         #[serde(with = "tagged_interval_settings")]
-        interval_settings: IntervalSettings,
+        interval_settings: BusyTimerIntervalSettings,
     },
 }
 
@@ -81,7 +81,7 @@ pub enum TimerSettings {
 }
 
 impl TimerSettings {
-    pub fn interval(settings: IntervalSettings) -> Self {
+    pub fn interval(settings: BusyTimerIntervalSettings) -> Self {
         Self::Interval {
             interval_work_ms: settings.interval_work_ms,
             interval_rest_ms: settings.interval_rest_ms,
@@ -92,7 +92,7 @@ impl TimerSettings {
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
-pub struct IntervalSettings {
+pub struct BusyTimerIntervalSettings {
     pub interval_work_ms: u64,
     pub interval_rest_ms: u64,
     pub interval_work_cycles_count: u32,
@@ -112,10 +112,10 @@ mod tagged_interval_settings {
     use serde::de::Error as _;
     use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
-    use super::{IntervalSettings, TimerSettings};
+    use super::{BusyTimerIntervalSettings, TimerSettings};
 
     pub fn serialize<S: Serializer>(
-        value: &IntervalSettings,
+        value: &BusyTimerIntervalSettings,
         serializer: S,
     ) -> Result<S::Ok, S::Error> {
         TimerSettings::interval(*value).serialize(serializer)
@@ -123,14 +123,14 @@ mod tagged_interval_settings {
 
     pub fn deserialize<'de, D: Deserializer<'de>>(
         deserializer: D,
-    ) -> Result<IntervalSettings, D::Error> {
+    ) -> Result<BusyTimerIntervalSettings, D::Error> {
         match TimerSettings::deserialize(deserializer)? {
             TimerSettings::Interval {
                 interval_work_ms,
                 interval_rest_ms,
                 interval_work_cycles_count,
                 is_autostart_enabled,
-            } => Ok(IntervalSettings {
+            } => Ok(BusyTimerIntervalSettings {
                 interval_work_ms,
                 interval_rest_ms,
                 interval_work_cycles_count,

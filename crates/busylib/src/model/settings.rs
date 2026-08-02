@@ -46,11 +46,14 @@ impl AccessMode {
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct HttpAccessInfo {
+    /// Access mode
     pub mode: AccessMode,
+    /// Access key was set and is valid
     pub key_valid: Option<bool>,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub(crate) struct NameInfo {
+    /// Device name (letters, digits, spaces and common punctuation; no backtick or tilde)
     pub name: DeviceName,
 }

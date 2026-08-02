@@ -2,7 +2,7 @@ use bytes::Bytes;
 
 use crate::client::Call;
 use crate::error::Result;
-use crate::model::{DisplayBrightnessResponse, DisplayElements, Screen};
+use crate::model::display::{DisplayBrightnessInfo, DisplayElements, Screen};
 use crate::transport::HttpTransport;
 use crate::types::{AppName, Brightness, TryIntoValue};
 
@@ -25,7 +25,7 @@ impl<T: HttpTransport> Display<'_, T> {
     }
 
     pub async fn brightness(&self) -> Result<Brightness> {
-        let response: DisplayBrightnessResponse = self
+        let response: DisplayBrightnessInfo = self
             .client
             .json(Call::get("/busybar/display/brightness"))
             .await?;

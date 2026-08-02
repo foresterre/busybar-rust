@@ -1,4 +1,8 @@
-use busylib::{AccessMode, Align, BusyProfileSlot, Font, Key, Screen, SwitchStartup};
+use busylib::model::busy::BusyProfileSlot;
+use busylib::model::display::{Align, Font, Screen};
+use busylib::model::input::Key;
+use busylib::model::settings::AccessMode;
+use busylib::model::smart_home::SwitchStartup;
 use clap::ValueEnum;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, ValueEnum)]

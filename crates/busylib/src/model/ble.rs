@@ -1,8 +1,9 @@
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
-pub struct BleStatus {
+pub struct BleStatusResponse {
     pub status: BleState,
+    /// Remote device address. Only present when status is "connected".
     pub address: Option<String>,
 }
 
