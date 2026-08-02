@@ -7,6 +7,7 @@ use busylib::model::system::{
 use serde::Serialize;
 
 use crate::reporter::events::CliEvent;
+use crate::reporter::events::fields::{Field, field, prefixed, write_fields};
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize)]
 pub struct SystemVersionEvent {
@@ -32,6 +33,11 @@ pub struct SystemStatusSystemEvent(StatusSystem);
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize)]
 pub struct SystemStatusPowerEvent(StatusPower);
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
+pub struct SystemLogDumpEvent {
+    path: String,
+}
 
 impl SystemVersionEvent {
     pub fn new(api_semver: String) -> Self {
@@ -72,6 +78,24 @@ impl SystemStatusSystemEvent {
 impl SystemStatusPowerEvent {
     pub fn new(power: StatusPower) -> Self {
         Self(power)
+    }
+}
+
+impl SystemLogDumpEvent {
+    pub fn new(path: String) -> Self {
+        Self { path }
+    }
+}
+
+impl From<SystemLogDumpEvent> for CliEvent {
+    fn from(event: SystemLogDumpEvent) -> Self {
+        CliEvent::SystemLogDump(event)
+    }
+}
+
+impl fmt::Display for SystemLogDumpEvent {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(&self.path)
     }
 }
 
@@ -176,31 +200,6 @@ impl fmt::Display for SystemStatusPowerEvent {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write_fields(f, &power_fields(&self.0))
     }
-}
-
-type Field = (String, String);
-
-fn field(key: &str, value: impl fmt::Display) -> Field {
-    (key.to_owned(), value.to_string())
-}
-
-fn prefixed(prefix: &str, fields: Vec<Field>) -> Vec<Field> {
-    fields
-        .into_iter()
-        .map(|(key, value)| (format!("{prefix} {key}"), value))
-        .collect()
-}
-
-fn write_fields(f: &mut fmt::Formatter<'_>, fields: &[Field]) -> fmt::Result {
-    for (index, (key, value)) in fields.iter().enumerate() {
-        if index > 0 {
-            f.write_str("\n")?;
-        }
-
-        write!(f, "{key}: {value}")?;
-    }
-
-    Ok(())
 }
 
 fn device_fields(device: &StatusDevice) -> Vec<Field> {

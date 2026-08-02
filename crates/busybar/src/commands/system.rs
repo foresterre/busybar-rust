@@ -4,8 +4,8 @@ use clap::Subcommand;
 use crate::cli::Context;
 use crate::error::Result;
 use crate::reporter::{
-    SystemStatusDeviceEvent, SystemStatusEvent, SystemStatusFirmwareEvent, SystemStatusPowerEvent,
-    SystemStatusSystemEvent, SystemTransportEvent, SystemVersionEvent,
+    SystemLogDumpEvent, SystemStatusDeviceEvent, SystemStatusEvent, SystemStatusFirmwareEvent,
+    SystemStatusPowerEvent, SystemStatusSystemEvent, SystemTransportEvent, SystemVersionEvent,
 };
 
 #[derive(Debug, Subcommand)]
@@ -49,7 +49,7 @@ impl SystemCommand {
             SystemCommand::StatusFirmware => status_firmware(context).await,
             SystemCommand::StatusSystem => status_system(context).await,
             SystemCommand::StatusPower => status_power(context).await,
-            SystemCommand::LogDump { .. } => todo!(),
+            SystemCommand::LogDump { filename } => log_dump(context, filename).await,
         }
     }
 }
@@ -106,6 +106,14 @@ async fn status_system(context: &Context) -> Result<()> {
     context
         .reporter
         .report(SystemStatusSystemEvent::new(system))?;
+
+    Ok(())
+}
+
+async fn log_dump(context: &Context, filename: Option<LogName>) -> Result<()> {
+    let path = context.client.system().log_dump(filename).await?;
+
+    context.reporter.report(SystemLogDumpEvent::new(path))?;
 
     Ok(())
 }

@@ -2,6 +2,7 @@ use clap::Subcommand;
 
 use crate::cli::Context;
 use crate::error::Result;
+use crate::reporter::OkEvent;
 use crate::values::KeyArg;
 
 #[derive(Debug, Subcommand)]
@@ -15,7 +16,17 @@ pub enum InputCommand {
 }
 
 impl InputCommand {
-    pub async fn run(self, _context: &Context) -> Result<()> {
-        todo!()
+    pub async fn run(self, context: &Context) -> Result<()> {
+        match self {
+            InputCommand::Press { key } => press(context, key).await,
+        }
     }
+}
+
+async fn press(context: &Context, key: KeyArg) -> Result<()> {
+    context.client.input().press(key.into()).await?;
+
+    context.reporter.report(OkEvent::new("input press"))?;
+
+    Ok(())
 }

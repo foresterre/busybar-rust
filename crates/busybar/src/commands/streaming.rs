@@ -2,8 +2,12 @@ use std::path::PathBuf;
 
 use clap::Subcommand;
 
+use std::path::Path;
+
 use crate::cli::Context;
 use crate::error::Result;
+use crate::io::Io;
+use crate::reporter::StreamingScreenEvent;
 use crate::values::ScreenArg;
 
 #[derive(Debug, Subcommand)]
@@ -24,7 +28,25 @@ pub enum StreamingCommand {
 }
 
 impl StreamingCommand {
-    pub async fn run(self, _context: &Context) -> Result<()> {
-        todo!()
+    pub async fn run(self, context: &Context) -> Result<()> {
+        match self {
+            StreamingCommand::Screen { screen, output } => {
+                self::screen(context, screen, output.as_deref()).await
+            }
+            // `/status/ws` upgrades to a WebSocket, which `HttpTransport` cannot carry.
+            StreamingCommand::StatusWs => todo!(),
+        }
     }
+}
+
+async fn screen(context: &Context, screen: ScreenArg, output: Option<&Path>) -> Result<()> {
+    let frame = context.client.streaming().screen(screen.into()).await?;
+
+    if let Some(payload) = Io::output_binary_data(context.output_format, &frame, output)? {
+        context
+            .reporter
+            .report(StreamingScreenEvent::new(payload))?;
+    }
+
+    Ok(())
 }

@@ -1,10 +1,12 @@
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 use busylib::types::storage_path::StoragePath;
 use clap::Subcommand;
 
 use crate::cli::Context;
 use crate::error::Result;
+use crate::io::Io;
+use crate::reporter::{OkEvent, StorageListEvent, StorageReadEvent, StorageStatusEvent};
 
 #[derive(Debug, Subcommand)]
 pub enum StorageCommand {
@@ -67,7 +69,75 @@ pub enum StorageCommand {
 }
 
 impl StorageCommand {
-    pub async fn run(self, _context: &Context) -> Result<()> {
-        todo!()
+    pub async fn run(self, context: &Context) -> Result<()> {
+        match self {
+            StorageCommand::Write { path, file } => write(context, path, &file).await,
+            StorageCommand::Read { path, output } => read(context, path, output.as_deref()).await,
+            StorageCommand::List { path } => list(context, path).await,
+            StorageCommand::Remove { path } => remove(context, path).await,
+            StorageCommand::Mkdir { path } => mkdir(context, path).await,
+            StorageCommand::Rename { path, new_path } => rename(context, path, new_path).await,
+            StorageCommand::Status => status(context).await,
+        }
     }
+}
+
+async fn write(context: &Context, path: StoragePath, file: &Path) -> Result<()> {
+    let data = Io::read_bytes(file)?;
+
+    context.client.storage().write(path, data).await?;
+
+    context.reporter.report(OkEvent::new("storage write"))?;
+
+    Ok(())
+}
+
+async fn read(context: &Context, path: StoragePath, output: Option<&Path>) -> Result<()> {
+    let data = context.client.storage().read(path).await?;
+
+    if let Some(payload) = Io::output_binary_data(context.output_format, &data, output)? {
+        context.reporter.report(StorageReadEvent::new(payload))?;
+    }
+
+    Ok(())
+}
+
+async fn list(context: &Context, path: StoragePath) -> Result<()> {
+    let list = context.client.storage().list(path).await?;
+
+    context.reporter.report(StorageListEvent::new(list))?;
+
+    Ok(())
+}
+
+async fn remove(context: &Context, path: StoragePath) -> Result<()> {
+    context.client.storage().remove(path).await?;
+
+    context.reporter.report(OkEvent::new("storage remove"))?;
+
+    Ok(())
+}
+
+async fn mkdir(context: &Context, path: StoragePath) -> Result<()> {
+    context.client.storage().mkdir(path).await?;
+
+    context.reporter.report(OkEvent::new("storage mkdir"))?;
+
+    Ok(())
+}
+
+async fn rename(context: &Context, path: StoragePath, new_path: StoragePath) -> Result<()> {
+    context.client.storage().rename(path, new_path).await?;
+
+    context.reporter.report(OkEvent::new("storage rename"))?;
+
+    Ok(())
+}
+
+async fn status(context: &Context) -> Result<()> {
+    let status = context.client.storage().status().await?;
+
+    context.reporter.report(StorageStatusEvent::new(status))?;
+
+    Ok(())
 }

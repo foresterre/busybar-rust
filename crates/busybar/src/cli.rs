@@ -8,7 +8,7 @@ use crate::values::{ApiPrefixArg, OutputFormat};
 
 /// Control a BUSY Bar over its HTTP API, using this CLI <3
 #[derive(Debug, Parser)]
-#[command(name = "busybar", version, propagate_version = true)]
+#[command(name = "busybar", version)]
 pub struct Cli {
     /// Base URL of the device
     #[arg(
@@ -58,6 +58,7 @@ impl Cli {
         let context = Context {
             client: builder.build_reqwest(),
             reporter: Reporter::new(output_format),
+            output_format,
         };
 
         let result = command.run(&context).await;
@@ -71,4 +72,5 @@ impl Cli {
 pub struct Context {
     pub client: Client<ReqwestHttpTransport>,
     pub reporter: Reporter,
+    pub output_format: OutputFormat,
 }

@@ -15,9 +15,14 @@ use crate::reporter::json::JsonHandler;
 use crate::values::OutputFormat;
 
 pub use crate::reporter::events::{
-    CliEvent, SystemStatusDeviceEvent, SystemStatusEvent, SystemStatusFirmwareEvent,
-    SystemStatusPowerEvent, SystemStatusSystemEvent, SystemTransportEvent, SystemVersionEvent,
-    WifiStatusEvent,
+    AccountBackendEvent, AccountInfoEvent, AccountStatusEvent, BleStatusEvent, BusyProfileEvent,
+    BusySnapshotEvent, CliEvent, OkEvent, Payload, SettingsAccessEvent, SettingsBrightnessEvent,
+    SettingsNameEvent, SettingsVolumeEvent, SmartHomePairingEvent, SmartHomeStartPairingEvent,
+    SmartHomeSwitchEvent, StorageListEvent, StorageReadEvent, StorageStatusEvent,
+    StreamingScreenEvent, SystemLogDumpEvent, SystemStatusDeviceEvent, SystemStatusEvent,
+    SystemStatusFirmwareEvent, SystemStatusPowerEvent, SystemStatusSystemEvent,
+    SystemTransportEvent, SystemVersionEvent, TimeNowEvent, TimeTimezoneEvent, TimeTzlistEvent,
+    UpdaterAutoupdateEvent, UpdaterChangelogEvent, UpdaterStatusEvent, WifiStatusEvent,
 };
 pub use crate::reporter::output::{Output, OutputError};
 

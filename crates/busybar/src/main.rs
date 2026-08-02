@@ -1,6 +1,7 @@
 mod cli;
 mod commands;
 mod error;
+mod io;
 mod reporter;
 mod values;
 

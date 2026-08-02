@@ -10,6 +10,12 @@ pub enum CliError {
     #[error("could not render the result as JSON")]
     Json(#[from] serde_json::Error),
 
+    #[error("could not read or write a local file")]
+    Io(#[from] std::io::Error),
+
+    #[error("{0}")]
+    Usage(&'static str),
+
     #[error(transparent)]
     Reporter(#[from] reporter::ReporterError),
 }
