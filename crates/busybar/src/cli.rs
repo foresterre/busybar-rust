@@ -3,6 +3,7 @@ use clap::Parser;
 
 use crate::commands::Command;
 use crate::error::Result;
+use crate::reporter::Reporter;
 use crate::values::OutputFormat;
 
 /// Control a BUSY Bar over its HTTP API, using this CLI <3
@@ -51,9 +52,13 @@ impl Cli {
 
         let context = Context {
             client: builder.build_reqwest(),
-            output_format,
+            reporter: Reporter::new(output_format),
         };
-        command.run(&context).await
+
+        let result = command.run(&context).await;
+        let Context { reporter, .. } = context;
+
+        result.and(reporter.finish().map_err(Into::into))
     }
 }
 
@@ -61,6 +66,5 @@ impl Cli {
 pub struct Context {
     #[allow(unused)] // TODO Use when implemented
     pub client: Client<ReqwestHttpTransport>,
-    #[allow(unused)] // TODO add storyteller and impl
-    pub output_format: OutputFormat,
+    pub reporter: Reporter,
 }

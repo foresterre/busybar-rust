@@ -1,0 +1,142 @@
+mod events;
+mod human;
+mod json;
+mod output;
+
+use std::sync::Arc;
+
+use storyteller::{
+    ChannelEventListener, ChannelHandlerGuard, ChannelReporter, EventListener, EventReporter,
+    HandlerGuard, event_channel,
+};
+
+use crate::reporter::human::HumanHandler;
+use crate::reporter::json::JsonHandler;
+use crate::values::OutputFormat;
+
+pub use crate::reporter::events::CliEvent;
+pub use crate::reporter::output::{Output, OutputError};
+
+#[derive(Debug, thiserror::Error)]
+pub enum ReporterError {
+    #[error("the output handler disconnected before the event was reported")]
+    Disconnected,
+
+    #[error("the output handler panicked")]
+    Panicked,
+
+    #[error(transparent)]
+    Output(#[from] OutputError),
+}
+
+pub struct Reporter {
+    reporter: ChannelReporter<CliEvent>,
+    guard: ChannelHandlerGuard,
+    output: Arc<Output>,
+}
+
+impl Reporter {
+    pub fn new(format: OutputFormat) -> Self {
+        Self::with_output(format, Arc::new(Output::stdout()))
+    }
+
+    pub fn with_output(format: OutputFormat, output: Arc<Output>) -> Self {
+        let (sender, receiver) = event_channel::<CliEvent>();
+        let listener = ChannelEventListener::new(receiver);
+
+        let guard = match format {
+            OutputFormat::Text => {
+                listener.run_handler(Arc::new(HumanHandler::new(Arc::clone(&output))))
+            }
+            OutputFormat::Json => {
+                listener.run_handler(Arc::new(JsonHandler::new(Arc::clone(&output))))
+            }
+        };
+
+        Self {
+            reporter: ChannelReporter::new(sender),
+            guard,
+            output,
+        }
+    }
+
+    #[allow(unused)] // TODO(foresterre): report cli events
+    pub fn report(&self, event: impl Into<CliEvent>) -> Result<(), ReporterError> {
+        self.reporter
+            .report_event(event)
+            .map_err(|_| ReporterError::Disconnected)
+    }
+
+    pub fn finish(self) -> Result<(), ReporterError> {
+        let Self {
+            reporter,
+            guard,
+            output,
+        } = self;
+
+        let token = reporter
+            .disconnect()
+            .map_err(|_| ReporterError::Disconnected)?;
+        guard.join(token).map_err(|()| ReporterError::Panicked)?;
+
+        match output.take_error() {
+            Some(error) => Err(ReporterError::Output(error)),
+            None => Ok(()),
+        }
+    }
+}
+
+impl std::fmt::Debug for Reporter {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.write_str("Reporter")
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use std::io::Write;
+    use std::sync::Mutex;
+
+    use super::*;
+
+    #[derive(Clone, Default)]
+    struct SharedBuffer(Arc<Mutex<Vec<u8>>>);
+
+    impl SharedBuffer {
+        fn contents(&self) -> Vec<u8> {
+            self.0.lock().unwrap().clone()
+        }
+    }
+
+    impl Write for SharedBuffer {
+        fn write(&mut self, buf: &[u8]) -> std::io::Result<usize> {
+            self.0.lock().unwrap().write(buf)
+        }
+
+        fn flush(&mut self) -> std::io::Result<()> {
+            Ok(())
+        }
+    }
+
+    #[test]
+    fn human_reporter_finishes_without_events() {
+        let buffer = SharedBuffer::default();
+        let output = Arc::new(Output::new(buffer.clone()));
+        let reporter = Reporter::with_output(OutputFormat::Text, output);
+
+        reporter.finish().unwrap();
+
+        assert!(buffer.contents().is_empty());
+    }
+
+    #[test]
+    fn json_reporter_finishes_without_events() {
+        let buffer = SharedBuffer::default();
+        let output = Arc::new(Output::new(buffer.clone()));
+        let reporter = Reporter::with_output(OutputFormat::Json, output);
+
+        reporter.finish().unwrap();
+
+        assert!(buffer.contents().is_empty());
+    }
+}
