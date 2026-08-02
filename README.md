@@ -1,5 +1,8 @@
 # busybar-rust
 
+Rust HTTP client and CLI for [busybar](https://busy.app/). The BUSY Bar spec can be found [here](https://api.busy.app/busybar/docs?urls.primaryName=1.1.1).
+
+For the Rust docs, see [docs.rs](docs.rs/busylib). To install the CLI, run `cargo install busybar --locked`.
 
 # License
 
