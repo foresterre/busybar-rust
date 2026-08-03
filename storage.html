@@ -35,7 +35,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-6a2986a8.js";
+            window.path_to_searchindex_js = "searchindex-fa113387.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0565151d.js"></script>
@@ -193,7 +193,7 @@ client.storage().write("/ext/test.png", data).await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar storage write /ext/test.png --file ./test.png
+<pre><code class="language-console">busybar api storage write /ext/test.png --file ./test.png
 </code></pre>
 <h2 id="read"><a class="header" href="#read">read</a></h2>
 <h3>API client</h3>
@@ -211,7 +211,7 @@ let data = client.storage().read("/ext/test.png").await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar storage read /ext/test.png --output ./test.png
+<pre><code class="language-console">busybar api storage read /ext/test.png --output ./test.png
 </code></pre>
 <h2 id="list"><a class="header" href="#list">list</a></h2>
 <h3>API client</h3>
@@ -229,7 +229,7 @@ let entries = client.storage().list("/ext").await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar storage list /ext
+<pre><code class="language-console">busybar api storage list /ext
 </code></pre>
 <h2 id="remove"><a class="header" href="#remove">remove</a></h2>
 <h3>API client</h3>
@@ -247,7 +247,7 @@ client.storage().remove("/ext/test.png").await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar storage remove /ext/test.png
+<pre><code class="language-console">busybar api storage remove /ext/test.png
 </code></pre>
 <h2 id="mkdir"><a class="header" href="#mkdir">mkdir</a></h2>
 <h3>API client</h3>
@@ -265,7 +265,7 @@ client.storage().mkdir("/ext/sub").await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar storage mkdir /ext/sub
+<pre><code class="language-console">busybar api storage mkdir /ext/sub
 </code></pre>
 <h2 id="rename"><a class="header" href="#rename">rename</a></h2>
 <h3>API client</h3>
@@ -286,7 +286,7 @@ client
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar storage rename /ext/test.png /ext/sub/test.png
+<pre><code class="language-console">busybar api storage rename /ext/test.png /ext/sub/test.png
 </code></pre>
 <h2 id="status"><a class="header" href="#status">status</a></h2>
 <h3>API client</h3>
@@ -304,7 +304,7 @@ let status = client.storage().status().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar storage status
+<pre><code class="language-console">busybar api storage status
 </code></pre>
 
                     </main>

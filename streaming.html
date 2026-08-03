@@ -35,7 +35,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-6a2986a8.js";
+            window.path_to_searchindex_js = "searchindex-fa113387.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0565151d.js"></script>
@@ -197,9 +197,9 @@ let frame = client.streaming().screen(Screen::Front).await?;
 
 <p>An <code>--output</code> path ending in <code>.bmp</code>, <code>.jpg</code> or <code>.png</code> converts the frame to that image format. If the output path
 extension is not one of these, you instead get raw bytes.</p>
-<pre><code class="language-console">busybar streaming screen front --output ./frame.png
+<pre><code class="language-console">busybar api streaming screen front --output ./frame.png
 </code></pre>
-<pre><code class="language-console">busybar streaming screen front --output ./frame.raw
+<pre><code class="language-console">busybar api streaming screen front --output ./frame.raw
 </code></pre>
 <h2 id="status_ws"><a class="header" href="#status_ws">status_ws</a></h2>
 <h3>API client</h3>
@@ -228,13 +228,13 @@ while let Some(message) = stream.next().await {
 
 <p>Prints one numbered line per message as it arrives, until interrupted with ctrl-c. With
 <code>--output-format json</code> each line is a JSON object (aka jsonlines), so the stream can for example be piped into <code>jq</code>.</p>
-<pre><code class="language-console">busybar streaming status-ws
+<pre><code class="language-console">busybar api streaming status-ws
 </code></pre>
 <p>If you provide a <code>--frame-dir &lt;dir&gt;</code> option, <code>busybar</code> as a side effect, will decode the streamed frames and write
 them as images to the given folder.</p>
 <p>By default, front frames are rendered with a black raster to mimic the
 matrix display of the actual device. This can be disabled by providing the <code>--no-image-raster</code> flag.</p>
-<pre><code class="language-console">busybar streaming status-ws --frame-dir ./frames
+<pre><code class="language-console">busybar api streaming status-ws --frame-dir ./frames
 </code></pre>
 <p>Reported events carry the frame inline as base64, in the same <code>--image-format</code> the files use.</p>
 <pre><code class="language-console">busybar --image-format jpg -o json streaming status-ws

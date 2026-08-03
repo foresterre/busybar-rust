@@ -35,7 +35,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-6a2986a8.js";
+            window.path_to_searchindex_js = "searchindex-fa113387.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0565151d.js"></script>
@@ -193,7 +193,7 @@ client.assets().upload("my_app", "data.png", data).await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar assets upload --app my_app --file data.png ./data.png
+<pre><code class="language-console">busybar api assets upload --app my_app --file data.png ./data.png
 </code></pre>
 <h2 id="delete"><a class="header" href="#delete">delete</a></h2>
 <h3>API client</h3>
@@ -211,7 +211,7 @@ client.assets().delete("my_app").await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar assets delete --app my_app
+<pre><code class="language-console">busybar api assets delete --app my_app
 </code></pre>
 <h2 id="play"><a class="header" href="#play">play</a></h2>
 <h3>API client</h3>
@@ -233,7 +233,7 @@ client
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar assets play --app my_app --stock shared/beep.snd
+<pre><code class="language-console">busybar api assets play --app my_app --stock shared/beep.snd
 </code></pre>
 <h2 id="stop"><a class="header" href="#stop">stop</a></h2>
 <h3>API client</h3>
@@ -251,7 +251,7 @@ client.assets().stop().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar assets stop
+<pre><code class="language-console">busybar api assets stop
 </code></pre>
 <h2 id="draw"><a class="header" href="#draw">draw</a></h2>
 <h3>API client</h3>
@@ -279,7 +279,7 @@ client.assets().draw(&amp;elements).await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar assets draw ./draw.json
+<pre><code class="language-console">busybar api assets draw ./draw.json
 </code></pre>
 <h2 id="clear"><a class="header" href="#clear">clear</a></h2>
 <h3>API client</h3>
@@ -298,7 +298,7 @@ client.assets().clear(Some(AppName::new("my_app")?)).await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar assets clear --app my_app
+<pre><code class="language-console">busybar api assets clear --app my_app
 </code></pre>
 
                     </main>

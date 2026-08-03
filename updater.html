@@ -35,7 +35,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-6a2986a8.js";
+            window.path_to_searchindex_js = "searchindex-fa113387.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0565151d.js"></script>
@@ -193,7 +193,7 @@ client.updater().update(package).await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar updater update ./firmware.tar
+<pre><code class="language-console">busybar api updater update ./firmware.tar
 </code></pre>
 <h2 id="check"><a class="header" href="#check">check</a></h2>
 <h3>API client</h3>
@@ -211,7 +211,7 @@ client.updater().check().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar updater check
+<pre><code class="language-console">busybar api updater check
 </code></pre>
 <h2 id="status"><a class="header" href="#status">status</a></h2>
 <h3>API client</h3>
@@ -229,7 +229,7 @@ let status = client.updater().status().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar updater status
+<pre><code class="language-console">busybar api updater status
 </code></pre>
 <h2 id="changelog"><a class="header" href="#changelog">changelog</a></h2>
 <h3>API client</h3>
@@ -247,7 +247,7 @@ let changelog = client.updater().changelog("25.0.0").await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar updater changelog 25.0.0
+<pre><code class="language-console">busybar api updater changelog 25.0.0
 </code></pre>
 <h2 id="install"><a class="header" href="#install">install</a></h2>
 <h3>API client</h3>
@@ -265,7 +265,7 @@ client.updater().install("25.0.0").await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar updater install 25.0.0
+<pre><code class="language-console">busybar api updater install 25.0.0
 </code></pre>
 <h2 id="abort_download"><a class="header" href="#abort_download">abort_download</a></h2>
 <h3>API client</h3>
@@ -283,7 +283,7 @@ client.updater().abort_download().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar updater abort-download
+<pre><code class="language-console">busybar api updater abort-download
 </code></pre>
 <h2 id="autoupdate"><a class="header" href="#autoupdate">autoupdate</a></h2>
 <h3>API client</h3>
@@ -301,7 +301,7 @@ let settings = client.updater().autoupdate().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar updater autoupdate
+<pre><code class="language-console">busybar api updater autoupdate
 </code></pre>
 <h2 id="set_autoupdate"><a class="header" href="#set_autoupdate">set_autoupdate</a></h2>
 <h3>API client</h3>
@@ -325,7 +325,7 @@ client.updater().set_autoupdate(&amp;settings).await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar updater set-autoupdate --enable --start 08:00 --end 23:59
+<pre><code class="language-console">busybar api updater set-autoupdate --enable --start 08:00 --end 23:59
 </code></pre>
 
                     </main>

@@ -35,7 +35,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-6a2986a8.js";
+            window.path_to_searchindex_js = "searchindex-fa113387.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0565151d.js"></script>
@@ -191,7 +191,7 @@ let access = client.settings().access().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar settings access
+<pre><code class="language-console">busybar api settings access
 </code></pre>
 <h2 id="set_access"><a class="header" href="#set_access">set_access</a></h2>
 <h3>API client</h3>
@@ -213,7 +213,7 @@ client
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar settings set-access key --key 12345678
+<pre><code class="language-console">busybar api settings set-access key --key 12345678
 </code></pre>
 <h2 id="name"><a class="header" href="#name">name</a></h2>
 <h3>API client</h3>
@@ -231,7 +231,7 @@ let name = client.settings().name().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar settings name
+<pre><code class="language-console">busybar api settings name
 </code></pre>
 <h2 id="set_name"><a class="header" href="#set_name">set_name</a></h2>
 <h3>API client</h3>
@@ -249,7 +249,7 @@ client.settings().set_name("BUSY bar").await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar settings set-name "BUSY bar"
+<pre><code class="language-console">busybar api settings set-name "BUSY bar"
 </code></pre>
 <h2 id="volume"><a class="header" href="#volume">volume</a></h2>
 <h3>API client</h3>
@@ -267,7 +267,7 @@ let volume = client.settings().volume().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar settings volume
+<pre><code class="language-console">busybar api settings volume
 </code></pre>
 <h2 id="set_volume"><a class="header" href="#set_volume">set_volume</a></h2>
 <h3>API client</h3>
@@ -286,7 +286,7 @@ client.settings().set_volume(Volume::new(35)?, true).await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar settings set-volume 35 --silent
+<pre><code class="language-console">busybar api settings set-volume 35 --silent
 </code></pre>
 <h2 id="brightness"><a class="header" href="#brightness">brightness</a></h2>
 <h3>API client</h3>
@@ -304,7 +304,7 @@ let brightness = client.settings().brightness().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar settings brightness
+<pre><code class="language-console">busybar api settings brightness
 </code></pre>
 <h2 id="set_brightness"><a class="header" href="#set_brightness">set_brightness</a></h2>
 <h3>API client</h3>
@@ -326,7 +326,7 @@ client
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar settings set-brightness 40
+<pre><code class="language-console">busybar api settings set-brightness 40
 </code></pre>
 
                     </main>

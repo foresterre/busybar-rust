@@ -35,7 +35,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-6a2986a8.js";
+            window.path_to_searchindex_js = "searchindex-fa113387.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0565151d.js"></script>
@@ -191,7 +191,7 @@ let snapshot = client.busy().snapshot().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar busy snapshot
+<pre><code class="language-console">busybar api busy snapshot
 </code></pre>
 <h2 id="set_snapshot"><a class="header" href="#set_snapshot">set_snapshot</a></h2>
 <h3>API client</h3>
@@ -211,7 +211,7 @@ client.busy().set_snapshot(&amp;snapshot).await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar busy set-snapshot ./snapshot.json
+<pre><code class="language-console">busybar api busy set-snapshot ./snapshot.json
 </code></pre>
 <h2 id="profile"><a class="header" href="#profile">profile</a></h2>
 <h3>API client</h3>
@@ -230,7 +230,7 @@ let profile = client.busy().profile(BusyProfileSlot::Custom).await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar busy profile custom
+<pre><code class="language-console">busybar api busy profile custom
 </code></pre>
 <h2 id="set_profile"><a class="header" href="#set_profile">set_profile</a></h2>
 <h3>API client</h3>
@@ -255,7 +255,7 @@ client
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar busy set-profile custom ./profile.json
+<pre><code class="language-console">busybar api busy set-profile custom ./profile.json
 </code></pre>
 
                     </main>

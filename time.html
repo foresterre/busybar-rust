@@ -35,7 +35,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-6a2986a8.js";
+            window.path_to_searchindex_js = "searchindex-fa113387.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0565151d.js"></script>
@@ -191,7 +191,7 @@ let now = client.time().now().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar time now
+<pre><code class="language-console">busybar api time now
 </code></pre>
 <h2 id="set_timestamp"><a class="header" href="#set_timestamp">set_timestamp</a></h2>
 <h3>API client</h3>
@@ -212,7 +212,7 @@ client
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar time set-timestamp 2025-10-02T14:30:45+04:00
+<pre><code class="language-console">busybar api time set-timestamp 2025-10-02T14:30:45+04:00
 </code></pre>
 <h2 id="timezone"><a class="header" href="#timezone">timezone</a></h2>
 <h3>API client</h3>
@@ -230,7 +230,7 @@ let timezone = client.time().timezone().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar time timezone
+<pre><code class="language-console">busybar api time timezone
 </code></pre>
 <h2 id="set_timezone"><a class="header" href="#set_timezone">set_timezone</a></h2>
 <h3>API client</h3>
@@ -248,7 +248,7 @@ client.time().set_timezone("Berlin").await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar time set-timezone Berlin
+<pre><code class="language-console">busybar api time set-timezone Berlin
 </code></pre>
 <h2 id="tzlist"><a class="header" href="#tzlist">tzlist</a></h2>
 <h3>API client</h3>
@@ -266,7 +266,7 @@ let timezones = client.time().tzlist().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar time tzlist
+<pre><code class="language-console">busybar api time tzlist
 </code></pre>
 
                     </main>

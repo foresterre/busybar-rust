@@ -36,7 +36,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-6a2986a8.js";
+            window.path_to_searchindex_js = "searchindex-fa113387.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-0565151d.js"></script>
@@ -204,7 +204,7 @@ let info = client.account().info().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar account info
+<pre><code class="language-console">busybar api account info
 </code></pre>
 <h2 id="status"><a class="header" href="#status">status</a></h2>
 <h3>API client</h3>
@@ -222,7 +222,7 @@ let status = client.account().status().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar account status
+<pre><code class="language-console">busybar api account status
 </code></pre>
 <h2 id="backend"><a class="header" href="#backend">backend</a></h2>
 <h3>API client</h3>
@@ -240,7 +240,7 @@ let backend = client.account().backend().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar account backend
+<pre><code class="language-console">busybar api account backend
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="assets"><a class="header" href="#assets">Assets</a></h1>
@@ -262,7 +262,7 @@ client.assets().upload("my_app", "data.png", data).await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar assets upload --app my_app --file data.png ./data.png
+<pre><code class="language-console">busybar api assets upload --app my_app --file data.png ./data.png
 </code></pre>
 <h2 id="delete"><a class="header" href="#delete">delete</a></h2>
 <h3>API client</h3>
@@ -280,7 +280,7 @@ client.assets().delete("my_app").await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar assets delete --app my_app
+<pre><code class="language-console">busybar api assets delete --app my_app
 </code></pre>
 <h2 id="play"><a class="header" href="#play">play</a></h2>
 <h3>API client</h3>
@@ -302,7 +302,7 @@ client
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar assets play --app my_app --stock shared/beep.snd
+<pre><code class="language-console">busybar api assets play --app my_app --stock shared/beep.snd
 </code></pre>
 <h2 id="stop"><a class="header" href="#stop">stop</a></h2>
 <h3>API client</h3>
@@ -320,7 +320,7 @@ client.assets().stop().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar assets stop
+<pre><code class="language-console">busybar api assets stop
 </code></pre>
 <h2 id="draw"><a class="header" href="#draw">draw</a></h2>
 <h3>API client</h3>
@@ -348,7 +348,7 @@ client.assets().draw(&amp;elements).await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar assets draw ./draw.json
+<pre><code class="language-console">busybar api assets draw ./draw.json
 </code></pre>
 <h2 id="clear"><a class="header" href="#clear">clear</a></h2>
 <h3>API client</h3>
@@ -367,7 +367,7 @@ client.assets().clear(Some(AppName::new("my_app")?)).await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar assets clear --app my_app
+<pre><code class="language-console">busybar api assets clear --app my_app
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="ble"><a class="header" href="#ble">Ble</a></h1>
@@ -387,7 +387,7 @@ client.ble().enable().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar ble enable
+<pre><code class="language-console">busybar api ble enable
 </code></pre>
 <h2 id="disable"><a class="header" href="#disable">disable</a></h2>
 <h3>API client</h3>
@@ -405,7 +405,7 @@ client.ble().disable().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar ble disable
+<pre><code class="language-console">busybar api ble disable
 </code></pre>
 <h2 id="remove_pairing"><a class="header" href="#remove_pairing">remove_pairing</a></h2>
 <h3>API client</h3>
@@ -423,7 +423,7 @@ client.ble().remove_pairing().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar ble remove-pairing
+<pre><code class="language-console">busybar api ble remove-pairing
 </code></pre>
 <h2 id="status-1"><a class="header" href="#status-1">status</a></h2>
 <h3>API client</h3>
@@ -441,7 +441,7 @@ let status = client.ble().status().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar ble status
+<pre><code class="language-console">busybar api ble status
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="busy"><a class="header" href="#busy">Busy</a></h1>
@@ -461,7 +461,7 @@ let snapshot = client.busy().snapshot().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar busy snapshot
+<pre><code class="language-console">busybar api busy snapshot
 </code></pre>
 <h2 id="set_snapshot"><a class="header" href="#set_snapshot">set_snapshot</a></h2>
 <h3>API client</h3>
@@ -481,7 +481,7 @@ client.busy().set_snapshot(&amp;snapshot).await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar busy set-snapshot ./snapshot.json
+<pre><code class="language-console">busybar api busy set-snapshot ./snapshot.json
 </code></pre>
 <h2 id="profile"><a class="header" href="#profile">profile</a></h2>
 <h3>API client</h3>
@@ -500,7 +500,7 @@ let profile = client.busy().profile(BusyProfileSlot::Custom).await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar busy profile custom
+<pre><code class="language-console">busybar api busy profile custom
 </code></pre>
 <h2 id="set_profile"><a class="header" href="#set_profile">set_profile</a></h2>
 <h3>API client</h3>
@@ -525,7 +525,7 @@ client
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar busy set-profile custom ./profile.json
+<pre><code class="language-console">busybar api busy set-profile custom ./profile.json
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="input"><a class="header" href="#input">Input</a></h1>
@@ -546,7 +546,7 @@ client.input().press(Key::Ok).await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar input press ok
+<pre><code class="language-console">busybar api input press ok
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="settings"><a class="header" href="#settings">Settings</a></h1>
@@ -566,7 +566,7 @@ let access = client.settings().access().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar settings access
+<pre><code class="language-console">busybar api settings access
 </code></pre>
 <h2 id="set_access"><a class="header" href="#set_access">set_access</a></h2>
 <h3>API client</h3>
@@ -588,7 +588,7 @@ client
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar settings set-access key --key 12345678
+<pre><code class="language-console">busybar api settings set-access key --key 12345678
 </code></pre>
 <h2 id="name"><a class="header" href="#name">name</a></h2>
 <h3>API client</h3>
@@ -606,7 +606,7 @@ let name = client.settings().name().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar settings name
+<pre><code class="language-console">busybar api settings name
 </code></pre>
 <h2 id="set_name"><a class="header" href="#set_name">set_name</a></h2>
 <h3>API client</h3>
@@ -624,7 +624,7 @@ client.settings().set_name("BUSY bar").await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar settings set-name "BUSY bar"
+<pre><code class="language-console">busybar api settings set-name "BUSY bar"
 </code></pre>
 <h2 id="volume"><a class="header" href="#volume">volume</a></h2>
 <h3>API client</h3>
@@ -642,7 +642,7 @@ let volume = client.settings().volume().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar settings volume
+<pre><code class="language-console">busybar api settings volume
 </code></pre>
 <h2 id="set_volume"><a class="header" href="#set_volume">set_volume</a></h2>
 <h3>API client</h3>
@@ -661,7 +661,7 @@ client.settings().set_volume(Volume::new(35)?, true).await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar settings set-volume 35 --silent
+<pre><code class="language-console">busybar api settings set-volume 35 --silent
 </code></pre>
 <h2 id="brightness"><a class="header" href="#brightness">brightness</a></h2>
 <h3>API client</h3>
@@ -679,7 +679,7 @@ let brightness = client.settings().brightness().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar settings brightness
+<pre><code class="language-console">busybar api settings brightness
 </code></pre>
 <h2 id="set_brightness"><a class="header" href="#set_brightness">set_brightness</a></h2>
 <h3>API client</h3>
@@ -701,7 +701,7 @@ client
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar settings set-brightness 40
+<pre><code class="language-console">busybar api settings set-brightness 40
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="smarthome"><a class="header" href="#smarthome">SmartHome</a></h1>
@@ -721,7 +721,7 @@ let pairing = client.smart_home().pairing().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar smart-home pairing
+<pre><code class="language-console">busybar api smart-home pairing
 </code></pre>
 <h2 id="start_pairing"><a class="header" href="#start_pairing">start_pairing</a></h2>
 <h3>API client</h3>
@@ -739,7 +739,7 @@ let payload = client.smart_home().start_pairing().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar smart-home start-pairing
+<pre><code class="language-console">busybar api smart-home start-pairing
 </code></pre>
 <h2 id="erase_pairings"><a class="header" href="#erase_pairings">erase_pairings</a></h2>
 <h3>API client</h3>
@@ -757,7 +757,7 @@ client.smart_home().erase_pairings().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar smart-home erase-pairings
+<pre><code class="language-console">busybar api smart-home erase-pairings
 </code></pre>
 <h2 id="switch"><a class="header" href="#switch">switch</a></h2>
 <h3>API client</h3>
@@ -775,7 +775,7 @@ let switch = client.smart_home().switch().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar smart-home switch
+<pre><code class="language-console">busybar api smart-home switch
 </code></pre>
 <h2 id="set_switch"><a class="header" href="#set_switch">set_switch</a></h2>
 <h3>API client</h3>
@@ -797,7 +797,7 @@ client
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar smart-home set-switch on --startup last
+<pre><code class="language-console">busybar api smart-home set-switch on --startup last
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="storage"><a class="header" href="#storage">Storage</a></h1>
@@ -819,7 +819,7 @@ client.storage().write("/ext/test.png", data).await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar storage write /ext/test.png --file ./test.png
+<pre><code class="language-console">busybar api storage write /ext/test.png --file ./test.png
 </code></pre>
 <h2 id="read"><a class="header" href="#read">read</a></h2>
 <h3>API client</h3>
@@ -837,7 +837,7 @@ let data = client.storage().read("/ext/test.png").await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar storage read /ext/test.png --output ./test.png
+<pre><code class="language-console">busybar api storage read /ext/test.png --output ./test.png
 </code></pre>
 <h2 id="list"><a class="header" href="#list">list</a></h2>
 <h3>API client</h3>
@@ -855,7 +855,7 @@ let entries = client.storage().list("/ext").await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar storage list /ext
+<pre><code class="language-console">busybar api storage list /ext
 </code></pre>
 <h2 id="remove"><a class="header" href="#remove">remove</a></h2>
 <h3>API client</h3>
@@ -873,7 +873,7 @@ client.storage().remove("/ext/test.png").await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar storage remove /ext/test.png
+<pre><code class="language-console">busybar api storage remove /ext/test.png
 </code></pre>
 <h2 id="mkdir"><a class="header" href="#mkdir">mkdir</a></h2>
 <h3>API client</h3>
@@ -891,7 +891,7 @@ client.storage().mkdir("/ext/sub").await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar storage mkdir /ext/sub
+<pre><code class="language-console">busybar api storage mkdir /ext/sub
 </code></pre>
 <h2 id="rename"><a class="header" href="#rename">rename</a></h2>
 <h3>API client</h3>
@@ -912,7 +912,7 @@ client
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar storage rename /ext/test.png /ext/sub/test.png
+<pre><code class="language-console">busybar api storage rename /ext/test.png /ext/sub/test.png
 </code></pre>
 <h2 id="status-2"><a class="header" href="#status-2">status</a></h2>
 <h3>API client</h3>
@@ -930,7 +930,7 @@ let status = client.storage().status().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar storage status
+<pre><code class="language-console">busybar api storage status
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="streaming"><a class="header" href="#streaming">Streaming</a></h1>
@@ -956,9 +956,9 @@ let frame = client.streaming().screen(Screen::Front).await?;
 
 <p>An <code>--output</code> path ending in <code>.bmp</code>, <code>.jpg</code> or <code>.png</code> converts the frame to that image format. If the output path
 extension is not one of these, you instead get raw bytes.</p>
-<pre><code class="language-console">busybar streaming screen front --output ./frame.png
+<pre><code class="language-console">busybar api streaming screen front --output ./frame.png
 </code></pre>
-<pre><code class="language-console">busybar streaming screen front --output ./frame.raw
+<pre><code class="language-console">busybar api streaming screen front --output ./frame.raw
 </code></pre>
 <h2 id="status_ws"><a class="header" href="#status_ws">status_ws</a></h2>
 <h3>API client</h3>
@@ -987,13 +987,13 @@ while let Some(message) = stream.next().await {
 
 <p>Prints one numbered line per message as it arrives, until interrupted with ctrl-c. With
 <code>--output-format json</code> each line is a JSON object (aka jsonlines), so the stream can for example be piped into <code>jq</code>.</p>
-<pre><code class="language-console">busybar streaming status-ws
+<pre><code class="language-console">busybar api streaming status-ws
 </code></pre>
 <p>If you provide a <code>--frame-dir &lt;dir&gt;</code> option, <code>busybar</code> as a side effect, will decode the streamed frames and write
 them as images to the given folder.</p>
 <p>By default, front frames are rendered with a black raster to mimic the
 matrix display of the actual device. This can be disabled by providing the <code>--no-image-raster</code> flag.</p>
-<pre><code class="language-console">busybar streaming status-ws --frame-dir ./frames
+<pre><code class="language-console">busybar api streaming status-ws --frame-dir ./frames
 </code></pre>
 <p>Reported events carry the frame inline as base64, in the same <code>--image-format</code> the files use.</p>
 <pre><code class="language-console">busybar --image-format jpg -o json streaming status-ws
@@ -1016,7 +1016,7 @@ let version = client.system().version().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar system version
+<pre><code class="language-console">busybar api system version
 </code></pre>
 <h2 id="transport"><a class="header" href="#transport">transport</a></h2>
 <h3>API client</h3>
@@ -1034,7 +1034,7 @@ let transport = client.system().transport().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar system transport
+<pre><code class="language-console">busybar api system transport
 </code></pre>
 <h2 id="status-3"><a class="header" href="#status-3">status</a></h2>
 <h3>API client</h3>
@@ -1052,7 +1052,7 @@ let status = client.system().status().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar system status
+<pre><code class="language-console">busybar api system status
 </code></pre>
 <h2 id="status_device"><a class="header" href="#status_device">status_device</a></h2>
 <h3>API client</h3>
@@ -1070,7 +1070,7 @@ let device = client.system().status_device().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar system status-device
+<pre><code class="language-console">busybar api system status-device
 </code></pre>
 <h2 id="status_firmware"><a class="header" href="#status_firmware">status_firmware</a></h2>
 <h3>API client</h3>
@@ -1088,7 +1088,7 @@ let firmware = client.system().status_firmware().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar system status-firmware
+<pre><code class="language-console">busybar api system status-firmware
 </code></pre>
 <h2 id="status_system"><a class="header" href="#status_system">status_system</a></h2>
 <h3>API client</h3>
@@ -1106,7 +1106,7 @@ let system = client.system().status_system().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar system status-system
+<pre><code class="language-console">busybar api system status-system
 </code></pre>
 <h2 id="status_power"><a class="header" href="#status_power">status_power</a></h2>
 <h3>API client</h3>
@@ -1124,7 +1124,7 @@ let power = client.system().status_power().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar system status-power
+<pre><code class="language-console">busybar api system status-power
 </code></pre>
 <h2 id="log_dump"><a class="header" href="#log_dump">log_dump</a></h2>
 <h3>API client</h3>
@@ -1146,7 +1146,7 @@ let path = client
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar system log-dump --filename dump
+<pre><code class="language-console">busybar api system log-dump --filename dump
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="time"><a class="header" href="#time">Time</a></h1>
@@ -1166,7 +1166,7 @@ let now = client.time().now().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar time now
+<pre><code class="language-console">busybar api time now
 </code></pre>
 <h2 id="set_timestamp"><a class="header" href="#set_timestamp">set_timestamp</a></h2>
 <h3>API client</h3>
@@ -1187,7 +1187,7 @@ client
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar time set-timestamp 2025-10-02T14:30:45+04:00
+<pre><code class="language-console">busybar api time set-timestamp 2025-10-02T14:30:45+04:00
 </code></pre>
 <h2 id="timezone"><a class="header" href="#timezone">timezone</a></h2>
 <h3>API client</h3>
@@ -1205,7 +1205,7 @@ let timezone = client.time().timezone().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar time timezone
+<pre><code class="language-console">busybar api time timezone
 </code></pre>
 <h2 id="set_timezone"><a class="header" href="#set_timezone">set_timezone</a></h2>
 <h3>API client</h3>
@@ -1223,7 +1223,7 @@ client.time().set_timezone("Berlin").await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar time set-timezone Berlin
+<pre><code class="language-console">busybar api time set-timezone Berlin
 </code></pre>
 <h2 id="tzlist"><a class="header" href="#tzlist">tzlist</a></h2>
 <h3>API client</h3>
@@ -1241,7 +1241,7 @@ let timezones = client.time().tzlist().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar time tzlist
+<pre><code class="language-console">busybar api time tzlist
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="updater"><a class="header" href="#updater">Updater</a></h1>
@@ -1263,7 +1263,7 @@ client.updater().update(package).await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar updater update ./firmware.tar
+<pre><code class="language-console">busybar api updater update ./firmware.tar
 </code></pre>
 <h2 id="check"><a class="header" href="#check">check</a></h2>
 <h3>API client</h3>
@@ -1281,7 +1281,7 @@ client.updater().check().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar updater check
+<pre><code class="language-console">busybar api updater check
 </code></pre>
 <h2 id="status-4"><a class="header" href="#status-4">status</a></h2>
 <h3>API client</h3>
@@ -1299,7 +1299,7 @@ let status = client.updater().status().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar updater status
+<pre><code class="language-console">busybar api updater status
 </code></pre>
 <h2 id="changelog"><a class="header" href="#changelog">changelog</a></h2>
 <h3>API client</h3>
@@ -1317,7 +1317,7 @@ let changelog = client.updater().changelog("25.0.0").await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar updater changelog 25.0.0
+<pre><code class="language-console">busybar api updater changelog 25.0.0
 </code></pre>
 <h2 id="install"><a class="header" href="#install">install</a></h2>
 <h3>API client</h3>
@@ -1335,7 +1335,7 @@ client.updater().install("25.0.0").await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar updater install 25.0.0
+<pre><code class="language-console">busybar api updater install 25.0.0
 </code></pre>
 <h2 id="abort_download"><a class="header" href="#abort_download">abort_download</a></h2>
 <h3>API client</h3>
@@ -1353,7 +1353,7 @@ client.updater().abort_download().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar updater abort-download
+<pre><code class="language-console">busybar api updater abort-download
 </code></pre>
 <h2 id="autoupdate"><a class="header" href="#autoupdate">autoupdate</a></h2>
 <h3>API client</h3>
@@ -1371,7 +1371,7 @@ let settings = client.updater().autoupdate().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar updater autoupdate
+<pre><code class="language-console">busybar api updater autoupdate
 </code></pre>
 <h2 id="set_autoupdate"><a class="header" href="#set_autoupdate">set_autoupdate</a></h2>
 <h3>API client</h3>
@@ -1395,7 +1395,7 @@ client.updater().set_autoupdate(&amp;settings).await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar updater set-autoupdate --enable --start 08:00 --end 23:59
+<pre><code class="language-console">busybar api updater set-autoupdate --enable --start 08:00 --end 23:59
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="wifi"><a class="header" href="#wifi">Wifi</a></h1>
@@ -1415,7 +1415,7 @@ let status = client.wifi().status().await?;
 </span><span class="boring">}</span></code></pre>
 <h3>CLI</h3>
 
-<pre><code class="language-console">busybar wifi status
+<pre><code class="language-console">busybar api wifi status
 </code></pre>
 
                     </main>
