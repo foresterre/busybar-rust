@@ -36,10 +36,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-fa113387.js";
+            window.path_to_searchindex_js = "searchindex-32fa3b49.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-0565151d.js"></script>
+        <script src="toc-1524e3c3.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -187,10 +187,8 @@ busylib = "0.0.9" # check latest version https://crates.io/crates/busylib
 <pre><code class="language-console">busybar help
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="account"><a class="header" href="#account">Account</a></h1>
+<h1 id="account"><a class="header" href="#account">account</a></h1>
 <h2 id="info"><a class="header" href="#info">info</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -202,13 +200,7 @@ let info = client.account().info().await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api account info
-</code></pre>
 <h2 id="status"><a class="header" href="#status">status</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -220,13 +212,7 @@ let status = client.account().status().await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api account status
-</code></pre>
 <h2 id="backend"><a class="header" href="#backend">backend</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -238,15 +224,9 @@ let backend = client.account().backend().await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api account backend
-</code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="assets"><a class="header" href="#assets">Assets</a></h1>
+<h1 id="assets"><a class="header" href="#assets">assets</a></h1>
 <h2 id="upload"><a class="header" href="#upload">upload</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -260,13 +240,7 @@ client.assets().upload("my_app", "data.png", data).await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api assets upload --app my_app --file data.png ./data.png
-</code></pre>
 <h2 id="delete"><a class="header" href="#delete">delete</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -278,13 +252,7 @@ client.assets().delete("my_app").await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api assets delete --app my_app
-</code></pre>
 <h2 id="play"><a class="header" href="#play">play</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -300,13 +268,7 @@ client
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api assets play --app my_app --stock shared/beep.snd
-</code></pre>
 <h2 id="stop"><a class="header" href="#stop">stop</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -318,13 +280,7 @@ client.assets().stop().await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api assets stop
-</code></pre>
 <h2 id="draw"><a class="header" href="#draw">draw</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -346,13 +302,7 @@ client.assets().draw(&amp;elements).await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api assets draw ./draw.json
-</code></pre>
 <h2 id="clear"><a class="header" href="#clear">clear</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -365,15 +315,9 @@ client.assets().clear(Some(AppName::new("my_app")?)).await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api assets clear --app my_app
-</code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="ble"><a class="header" href="#ble">Ble</a></h1>
+<h1 id="ble"><a class="header" href="#ble">ble</a></h1>
 <h2 id="enable"><a class="header" href="#enable">enable</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -385,13 +329,7 @@ client.ble().enable().await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api ble enable
-</code></pre>
 <h2 id="disable"><a class="header" href="#disable">disable</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -403,13 +341,7 @@ client.ble().disable().await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api ble disable
-</code></pre>
 <h2 id="remove_pairing"><a class="header" href="#remove_pairing">remove_pairing</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -421,13 +353,7 @@ client.ble().remove_pairing().await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api ble remove-pairing
-</code></pre>
 <h2 id="status-1"><a class="header" href="#status-1">status</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -439,15 +365,9 @@ let status = client.ble().status().await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api ble status
-</code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="busy"><a class="header" href="#busy">Busy</a></h1>
+<h1 id="busy"><a class="header" href="#busy">busy</a></h1>
 <h2 id="snapshot"><a class="header" href="#snapshot">snapshot</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -459,13 +379,7 @@ let snapshot = client.busy().snapshot().await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api busy snapshot
-</code></pre>
 <h2 id="set_snapshot"><a class="header" href="#set_snapshot">set_snapshot</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -479,13 +393,7 @@ client.busy().set_snapshot(&amp;snapshot).await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api busy set-snapshot ./snapshot.json
-</code></pre>
 <h2 id="profile"><a class="header" href="#profile">profile</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -498,13 +406,7 @@ let profile = client.busy().profile(BusyProfileSlot::Custom).await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api busy profile custom
-</code></pre>
 <h2 id="set_profile"><a class="header" href="#set_profile">set_profile</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -523,15 +425,9 @@ client
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api busy set-profile custom ./profile.json
-</code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="input"><a class="header" href="#input">Input</a></h1>
+<h1 id="input"><a class="header" href="#input">input</a></h1>
 <h2 id="press"><a class="header" href="#press">press</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -544,15 +440,9 @@ client.input().press(Key::Ok).await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api input press ok
-</code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="settings"><a class="header" href="#settings">Settings</a></h1>
+<h1 id="settings"><a class="header" href="#settings">settings</a></h1>
 <h2 id="access"><a class="header" href="#access">access</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -564,13 +454,7 @@ let access = client.settings().access().await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api settings access
-</code></pre>
 <h2 id="set_access"><a class="header" href="#set_access">set_access</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -586,13 +470,7 @@ client
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api settings set-access key --key 12345678
-</code></pre>
 <h2 id="name"><a class="header" href="#name">name</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -604,13 +482,7 @@ let name = client.settings().name().await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api settings name
-</code></pre>
 <h2 id="set_name"><a class="header" href="#set_name">set_name</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -622,13 +494,7 @@ client.settings().set_name("BUSY bar").await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api settings set-name "BUSY bar"
-</code></pre>
 <h2 id="volume"><a class="header" href="#volume">volume</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -640,13 +506,7 @@ let volume = client.settings().volume().await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api settings volume
-</code></pre>
 <h2 id="set_volume"><a class="header" href="#set_volume">set_volume</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -659,13 +519,7 @@ client.settings().set_volume(Volume::new(35)?, true).await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api settings set-volume 35 --silent
-</code></pre>
 <h2 id="brightness"><a class="header" href="#brightness">brightness</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -677,13 +531,7 @@ let brightness = client.settings().brightness().await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api settings brightness
-</code></pre>
 <h2 id="set_brightness"><a class="header" href="#set_brightness">set_brightness</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -699,15 +547,9 @@ client
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api settings set-brightness 40
-</code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="smarthome"><a class="header" href="#smarthome">SmartHome</a></h1>
+<h1 id="smart_home"><a class="header" href="#smart_home">smart_home</a></h1>
 <h2 id="pairing"><a class="header" href="#pairing">pairing</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -719,13 +561,7 @@ let pairing = client.smart_home().pairing().await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api smart-home pairing
-</code></pre>
 <h2 id="start_pairing"><a class="header" href="#start_pairing">start_pairing</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -737,13 +573,7 @@ let payload = client.smart_home().start_pairing().await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api smart-home start-pairing
-</code></pre>
 <h2 id="erase_pairings"><a class="header" href="#erase_pairings">erase_pairings</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -755,13 +585,7 @@ client.smart_home().erase_pairings().await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api smart-home erase-pairings
-</code></pre>
 <h2 id="switch"><a class="header" href="#switch">switch</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -773,13 +597,7 @@ let switch = client.smart_home().switch().await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api smart-home switch
-</code></pre>
 <h2 id="set_switch"><a class="header" href="#set_switch">set_switch</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -795,15 +613,9 @@ client
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api smart-home set-switch on --startup last
-</code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="storage"><a class="header" href="#storage">Storage</a></h1>
+<h1 id="storage"><a class="header" href="#storage">storage</a></h1>
 <h2 id="write"><a class="header" href="#write">write</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -817,13 +629,7 @@ client.storage().write("/ext/test.png", data).await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api storage write /ext/test.png --file ./test.png
-</code></pre>
 <h2 id="read"><a class="header" href="#read">read</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -835,13 +641,7 @@ let data = client.storage().read("/ext/test.png").await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api storage read /ext/test.png --output ./test.png
-</code></pre>
 <h2 id="list"><a class="header" href="#list">list</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -853,13 +653,7 @@ let entries = client.storage().list("/ext").await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api storage list /ext
-</code></pre>
 <h2 id="remove"><a class="header" href="#remove">remove</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -871,13 +665,7 @@ client.storage().remove("/ext/test.png").await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api storage remove /ext/test.png
-</code></pre>
 <h2 id="mkdir"><a class="header" href="#mkdir">mkdir</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -889,13 +677,7 @@ client.storage().mkdir("/ext/sub").await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api storage mkdir /ext/sub
-</code></pre>
 <h2 id="rename"><a class="header" href="#rename">rename</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -910,13 +692,7 @@ client
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api storage rename /ext/test.png /ext/sub/test.png
-</code></pre>
 <h2 id="status-2"><a class="header" href="#status-2">status</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -928,18 +704,14 @@ let status = client.storage().status().await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api storage status
-</code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="streaming"><a class="header" href="#streaming">Streaming</a></h1>
+<h1 id="streaming"><a class="header" href="#streaming">streaming</a></h1>
 <h2 id="screen"><a class="header" href="#screen">screen</a></h2>
 <p>Frames come off the device as base64 text. The front screen is 72x16 BGR888. The backscreen is 80x80 8-bit grayscale
 (despite that the screen on the device itself seems wider).</p>
-<p>This is what “raw” means wrt the image format. Note that the API states the content-type is BMP, but this is not true.</p>
-<h3>API client</h3>
-
+<p>This is what “raw” means wrt the image format.</p>
+<p>Note that the API states the content-type is BMP, but this is not true. It may also say its RGB888, but this is also not
+true (it is BGR888 instead, so you should swap the blue and red channels if you want RGB).</p>
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -952,17 +724,7 @@ let frame = client.streaming().screen(Screen::Front).await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<p>An <code>--output</code> path ending in <code>.bmp</code>, <code>.jpg</code> or <code>.png</code> converts the frame to that image format. If the output path
-extension is not one of these, you instead get raw bytes.</p>
-<pre><code class="language-console">busybar api streaming screen front --output ./frame.png
-</code></pre>
-<pre><code class="language-console">busybar api streaming screen front --output ./frame.raw
-</code></pre>
 <h2 id="status_ws"><a class="header" href="#status_ws">status_ws</a></h2>
-<h3>API client</h3>
-
 <p>The stream is enabled as soon as it opens, and ends when the device hangs up.
 The WebSocket transport is passed per call, since the client itself currently only carries an HTTP transport.</p>
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
@@ -983,26 +745,9 @@ while let Some(message) = stream.next().await {
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<p>Prints one numbered line per message as it arrives, until interrupted with ctrl-c. With
-<code>--output-format json</code> each line is a JSON object (aka jsonlines), so the stream can for example be piped into <code>jq</code>.</p>
-<pre><code class="language-console">busybar api streaming status-ws
-</code></pre>
-<p>If you provide a <code>--frame-dir &lt;dir&gt;</code> option, <code>busybar</code> as a side effect, will decode the streamed frames and write
-them as images to the given folder.</p>
-<p>By default, front frames are rendered with a black raster to mimic the
-matrix display of the actual device. This can be disabled by providing the <code>--no-image-raster</code> flag.</p>
-<pre><code class="language-console">busybar api streaming status-ws --frame-dir ./frames
-</code></pre>
-<p>Reported events carry the frame inline as base64, in the same <code>--image-format</code> the files use.</p>
-<pre><code class="language-console">busybar --image-format jpg -o json streaming status-ws
-</code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="system"><a class="header" href="#system">System</a></h1>
+<h1 id="system"><a class="header" href="#system">system</a></h1>
 <h2 id="version"><a class="header" href="#version">version</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -1014,13 +759,7 @@ let version = client.system().version().await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api system version
-</code></pre>
 <h2 id="transport"><a class="header" href="#transport">transport</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -1032,13 +771,7 @@ let transport = client.system().transport().await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api system transport
-</code></pre>
 <h2 id="status-3"><a class="header" href="#status-3">status</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -1050,13 +783,7 @@ let status = client.system().status().await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api system status
-</code></pre>
 <h2 id="status_device"><a class="header" href="#status_device">status_device</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -1068,13 +795,7 @@ let device = client.system().status_device().await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api system status-device
-</code></pre>
 <h2 id="status_firmware"><a class="header" href="#status_firmware">status_firmware</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -1086,13 +807,7 @@ let firmware = client.system().status_firmware().await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api system status-firmware
-</code></pre>
 <h2 id="status_system"><a class="header" href="#status_system">status_system</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -1104,13 +819,7 @@ let system = client.system().status_system().await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api system status-system
-</code></pre>
 <h2 id="status_power"><a class="header" href="#status_power">status_power</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -1122,13 +831,7 @@ let power = client.system().status_power().await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api system status-power
-</code></pre>
 <h2 id="log_dump"><a class="header" href="#log_dump">log_dump</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -1144,15 +847,9 @@ let path = client
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api system log-dump --filename dump
-</code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="time"><a class="header" href="#time">Time</a></h1>
+<h1 id="time"><a class="header" href="#time">time</a></h1>
 <h2 id="now"><a class="header" href="#now">now</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -1164,13 +861,7 @@ let now = client.time().now().await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api time now
-</code></pre>
 <h2 id="set_timestamp"><a class="header" href="#set_timestamp">set_timestamp</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -1185,13 +876,7 @@ client
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api time set-timestamp 2025-10-02T14:30:45+04:00
-</code></pre>
 <h2 id="timezone"><a class="header" href="#timezone">timezone</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -1203,13 +888,7 @@ let timezone = client.time().timezone().await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api time timezone
-</code></pre>
 <h2 id="set_timezone"><a class="header" href="#set_timezone">set_timezone</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -1221,13 +900,7 @@ client.time().set_timezone("Berlin").await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api time set-timezone Berlin
-</code></pre>
 <h2 id="tzlist"><a class="header" href="#tzlist">tzlist</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -1239,15 +912,9 @@ let timezones = client.time().tzlist().await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api time tzlist
-</code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="updater"><a class="header" href="#updater">Updater</a></h1>
+<h1 id="updater"><a class="header" href="#updater">updater</a></h1>
 <h2 id="update"><a class="header" href="#update">update</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -1261,13 +928,7 @@ client.updater().update(package).await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api updater update ./firmware.tar
-</code></pre>
 <h2 id="check"><a class="header" href="#check">check</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -1279,13 +940,7 @@ client.updater().check().await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api updater check
-</code></pre>
 <h2 id="status-4"><a class="header" href="#status-4">status</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -1297,13 +952,7 @@ let status = client.updater().status().await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api updater status
-</code></pre>
 <h2 id="changelog"><a class="header" href="#changelog">changelog</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -1315,13 +964,7 @@ let changelog = client.updater().changelog("25.0.0").await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api updater changelog 25.0.0
-</code></pre>
 <h2 id="install"><a class="header" href="#install">install</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -1333,13 +976,7 @@ client.updater().install("25.0.0").await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api updater install 25.0.0
-</code></pre>
 <h2 id="abort_download"><a class="header" href="#abort_download">abort_download</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -1351,13 +988,7 @@ client.updater().abort_download().await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api updater abort-download
-</code></pre>
 <h2 id="autoupdate"><a class="header" href="#autoupdate">autoupdate</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -1369,13 +1000,7 @@ let settings = client.updater().autoupdate().await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api updater autoupdate
-</code></pre>
 <h2 id="set_autoupdate"><a class="header" href="#set_autoupdate">set_autoupdate</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -1393,15 +1018,9 @@ client.updater().set_autoupdate(&amp;settings).await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
-<pre><code class="language-console">busybar api updater set-autoupdate --enable --start 08:00 --end 23:59
-</code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="wifi"><a class="header" href="#wifi">Wifi</a></h1>
+<h1 id="wifi"><a class="header" href="#wifi">wifi</a></h1>
 <h2 id="status-5"><a class="header" href="#status-5">status</a></h2>
-<h3>API client</h3>
-
 <pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">async fn doc() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -1413,9 +1032,236 @@ let status = client.wifi().status().await?;
 <span class="boring">Ok(())
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
-<h3>CLI</h3>
-
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="account-1"><a class="header" href="#account-1">account</a></h1>
+<h2 id="info-1"><a class="header" href="#info-1">info</a></h2>
+<pre><code class="language-console">busybar api account info
+</code></pre>
+<h2 id="status-6"><a class="header" href="#status-6">status</a></h2>
+<pre><code class="language-console">busybar api account status
+</code></pre>
+<h2 id="backend-1"><a class="header" href="#backend-1">backend</a></h2>
+<pre><code class="language-console">busybar api account backend
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="assets-1"><a class="header" href="#assets-1">assets</a></h1>
+<h2 id="upload-1"><a class="header" href="#upload-1">upload</a></h2>
+<pre><code class="language-console">busybar api assets upload --app my_app --file data.png ./data.png
+</code></pre>
+<h2 id="delete-1"><a class="header" href="#delete-1">delete</a></h2>
+<pre><code class="language-console">busybar api assets delete --app my_app
+</code></pre>
+<h2 id="play-1"><a class="header" href="#play-1">play</a></h2>
+<pre><code class="language-console">busybar api assets play --app my_app --stock shared/beep.snd
+</code></pre>
+<h2 id="stop-1"><a class="header" href="#stop-1">stop</a></h2>
+<pre><code class="language-console">busybar api assets stop
+</code></pre>
+<h2 id="draw-1"><a class="header" href="#draw-1">draw</a></h2>
+<pre><code class="language-console">busybar api assets draw ./draw.json
+</code></pre>
+<h2 id="clear-1"><a class="header" href="#clear-1">clear</a></h2>
+<pre><code class="language-console">busybar api assets clear --app my_app
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="ble-1"><a class="header" href="#ble-1">ble</a></h1>
+<h2 id="enable-1"><a class="header" href="#enable-1">enable</a></h2>
+<pre><code class="language-console">busybar api ble enable
+</code></pre>
+<h2 id="disable-1"><a class="header" href="#disable-1">disable</a></h2>
+<pre><code class="language-console">busybar api ble disable
+</code></pre>
+<h2 id="remove_pairing-1"><a class="header" href="#remove_pairing-1">remove_pairing</a></h2>
+<pre><code class="language-console">busybar api ble remove-pairing
+</code></pre>
+<h2 id="status-7"><a class="header" href="#status-7">status</a></h2>
+<pre><code class="language-console">busybar api ble status
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="busy-1"><a class="header" href="#busy-1">busy</a></h1>
+<h2 id="snapshot-1"><a class="header" href="#snapshot-1">snapshot</a></h2>
+<pre><code class="language-console">busybar api busy snapshot
+</code></pre>
+<h2 id="set_snapshot-1"><a class="header" href="#set_snapshot-1">set_snapshot</a></h2>
+<pre><code class="language-console">busybar api busy set-snapshot ./snapshot.json
+</code></pre>
+<h2 id="profile-1"><a class="header" href="#profile-1">profile</a></h2>
+<pre><code class="language-console">busybar api busy profile custom
+</code></pre>
+<h2 id="set_profile-1"><a class="header" href="#set_profile-1">set_profile</a></h2>
+<pre><code class="language-console">busybar api busy set-profile custom ./profile.json
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="input-1"><a class="header" href="#input-1">input</a></h1>
+<h2 id="press-1"><a class="header" href="#press-1">press</a></h2>
+<pre><code class="language-console">busybar api input press ok
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="settings-1"><a class="header" href="#settings-1">settings</a></h1>
+<h2 id="access-1"><a class="header" href="#access-1">access</a></h2>
+<pre><code class="language-console">busybar api settings access
+</code></pre>
+<h2 id="set_access-1"><a class="header" href="#set_access-1">set_access</a></h2>
+<pre><code class="language-console">busybar api settings set-access key --key 12345678
+</code></pre>
+<h2 id="name-1"><a class="header" href="#name-1">name</a></h2>
+<pre><code class="language-console">busybar api settings name
+</code></pre>
+<h2 id="set_name-1"><a class="header" href="#set_name-1">set_name</a></h2>
+<pre><code class="language-console">busybar api settings set-name "BUSY bar"
+</code></pre>
+<h2 id="volume-1"><a class="header" href="#volume-1">volume</a></h2>
+<pre><code class="language-console">busybar api settings volume
+</code></pre>
+<h2 id="set_volume-1"><a class="header" href="#set_volume-1">set_volume</a></h2>
+<pre><code class="language-console">busybar api settings set-volume 35 --silent
+</code></pre>
+<h2 id="brightness-1"><a class="header" href="#brightness-1">brightness</a></h2>
+<pre><code class="language-console">busybar api settings brightness
+</code></pre>
+<h2 id="set_brightness-1"><a class="header" href="#set_brightness-1">set_brightness</a></h2>
+<pre><code class="language-console">busybar api settings set-brightness 40
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="smart-home"><a class="header" href="#smart-home">smart-home</a></h1>
+<h2 id="pairing-1"><a class="header" href="#pairing-1">pairing</a></h2>
+<pre><code class="language-console">busybar api smart-home pairing
+</code></pre>
+<h2 id="start_pairing-1"><a class="header" href="#start_pairing-1">start_pairing</a></h2>
+<pre><code class="language-console">busybar api smart-home start-pairing
+</code></pre>
+<h2 id="erase_pairings-1"><a class="header" href="#erase_pairings-1">erase_pairings</a></h2>
+<pre><code class="language-console">busybar api smart-home erase-pairings
+</code></pre>
+<h2 id="switch-1"><a class="header" href="#switch-1">switch</a></h2>
+<pre><code class="language-console">busybar api smart-home switch
+</code></pre>
+<h2 id="set_switch-1"><a class="header" href="#set_switch-1">set_switch</a></h2>
+<pre><code class="language-console">busybar api smart-home set-switch on --startup last
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="storage-1"><a class="header" href="#storage-1">storage</a></h1>
+<h2 id="write-1"><a class="header" href="#write-1">write</a></h2>
+<pre><code class="language-console">busybar api storage write /ext/test.png --file ./test.png
+</code></pre>
+<h2 id="read-1"><a class="header" href="#read-1">read</a></h2>
+<pre><code class="language-console">busybar api storage read /ext/test.png --output ./test.png
+</code></pre>
+<h2 id="list-1"><a class="header" href="#list-1">list</a></h2>
+<pre><code class="language-console">busybar api storage list /ext
+</code></pre>
+<h2 id="remove-1"><a class="header" href="#remove-1">remove</a></h2>
+<pre><code class="language-console">busybar api storage remove /ext/test.png
+</code></pre>
+<h2 id="mkdir-1"><a class="header" href="#mkdir-1">mkdir</a></h2>
+<pre><code class="language-console">busybar api storage mkdir /ext/sub
+</code></pre>
+<h2 id="rename-1"><a class="header" href="#rename-1">rename</a></h2>
+<pre><code class="language-console">busybar api storage rename /ext/test.png /ext/sub/test.png
+</code></pre>
+<h2 id="status-8"><a class="header" href="#status-8">status</a></h2>
+<pre><code class="language-console">busybar api storage status
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="streaming-1"><a class="header" href="#streaming-1">streaming</a></h1>
+<h2 id="screen-1"><a class="header" href="#screen-1">screen</a></h2>
+<p>An <code>--output</code> path ending in <code>.bmp</code>, <code>.jpg</code> or <code>.png</code> converts the frame to that image format. If the output path
+extension is not one of these, you instead get raw bytes.</p>
+<pre><code class="language-console">busybar api streaming screen front --output ./frame.png
+</code></pre>
+<pre><code class="language-console">busybar api streaming screen front --output ./frame.raw
+</code></pre>
+<h2 id="status_ws-1"><a class="header" href="#status_ws-1">status_ws</a></h2>
+<p>Prints one numbered line per message as it arrives, until interrupted with ctrl-c. With
+<code>--output-format json</code> each line is a JSON object (aka jsonlines), so the stream can for example be piped into <code>jq</code>.</p>
+<pre><code class="language-console">busybar api streaming status-ws
+</code></pre>
+<p>If you provide a <code>--frame-dir &lt;dir&gt;</code> option, <code>busybar</code> as a side effect, will decode the streamed frames and write
+them as images to the given folder.</p>
+<p>By default, front frames are rendered with a black raster to mimic the
+matrix display of the actual device. This can be disabled by providing the <code>--no-image-raster</code> flag.</p>
+<pre><code class="language-console">busybar api streaming status-ws --frame-dir ./frames
+</code></pre>
+<p>Reported events carry the frame inline as base64, in the same <code>--image-format</code> the files use.</p>
+<pre><code class="language-console">busybar --image-format jpg -o json api streaming status-ws
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="system-1"><a class="header" href="#system-1">system</a></h1>
+<h2 id="version-1"><a class="header" href="#version-1">version</a></h2>
+<pre><code class="language-console">busybar api system version
+</code></pre>
+<h2 id="transport-1"><a class="header" href="#transport-1">transport</a></h2>
+<pre><code class="language-console">busybar api system transport
+</code></pre>
+<h2 id="status-9"><a class="header" href="#status-9">status</a></h2>
+<pre><code class="language-console">busybar api system status
+</code></pre>
+<h2 id="status_device-1"><a class="header" href="#status_device-1">status_device</a></h2>
+<pre><code class="language-console">busybar api system status-device
+</code></pre>
+<h2 id="status_firmware-1"><a class="header" href="#status_firmware-1">status_firmware</a></h2>
+<pre><code class="language-console">busybar api system status-firmware
+</code></pre>
+<h2 id="status_system-1"><a class="header" href="#status_system-1">status_system</a></h2>
+<pre><code class="language-console">busybar api system status-system
+</code></pre>
+<h2 id="status_power-1"><a class="header" href="#status_power-1">status_power</a></h2>
+<pre><code class="language-console">busybar api system status-power
+</code></pre>
+<h2 id="log_dump-1"><a class="header" href="#log_dump-1">log_dump</a></h2>
+<pre><code class="language-console">busybar api system log-dump --filename dump
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="time-1"><a class="header" href="#time-1">time</a></h1>
+<h2 id="now-1"><a class="header" href="#now-1">now</a></h2>
+<pre><code class="language-console">busybar api time now
+</code></pre>
+<h2 id="set_timestamp-1"><a class="header" href="#set_timestamp-1">set_timestamp</a></h2>
+<pre><code class="language-console">busybar api time set-timestamp 2025-10-02T14:30:45+04:00
+</code></pre>
+<h2 id="timezone-1"><a class="header" href="#timezone-1">timezone</a></h2>
+<pre><code class="language-console">busybar api time timezone
+</code></pre>
+<h2 id="set_timezone-1"><a class="header" href="#set_timezone-1">set_timezone</a></h2>
+<pre><code class="language-console">busybar api time set-timezone Berlin
+</code></pre>
+<h2 id="tzlist-1"><a class="header" href="#tzlist-1">tzlist</a></h2>
+<pre><code class="language-console">busybar api time tzlist
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="updater-1"><a class="header" href="#updater-1">updater</a></h1>
+<h2 id="update-1"><a class="header" href="#update-1">update</a></h2>
+<pre><code class="language-console">busybar api updater update ./firmware.tar
+</code></pre>
+<h2 id="check-1"><a class="header" href="#check-1">check</a></h2>
+<pre><code class="language-console">busybar api updater check
+</code></pre>
+<h2 id="status-10"><a class="header" href="#status-10">status</a></h2>
+<pre><code class="language-console">busybar api updater status
+</code></pre>
+<h2 id="changelog-1"><a class="header" href="#changelog-1">changelog</a></h2>
+<pre><code class="language-console">busybar api updater changelog 25.0.0
+</code></pre>
+<h2 id="install-1"><a class="header" href="#install-1">install</a></h2>
+<pre><code class="language-console">busybar api updater install 25.0.0
+</code></pre>
+<h2 id="abort_download-1"><a class="header" href="#abort_download-1">abort_download</a></h2>
+<pre><code class="language-console">busybar api updater abort-download
+</code></pre>
+<h2 id="autoupdate-1"><a class="header" href="#autoupdate-1">autoupdate</a></h2>
+<pre><code class="language-console">busybar api updater autoupdate
+</code></pre>
+<h2 id="set_autoupdate-1"><a class="header" href="#set_autoupdate-1">set_autoupdate</a></h2>
+<pre><code class="language-console">busybar api updater set-autoupdate --enable --start 08:00 --end 23:59
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="wifi-1"><a class="header" href="#wifi-1">wifi</a></h1>
+<h2 id="status-11"><a class="header" href="#status-11">status</a></h2>
 <pre><code class="language-console">busybar api wifi status
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="mirror"><a class="header" href="#mirror">mirror</a></h1>
+<pre><code class="language-console">busybar mirror
 </code></pre>
 
                     </main>
