@@ -4,6 +4,10 @@ All notable changes to this crate are documented in this file. The format is bas
 
 ## Unreleased
 
+No notable changes.
+
+## 0.0.11 - 2026-08-03
+
 ### Added
 
 - Added `busybar capture-frames <dir>` subcommand which writes frames streamed by a screen to a folder.

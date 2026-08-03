@@ -6,6 +6,10 @@ All notable changes to this crate are documented in this file. The format is bas
 
 No notable changes.
 
+## 0.0.11 - 2026-08-03
+
+No notable changes.
+
 ## 0.0.10 - 2026-08-03
 
 ### Added
