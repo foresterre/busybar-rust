@@ -18,7 +18,7 @@ let snapshot = client.busy().snapshot().await?;
 <h3>CLI</h3>
 
 ```console
-busybar busy snapshot
+busybar api busy snapshot
 ```
 
 ## set_snapshot
@@ -41,7 +41,7 @@ client.busy().set_snapshot(&snapshot).await?;
 <h3>CLI</h3>
 
 ```console
-busybar busy set-snapshot ./snapshot.json
+busybar api busy set-snapshot ./snapshot.json
 ```
 
 ## profile
@@ -63,7 +63,7 @@ let profile = client.busy().profile(BusyProfileSlot::Custom).await?;
 <h3>CLI</h3>
 
 ```console
-busybar busy profile custom
+busybar api busy profile custom
 ```
 
 ## set_profile
@@ -91,5 +91,5 @@ client
 <h3>CLI</h3>
 
 ```console
-busybar busy set-profile custom ./profile.json
+busybar api busy set-profile custom ./profile.json
 ```

@@ -27,11 +27,11 @@ An `--output` path ending in `.bmp`, `.jpg` or `.png` converts the frame to that
 extension is not one of these, you instead get raw bytes.
 
 ```console
-busybar streaming screen front --output ./frame.png
+busybar api streaming screen front --output ./frame.png
 ```
 
 ```console
-busybar streaming screen front --output ./frame.raw
+busybar api streaming screen front --output ./frame.raw
 ```
 
 ## status_ws
@@ -65,7 +65,7 @@ Prints one numbered line per message as it arrives, until interrupted with ctrl-
 `--output-format json` each line is a JSON object (aka jsonlines), so the stream can for example be piped into `jq`.
 
 ```console
-busybar streaming status-ws
+busybar api streaming status-ws
 ```
 
 If you provide a `--frame-dir <dir>` option, `busybar` as a side effect, will decode the streamed frames and write
@@ -75,7 +75,7 @@ By default, front frames are rendered with a black raster to mimic the
 matrix display of the actual device. This can be disabled by providing the `--no-image-raster` flag.
 
 ```console
-busybar streaming status-ws --frame-dir ./frames
+busybar api streaming status-ws --frame-dir ./frames
 ```
 
 Reported events carry the frame inline as base64, in the same `--image-format` the files use.

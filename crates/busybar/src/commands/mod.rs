@@ -21,6 +21,26 @@ use crate::types::screen_arg::ScreenArg;
 
 #[derive(Debug, Subcommand)]
 pub enum Command {
+    /// Operations which map directly onto the HTTP API
+    Api {
+        #[command(subcommand)]
+        command: ApiCommand,
+    },
+
+    /// Mirror a screen of the device in the terminal, until interrupted with ctrl-c
+    Mirror {
+        /// Screen to mirror
+        #[arg(long, value_enum, default_value_t = ScreenArg::Front)]
+        screen: ScreenArg,
+
+        /// Do not space the pixels of front frames out on the black raster of the matrix
+        #[arg(long)]
+        no_screen_raster: bool,
+    },
+}
+
+#[derive(Debug, Subcommand)]
+pub enum ApiCommand {
     /// Linked account and cloud connection
     Account {
         #[command(subcommand)]
@@ -49,17 +69,6 @@ pub enum Command {
     Input {
         #[command(subcommand)]
         command: input::InputCommand,
-    },
-
-    /// Mirror a screen of the device in the terminal, until interrupted with ctrl-c
-    Mirror {
-        /// Screen to mirror
-        #[arg(long, value_enum, default_value_t = ScreenArg::Front)]
-        screen: ScreenArg,
-
-        /// Do not space the pixels of front frames out on the black raster of the matrix
-        #[arg(long)]
-        no_screen_raster: bool,
     },
 
     /// Device name, HTTP API access, volume and brightness
@@ -115,23 +124,31 @@ pub enum Command {
 impl Command {
     pub async fn run(self, context: &Context) -> Result<()> {
         match self {
-            Command::Account { command } => command.run(context).await,
-            Command::Assets { command } => command.run(context).await,
-            Command::Ble { command } => command.run(context).await,
-            Command::Busy { command } => command.run(context).await,
-            Command::Input { command } => command.run(context).await,
+            Command::Api { command } => command.run(context).await,
             Command::Mirror {
                 screen,
                 no_screen_raster,
             } => mirror::run(context, screen, no_screen_raster).await,
-            Command::Settings { command } => command.run(context).await,
-            Command::SmartHome { command } => command.run(context).await,
-            Command::Storage { command } => command.run(context).await,
-            Command::Streaming { command } => command.run(context).await,
-            Command::System { command } => command.run(context).await,
-            Command::Time { command } => command.run(context).await,
-            Command::Updater { command } => command.run(context).await,
-            Command::Wifi { command } => command.run(context).await,
+        }
+    }
+}
+
+impl ApiCommand {
+    pub async fn run(self, context: &Context) -> Result<()> {
+        match self {
+            ApiCommand::Account { command } => command.run(context).await,
+            ApiCommand::Assets { command } => command.run(context).await,
+            ApiCommand::Ble { command } => command.run(context).await,
+            ApiCommand::Busy { command } => command.run(context).await,
+            ApiCommand::Input { command } => command.run(context).await,
+            ApiCommand::Settings { command } => command.run(context).await,
+            ApiCommand::SmartHome { command } => command.run(context).await,
+            ApiCommand::Storage { command } => command.run(context).await,
+            ApiCommand::Streaming { command } => command.run(context).await,
+            ApiCommand::System { command } => command.run(context).await,
+            ApiCommand::Time { command } => command.run(context).await,
+            ApiCommand::Updater { command } => command.run(context).await,
+            ApiCommand::Wifi { command } => command.run(context).await,
         }
     }
 }

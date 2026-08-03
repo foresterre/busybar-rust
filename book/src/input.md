@@ -19,5 +19,5 @@ client.input().press(Key::Ok).await?;
 <h3>CLI</h3>
 
 ```console
-busybar input press ok
+busybar api input press ok
 ```

@@ -18,7 +18,7 @@ let pairing = client.smart_home().pairing().await?;
 <h3>CLI</h3>
 
 ```console
-busybar smart-home pairing
+busybar api smart-home pairing
 ```
 
 ## start_pairing
@@ -39,7 +39,7 @@ let payload = client.smart_home().start_pairing().await?;
 <h3>CLI</h3>
 
 ```console
-busybar smart-home start-pairing
+busybar api smart-home start-pairing
 ```
 
 ## erase_pairings
@@ -60,7 +60,7 @@ client.smart_home().erase_pairings().await?;
 <h3>CLI</h3>
 
 ```console
-busybar smart-home erase-pairings
+busybar api smart-home erase-pairings
 ```
 
 ## switch
@@ -81,7 +81,7 @@ let switch = client.smart_home().switch().await?;
 <h3>CLI</h3>
 
 ```console
-busybar smart-home switch
+busybar api smart-home switch
 ```
 
 ## set_switch
@@ -106,5 +106,5 @@ client
 <h3>CLI</h3>
 
 ```console
-busybar smart-home set-switch on --startup last
+busybar api smart-home set-switch on --startup last
 ```

@@ -18,7 +18,7 @@ let version = client.system().version().await?;
 <h3>CLI</h3>
 
 ```console
-busybar system version
+busybar api system version
 ```
 
 ## transport
@@ -39,7 +39,7 @@ let transport = client.system().transport().await?;
 <h3>CLI</h3>
 
 ```console
-busybar system transport
+busybar api system transport
 ```
 
 ## status
@@ -60,7 +60,7 @@ let status = client.system().status().await?;
 <h3>CLI</h3>
 
 ```console
-busybar system status
+busybar api system status
 ```
 
 ## status_device
@@ -81,7 +81,7 @@ let device = client.system().status_device().await?;
 <h3>CLI</h3>
 
 ```console
-busybar system status-device
+busybar api system status-device
 ```
 
 ## status_firmware
@@ -102,7 +102,7 @@ let firmware = client.system().status_firmware().await?;
 <h3>CLI</h3>
 
 ```console
-busybar system status-firmware
+busybar api system status-firmware
 ```
 
 ## status_system
@@ -123,7 +123,7 @@ let system = client.system().status_system().await?;
 <h3>CLI</h3>
 
 ```console
-busybar system status-system
+busybar api system status-system
 ```
 
 ## status_power
@@ -144,7 +144,7 @@ let power = client.system().status_power().await?;
 <h3>CLI</h3>
 
 ```console
-busybar system status-power
+busybar api system status-power
 ```
 
 ## log_dump
@@ -169,5 +169,5 @@ let path = client
 <h3>CLI</h3>
 
 ```console
-busybar system log-dump --filename dump
+busybar api system log-dump --filename dump
 ```

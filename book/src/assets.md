@@ -20,7 +20,7 @@ client.assets().upload("my_app", "data.png", data).await?;
 <h3>CLI</h3>
 
 ```console
-busybar assets upload --app my_app --file data.png ./data.png
+busybar api assets upload --app my_app --file data.png ./data.png
 ```
 
 ## delete
@@ -41,7 +41,7 @@ client.assets().delete("my_app").await?;
 <h3>CLI</h3>
 
 ```console
-busybar assets delete --app my_app
+busybar api assets delete --app my_app
 ```
 
 ## play
@@ -66,7 +66,7 @@ client
 <h3>CLI</h3>
 
 ```console
-busybar assets play --app my_app --stock shared/beep.snd
+busybar api assets play --app my_app --stock shared/beep.snd
 ```
 
 ## stop
@@ -87,7 +87,7 @@ client.assets().stop().await?;
 <h3>CLI</h3>
 
 ```console
-busybar assets stop
+busybar api assets stop
 ```
 
 ## draw
@@ -118,7 +118,7 @@ client.assets().draw(&elements).await?;
 <h3>CLI</h3>
 
 ```console
-busybar assets draw ./draw.json
+busybar api assets draw ./draw.json
 ```
 
 ## clear
@@ -140,5 +140,5 @@ client.assets().clear(Some(AppName::new("my_app")?)).await?;
 <h3>CLI</h3>
 
 ```console
-busybar assets clear --app my_app
+busybar api assets clear --app my_app
 ```

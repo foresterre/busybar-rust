@@ -18,7 +18,7 @@ let info = client.account().info().await?;
 <h3>CLI</h3>
 
 ```console
-busybar account info
+busybar api account info
 ```
 
 ## status
@@ -39,7 +39,7 @@ let status = client.account().status().await?;
 <h3>CLI</h3>
 
 ```console
-busybar account status
+busybar api account status
 ```
 
 ## backend
@@ -60,5 +60,5 @@ let backend = client.account().backend().await?;
 <h3>CLI</h3>
 
 ```console
-busybar account backend
+busybar api account backend
 ```

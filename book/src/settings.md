@@ -18,7 +18,7 @@ let access = client.settings().access().await?;
 <h3>CLI</h3>
 
 ```console
-busybar settings access
+busybar api settings access
 ```
 
 ## set_access
@@ -43,7 +43,7 @@ client
 <h3>CLI</h3>
 
 ```console
-busybar settings set-access key --key 12345678
+busybar api settings set-access key --key 12345678
 ```
 
 ## name
@@ -64,7 +64,7 @@ let name = client.settings().name().await?;
 <h3>CLI</h3>
 
 ```console
-busybar settings name
+busybar api settings name
 ```
 
 ## set_name
@@ -85,7 +85,7 @@ client.settings().set_name("BUSY bar").await?;
 <h3>CLI</h3>
 
 ```console
-busybar settings set-name "BUSY bar"
+busybar api settings set-name "BUSY bar"
 ```
 
 ## volume
@@ -106,7 +106,7 @@ let volume = client.settings().volume().await?;
 <h3>CLI</h3>
 
 ```console
-busybar settings volume
+busybar api settings volume
 ```
 
 ## set_volume
@@ -128,7 +128,7 @@ client.settings().set_volume(Volume::new(35)?, true).await?;
 <h3>CLI</h3>
 
 ```console
-busybar settings set-volume 35 --silent
+busybar api settings set-volume 35 --silent
 ```
 
 ## brightness
@@ -149,7 +149,7 @@ let brightness = client.settings().brightness().await?;
 <h3>CLI</h3>
 
 ```console
-busybar settings brightness
+busybar api settings brightness
 ```
 
 ## set_brightness
@@ -174,5 +174,5 @@ client
 <h3>CLI</h3>
 
 ```console
-busybar settings set-brightness 40
+busybar api settings set-brightness 40
 ```

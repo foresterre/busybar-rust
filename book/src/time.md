@@ -18,7 +18,7 @@ let now = client.time().now().await?;
 <h3>CLI</h3>
 
 ```console
-busybar time now
+busybar api time now
 ```
 
 ## set_timestamp
@@ -42,7 +42,7 @@ client
 <h3>CLI</h3>
 
 ```console
-busybar time set-timestamp 2025-10-02T14:30:45+04:00
+busybar api time set-timestamp 2025-10-02T14:30:45+04:00
 ```
 
 ## timezone
@@ -63,7 +63,7 @@ let timezone = client.time().timezone().await?;
 <h3>CLI</h3>
 
 ```console
-busybar time timezone
+busybar api time timezone
 ```
 
 ## set_timezone
@@ -84,7 +84,7 @@ client.time().set_timezone("Berlin").await?;
 <h3>CLI</h3>
 
 ```console
-busybar time set-timezone Berlin
+busybar api time set-timezone Berlin
 ```
 
 ## tzlist
@@ -105,5 +105,5 @@ let timezones = client.time().tzlist().await?;
 <h3>CLI</h3>
 
 ```console
-busybar time tzlist
+busybar api time tzlist
 ```

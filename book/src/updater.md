@@ -20,7 +20,7 @@ client.updater().update(package).await?;
 <h3>CLI</h3>
 
 ```console
-busybar updater update ./firmware.tar
+busybar api updater update ./firmware.tar
 ```
 
 ## check
@@ -41,7 +41,7 @@ client.updater().check().await?;
 <h3>CLI</h3>
 
 ```console
-busybar updater check
+busybar api updater check
 ```
 
 ## status
@@ -62,7 +62,7 @@ let status = client.updater().status().await?;
 <h3>CLI</h3>
 
 ```console
-busybar updater status
+busybar api updater status
 ```
 
 ## changelog
@@ -83,7 +83,7 @@ let changelog = client.updater().changelog("25.0.0").await?;
 <h3>CLI</h3>
 
 ```console
-busybar updater changelog 25.0.0
+busybar api updater changelog 25.0.0
 ```
 
 ## install
@@ -104,7 +104,7 @@ client.updater().install("25.0.0").await?;
 <h3>CLI</h3>
 
 ```console
-busybar updater install 25.0.0
+busybar api updater install 25.0.0
 ```
 
 ## abort_download
@@ -125,7 +125,7 @@ client.updater().abort_download().await?;
 <h3>CLI</h3>
 
 ```console
-busybar updater abort-download
+busybar api updater abort-download
 ```
 
 ## autoupdate
@@ -146,7 +146,7 @@ let settings = client.updater().autoupdate().await?;
 <h3>CLI</h3>
 
 ```console
-busybar updater autoupdate
+busybar api updater autoupdate
 ```
 
 ## set_autoupdate
@@ -173,5 +173,5 @@ client.updater().set_autoupdate(&settings).await?;
 <h3>CLI</h3>
 
 ```console
-busybar updater set-autoupdate --enable --start 08:00 --end 23:59
+busybar api updater set-autoupdate --enable --start 08:00 --end 23:59
 ```

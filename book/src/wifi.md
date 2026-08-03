@@ -18,5 +18,5 @@ let status = client.wifi().status().await?;
 <h3>CLI</h3>
 
 ```console
-busybar wifi status
+busybar api wifi status
 ```

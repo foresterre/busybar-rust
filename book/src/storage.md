@@ -20,7 +20,7 @@ client.storage().write("/ext/test.png", data).await?;
 <h3>CLI</h3>
 
 ```console
-busybar storage write /ext/test.png --file ./test.png
+busybar api storage write /ext/test.png --file ./test.png
 ```
 
 ## read
@@ -41,7 +41,7 @@ let data = client.storage().read("/ext/test.png").await?;
 <h3>CLI</h3>
 
 ```console
-busybar storage read /ext/test.png --output ./test.png
+busybar api storage read /ext/test.png --output ./test.png
 ```
 
 ## list
@@ -62,7 +62,7 @@ let entries = client.storage().list("/ext").await?;
 <h3>CLI</h3>
 
 ```console
-busybar storage list /ext
+busybar api storage list /ext
 ```
 
 ## remove
@@ -83,7 +83,7 @@ client.storage().remove("/ext/test.png").await?;
 <h3>CLI</h3>
 
 ```console
-busybar storage remove /ext/test.png
+busybar api storage remove /ext/test.png
 ```
 
 ## mkdir
@@ -104,7 +104,7 @@ client.storage().mkdir("/ext/sub").await?;
 <h3>CLI</h3>
 
 ```console
-busybar storage mkdir /ext/sub
+busybar api storage mkdir /ext/sub
 ```
 
 ## rename
@@ -128,7 +128,7 @@ client
 <h3>CLI</h3>
 
 ```console
-busybar storage rename /ext/test.png /ext/sub/test.png
+busybar api storage rename /ext/test.png /ext/sub/test.png
 ```
 
 ## status
@@ -149,5 +149,5 @@ let status = client.storage().status().await?;
 <h3>CLI</h3>
 
 ```console
-busybar storage status
+busybar api storage status
 ```

@@ -18,7 +18,7 @@ client.ble().enable().await?;
 <h3>CLI</h3>
 
 ```console
-busybar ble enable
+busybar api ble enable
 ```
 
 ## disable
@@ -39,7 +39,7 @@ client.ble().disable().await?;
 <h3>CLI</h3>
 
 ```console
-busybar ble disable
+busybar api ble disable
 ```
 
 ## remove_pairing
@@ -60,7 +60,7 @@ client.ble().remove_pairing().await?;
 <h3>CLI</h3>
 
 ```console
-busybar ble remove-pairing
+busybar api ble remove-pairing
 ```
 
 ## status
@@ -81,5 +81,5 @@ let status = client.ble().status().await?;
 <h3>CLI</h3>
 
 ```console
-busybar ble status
+busybar api ble status
 ```
