@@ -168,13 +168,13 @@ impl RawImage {
         let image = match &self.image {
             DynamicImage::ImageLuma8(source) => {
                 let mut target = GrayImage::new(width, height);
-                self::paint(source, &mut target, step, raster.pixel);
+                paint(source, &mut target, step, raster.pixel);
                 DynamicImage::ImageLuma8(target)
             }
             source => {
                 let source = source.to_rgb8();
                 let mut target = RgbImage::new(width, height);
-                self::paint(&source, &mut target, step, raster.pixel);
+                paint(&source, &mut target, step, raster.pixel);
                 DynamicImage::ImageRgb8(target)
             }
         };

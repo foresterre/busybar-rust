@@ -66,7 +66,7 @@ impl<W: Write> Mirror<W> {
 
     pub fn draw(&mut self, image: &RawImage) -> io::Result<()> {
         let cells = Cells::of(image);
-        let (columns, rows) = self::viewport();
+        let (columns, rows) = viewport();
 
         if cells.columns > columns || cells.rows > rows {
             return self.notice(&format!(
@@ -75,7 +75,7 @@ impl<W: Write> Mirror<W> {
             ));
         }
 
-        self::paint(&mut self.out, image, cells)?;
+        paint(&mut self.out, image, cells)?;
         self.out.flush()
     }
 
@@ -109,11 +109,11 @@ fn paint<W: Write>(out: &mut W, image: &RawImage, cells: Cells) -> io::Result<()
         let mut foreground = None;
         let mut background = None;
 
-        out.queue(MoveTo(0, self::coordinate(row)))?;
+        out.queue(MoveTo(0, coordinate(row)))?;
 
         for column in 0..cells.columns {
-            let top = self::sample(image, column, row * 2);
-            let bottom = self::sample(image, column, row * 2 + 1);
+            let top = sample(image, column, row * 2);
+            let bottom = sample(image, column, row * 2 + 1);
 
             if foreground != Some(top) {
                 out.queue(SetForegroundColor(top))?;
@@ -133,7 +133,7 @@ fn paint<W: Write>(out: &mut W, image: &RawImage, cells: Cells) -> io::Result<()
 
     queue!(
         out,
-        MoveTo(0, self::coordinate(cells.rows)),
+        MoveTo(0, coordinate(cells.rows)),
         Clear(ClearType::FromCursorDown)
     )?;
 
@@ -161,7 +161,7 @@ mod tests {
 
     fn render(image: &RawImage) -> String {
         let mut out = Vec::new();
-        self::paint(&mut out, image, Cells::of(image)).unwrap();
+        paint(&mut out, image, Cells::of(image)).unwrap();
 
         String::from_utf8(out).unwrap()
     }

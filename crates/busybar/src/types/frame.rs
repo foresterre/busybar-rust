@@ -52,7 +52,7 @@ impl Frame {
     }
 
     pub fn from_streamed(frame: &StreamedFrame) -> Result<Self, FrameError> {
-        let pixels = self::decode_pixels(frame)?;
+        let pixels = decode_pixels(frame)?;
 
         let layout = match frame.pixel_format() {
             PixelFormat::Rgb888 => PixelLayout::Bgr888,
@@ -92,16 +92,16 @@ fn decode_pixels(frame: &StreamedFrame) -> Result<Vec<u8>, FrameError> {
     };
 
     match (frame.encoding(), bytes_per_pixel) {
-        (Encoding::Plain, 0) => Ok(self::expand_nibbles(&frame.data)),
+        (Encoding::Plain, 0) => Ok(expand_nibbles(&frame.data)),
         (Encoding::Plain, _) => Ok(frame.data.clone()),
         (Encoding::RunLength, 0) => Err(FrameError::UnsupportedCombination {
-            encoding: self::encoding_name(Encoding::RunLength),
-            format: self::format_name(PixelFormat::L4),
+            encoding: encoding_name(Encoding::RunLength),
+            format: format_name(PixelFormat::L4),
         }),
-        (Encoding::RunLength, size) => self::run_length(&frame.data, size),
+        (Encoding::RunLength, size) => run_length(&frame.data, size),
         (encoding @ (Encoding::Deflate | Encoding::DeflateRunLength), _) => {
             Err(FrameError::UnsupportedEncoding {
-                encoding: self::encoding_name(encoding),
+                encoding: encoding_name(encoding),
             })
         }
     }
@@ -258,7 +258,7 @@ mod tests {
             plain.extend_from_slice(&[0x44, 0x55, 0x66]);
         }
 
-        let encoded = Frame::from_streamed(&self::streamed(
+        let encoded = Frame::from_streamed(&streamed(
             Encoding::RunLength,
             PixelFormat::Rgb888,
             72,
@@ -269,7 +269,7 @@ mod tests {
         .encode(ImageFormat::Png)
         .unwrap();
 
-        let expected = Frame::from_streamed(&self::streamed(
+        let expected = Frame::from_streamed(&streamed(
             Encoding::Plain,
             PixelFormat::Rgb888,
             72,
@@ -293,7 +293,7 @@ mod tests {
         let mut plain = vec![0x01, 0x02, 0x03, 0x04, 0x05, 0x06];
         plain.extend(std::iter::repeat_n(0, 258 * 3));
 
-        let encoded = Frame::from_streamed(&self::streamed(
+        let encoded = Frame::from_streamed(&streamed(
             Encoding::RunLength,
             PixelFormat::Rgb888,
             26,
@@ -304,7 +304,7 @@ mod tests {
         .encode(ImageFormat::Png)
         .unwrap();
 
-        let expected = Frame::from_streamed(&self::streamed(
+        let expected = Frame::from_streamed(&streamed(
             Encoding::Plain,
             PixelFormat::Rgb888,
             26,
@@ -320,7 +320,7 @@ mod tests {
 
     #[test]
     fn decodes_a_plain_grayscale_frame() {
-        let frame = Frame::from_streamed(&self::streamed(
+        let frame = Frame::from_streamed(&streamed(
             Encoding::Plain,
             PixelFormat::L8,
             80,
@@ -334,7 +334,7 @@ mod tests {
 
     #[test]
     fn expands_four_bit_grayscale_before_rendering() {
-        let frame = Frame::from_streamed(&self::streamed(
+        let frame = Frame::from_streamed(&streamed(
             Encoding::Plain,
             PixelFormat::L4,
             2,
@@ -343,7 +343,7 @@ mod tests {
         ))
         .unwrap();
 
-        let expected = Frame::from_streamed(&self::streamed(
+        let expected = Frame::from_streamed(&streamed(
             Encoding::Plain,
             PixelFormat::L8,
             2,
@@ -360,7 +360,7 @@ mod tests {
 
     #[test]
     fn encodes_to_base64() {
-        let frame = Frame::from_streamed(&self::streamed(
+        let frame = Frame::from_streamed(&streamed(
             Encoding::Plain,
             PixelFormat::L8,
             2,
@@ -379,7 +379,7 @@ mod tests {
 
     #[test]
     fn rejects_an_encoding_it_cannot_decode() {
-        let error = Frame::from_streamed(&self::streamed(
+        let error = Frame::from_streamed(&streamed(
             Encoding::Deflate,
             PixelFormat::Rgb888,
             72,
@@ -396,7 +396,7 @@ mod tests {
 
     #[test]
     fn rejects_run_length_data_which_ends_mid_run() {
-        let error = Frame::from_streamed(&self::streamed(
+        let error = Frame::from_streamed(&streamed(
             Encoding::RunLength,
             PixelFormat::Rgb888,
             72,
@@ -410,7 +410,7 @@ mod tests {
 
     #[test]
     fn rejects_a_frame_which_does_not_fill_its_geometry() {
-        let error = Frame::from_streamed(&self::streamed(
+        let error = Frame::from_streamed(&streamed(
             Encoding::RunLength,
             PixelFormat::Rgb888,
             72,

@@ -34,7 +34,7 @@ pub async fn run(context: &Context, screen: ScreenArg, no_screen_raster: bool) -
         tokio::select! {
             _ = tokio::signal::ctrl_c() => break,
             message = stream.next() => match message {
-                Some(message) => self::draw(&mut mirror, message?, screen, raster)?,
+                Some(message) => draw(&mut mirror, message?, screen, raster)?,
                 None => break,
             },
         }
@@ -61,7 +61,7 @@ fn draw<W: Write>(
             continue;
         }
 
-        match self::decode(&frame, raster) {
+        match decode(&frame, raster) {
             Ok(frame) => mirror.draw(frame.image())?,
             Err(error) => mirror.notice(&error.to_string())?,
         }

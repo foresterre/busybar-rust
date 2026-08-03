@@ -54,15 +54,16 @@ pub enum StreamingCommand {
 impl StreamingCommand {
     pub async fn run(self, context: &Context) -> Result<()> {
         match self {
-            StreamingCommand::Screen { screen, output } => {
-                self::screen(context, screen, output.as_deref()).await
-            }
+            StreamingCommand::Screen {
+                screen: screen_arg,
+                output,
+            } => screen(context, screen_arg, output.as_deref()).await,
             StreamingCommand::StatusWs {
                 frame_dir,
                 no_image_raster,
             } => {
                 let raster = (!no_image_raster).then(Raster::default);
-                self::status_ws(context, frame_dir.as_deref(), raster).await
+                status_ws(context, frame_dir.as_deref(), raster).await
             }
         }
     }
@@ -104,7 +105,7 @@ async fn status_ws(
             _ = tokio::signal::ctrl_c() => break,
             message = stream.next() => match message {
                 Some(message) => {
-                    for event in self::events(context, &mut sequence, message?, frame_dir, raster) {
+                    for event in events(context, &mut sequence, message?, frame_dir, raster) {
                         context.reporter.report(event)?;
                     }
                 }
@@ -144,7 +145,7 @@ fn events(
 
         let event = match update {
             Update::Frame(frame) => {
-                let payload = self::frame_payload(context, *sequence, &frame, frame_dir, raster);
+                let payload = frame_payload(context, *sequence, &frame, frame_dir, raster);
                 StreamingStatusEvent::frame(*sequence, timestamp, error, payload)
             }
             update => StreamingStatusEvent::update(*sequence, timestamp, error, update),
@@ -191,7 +192,7 @@ fn frame_payload(
         Some(directory) if re_encode.is_none() || decoded.is_some() => {
             let name = format!("{}-{sequence:06}.{selected}", screen_name(frame.screen()));
 
-            match self::write_frame(&directory.join(name), frame, decoded.as_ref(), re_encode) {
+            match write_frame(&directory.join(name), frame, decoded.as_ref(), re_encode) {
                 Ok(path) => Some(path),
                 Err(error) => {
                     reason.get_or_insert(error.to_string());

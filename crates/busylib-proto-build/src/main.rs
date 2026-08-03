@@ -24,7 +24,7 @@ const PROTOS: [&str; 15] = [
 ];
 
 fn main() -> ExitCode {
-    match self::run() {
+    match run() {
         Ok(destination) => {
             println!("wrote {}", destination.display());
             ExitCode::SUCCESS
@@ -46,13 +46,13 @@ fn run() -> Result<PathBuf, Box<dyn Error>> {
 
     let schemas = match std::env::args().nth(1) {
         Some(directory) => PathBuf::from(directory),
-        None => self::checkout(&workspace.join("target/busybar-protobuf"))?,
+        None => checkout(&workspace.join("target/busybar-protobuf"))?,
     };
 
     let out = workspace.join("target/busylib-proto-build");
     std::fs::create_dir_all(&out)?;
 
-    let generated = self::generate(&schemas, &out)?;
+    let generated = generate(&schemas, &out)?;
     let destination = crates.join("busylib-proto/src/generated/protos.rs");
 
     std::fs::write(&destination, generated)?;
