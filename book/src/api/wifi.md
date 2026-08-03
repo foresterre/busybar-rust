@@ -1,8 +1,6 @@
-# Wifi
+# wifi
 
 ## status
-
-<h3>API client</h3>
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
@@ -13,10 +11,4 @@ let status = client.wifi().status().await?;
 
 # Ok(())
 # }
-```
-
-<h3>CLI</h3>
-
-```console
-busybar api wifi status
 ```

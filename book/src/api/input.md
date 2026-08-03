@@ -1,8 +1,6 @@
-# Input
+# input
 
 ## press
-
-<h3>API client</h3>
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
@@ -14,10 +12,4 @@ client.input().press(Key::Ok).await?;
 
 # Ok(())
 # }
-```
-
-<h3>CLI</h3>
-
-```console
-busybar api input press ok
 ```

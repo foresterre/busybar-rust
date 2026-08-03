@@ -1,178 +1,113 @@
-# Settings
+# updater
 
-## access
-
-<h3>API client</h3>
+## update
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
 use busylib::ClientBuilder;
 
 let client = ClientBuilder::new("http://10.0.4.20")?.build_reqwest();
-let access = client.settings().access().await?;
+
+let package = std::fs::read("firmware.tar").unwrap();
+client.updater().update(package).await?;
 
 # Ok(())
 # }
 ```
 
-<h3>CLI</h3>
-
-```console
-busybar api settings access
-```
-
-## set_access
-
-<h3>API client</h3>
-
-```rust
-# async fn doc() -> Result<(), Box<dyn std::error::Error>> {
-use busylib::ClientBuilder;
-use busylib::model::settings::HttpAccess;
-
-let client = ClientBuilder::new("http://10.0.4.20")?.build_reqwest();
-client
-    .settings()
-    .set_access(&HttpAccess::Key("12345678".parse()?))
-    .await?;
-
-# Ok(())
-# }
-```
-
-<h3>CLI</h3>
-
-```console
-busybar api settings set-access key --key 12345678
-```
-
-## name
-
-<h3>API client</h3>
+## check
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
 use busylib::ClientBuilder;
 
 let client = ClientBuilder::new("http://10.0.4.20")?.build_reqwest();
-let name = client.settings().name().await?;
+client.updater().check().await?;
 
 # Ok(())
 # }
 ```
 
-<h3>CLI</h3>
-
-```console
-busybar api settings name
-```
-
-## set_name
-
-<h3>API client</h3>
+## status
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
 use busylib::ClientBuilder;
 
 let client = ClientBuilder::new("http://10.0.4.20")?.build_reqwest();
-client.settings().set_name("BUSY bar").await?;
+let status = client.updater().status().await?;
 
 # Ok(())
 # }
 ```
 
-<h3>CLI</h3>
-
-```console
-busybar api settings set-name "BUSY bar"
-```
-
-## volume
-
-<h3>API client</h3>
+## changelog
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
 use busylib::ClientBuilder;
 
 let client = ClientBuilder::new("http://10.0.4.20")?.build_reqwest();
-let volume = client.settings().volume().await?;
+let changelog = client.updater().changelog("25.0.0").await?;
 
 # Ok(())
 # }
 ```
 
-<h3>CLI</h3>
-
-```console
-busybar api settings volume
-```
-
-## set_volume
-
-<h3>API client</h3>
-
-```rust
-# async fn doc() -> Result<(), Box<dyn std::error::Error>> {
-use busylib::ClientBuilder;
-use busylib::types::volume::Volume;
-
-let client = ClientBuilder::new("http://10.0.4.20")?.build_reqwest();
-client.settings().set_volume(Volume::new(35)?, true).await?;
-
-# Ok(())
-# }
-```
-
-<h3>CLI</h3>
-
-```console
-busybar api settings set-volume 35 --silent
-```
-
-## brightness
-
-<h3>API client</h3>
+## install
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
 use busylib::ClientBuilder;
 
 let client = ClientBuilder::new("http://10.0.4.20")?.build_reqwest();
-let brightness = client.settings().brightness().await?;
+client.updater().install("25.0.0").await?;
 
 # Ok(())
 # }
 ```
 
-<h3>CLI</h3>
-
-```console
-busybar api settings brightness
-```
-
-## set_brightness
-
-<h3>API client</h3>
+## abort_download
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
 use busylib::ClientBuilder;
-use busylib::types::brightness::Brightness;
 
 let client = ClientBuilder::new("http://10.0.4.20")?.build_reqwest();
-client
-    .settings()
-    .set_brightness(Brightness::level(40)?)
-    .await?;
+client.updater().abort_download().await?;
 
 # Ok(())
 # }
 ```
 
-<h3>CLI</h3>
+## autoupdate
 
-```console
-busybar api settings set-brightness 40
+```rust
+# async fn doc() -> Result<(), Box<dyn std::error::Error>> {
+use busylib::ClientBuilder;
+
+let client = ClientBuilder::new("http://10.0.4.20")?.build_reqwest();
+let settings = client.updater().autoupdate().await?;
+
+# Ok(())
+# }
+```
+
+## set_autoupdate
+
+```rust
+# async fn doc() -> Result<(), Box<dyn std::error::Error>> {
+use busylib::ClientBuilder;
+use busylib::model::updater::AutoupdateSettings;
+use busylib::types::time_of_day::TimeOfDay;
+
+let client = ClientBuilder::new("http://10.0.4.20")?.build_reqwest();
+
+let settings = AutoupdateSettings::new()
+    .enabled(true)
+    .window(TimeOfDay::new("08:00")?, TimeOfDay::new("23:59")?);
+client.updater().set_autoupdate(&settings).await?;
+
+# Ok(())
+# }
 ```

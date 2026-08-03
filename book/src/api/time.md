@@ -1,85 +1,69 @@
-# Ble
+# time
 
-## enable
-
-<h3>API client</h3>
+## now
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
 use busylib::ClientBuilder;
 
 let client = ClientBuilder::new("http://10.0.4.20")?.build_reqwest();
-client.ble().enable().await?;
+let now = client.time().now().await?;
 
 # Ok(())
 # }
 ```
 
-<h3>CLI</h3>
-
-```console
-busybar api ble enable
-```
-
-## disable
-
-<h3>API client</h3>
+## set_timestamp
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
 use busylib::ClientBuilder;
 
 let client = ClientBuilder::new("http://10.0.4.20")?.build_reqwest();
-client.ble().disable().await?;
+client
+    .time()
+    .set_timestamp("2025-10-02T14:30:45+04:00")
+    .await?;
 
 # Ok(())
 # }
 ```
 
-<h3>CLI</h3>
-
-```console
-busybar api ble disable
-```
-
-## remove_pairing
-
-<h3>API client</h3>
+## timezone
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
 use busylib::ClientBuilder;
 
 let client = ClientBuilder::new("http://10.0.4.20")?.build_reqwest();
-client.ble().remove_pairing().await?;
+let timezone = client.time().timezone().await?;
 
 # Ok(())
 # }
 ```
 
-<h3>CLI</h3>
-
-```console
-busybar api ble remove-pairing
-```
-
-## status
-
-<h3>API client</h3>
+## set_timezone
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
 use busylib::ClientBuilder;
 
 let client = ClientBuilder::new("http://10.0.4.20")?.build_reqwest();
-let status = client.ble().status().await?;
+client.time().set_timezone("Berlin").await?;
 
 # Ok(())
 # }
 ```
 
-<h3>CLI</h3>
+## tzlist
 
-```console
-busybar api ble status
+```rust
+# async fn doc() -> Result<(), Box<dyn std::error::Error>> {
+use busylib::ClientBuilder;
+
+let client = ClientBuilder::new("http://10.0.4.20")?.build_reqwest();
+let timezones = client.time().tzlist().await?;
+
+# Ok(())
+# }
 ```

@@ -1,8 +1,6 @@
-# Busy
+# busy
 
 ## snapshot
-
-<h3>API client</h3>
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
@@ -15,15 +13,7 @@ let snapshot = client.busy().snapshot().await?;
 # }
 ```
 
-<h3>CLI</h3>
-
-```console
-busybar api busy snapshot
-```
-
 ## set_snapshot
-
-<h3>API client</h3>
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
@@ -38,15 +28,7 @@ client.busy().set_snapshot(&snapshot).await?;
 # }
 ```
 
-<h3>CLI</h3>
-
-```console
-busybar api busy set-snapshot ./snapshot.json
-```
-
 ## profile
-
-<h3>API client</h3>
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
@@ -60,15 +42,7 @@ let profile = client.busy().profile(BusyProfileSlot::Custom).await?;
 # }
 ```
 
-<h3>CLI</h3>
-
-```console
-busybar api busy profile custom
-```
-
 ## set_profile
-
-<h3>API client</h3>
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
@@ -86,10 +60,4 @@ client
 
 # Ok(())
 # }
-```
-
-<h3>CLI</h3>
-
-```console
-busybar api busy set-profile custom ./profile.json
 ```

@@ -1,177 +1,114 @@
-# Updater
+# settings
 
-## update
-
-<h3>API client</h3>
+## access
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
 use busylib::ClientBuilder;
 
 let client = ClientBuilder::new("http://10.0.4.20")?.build_reqwest();
-
-let package = std::fs::read("firmware.tar").unwrap();
-client.updater().update(package).await?;
+let access = client.settings().access().await?;
 
 # Ok(())
 # }
 ```
 
-<h3>CLI</h3>
+## set_access
 
-```console
-busybar api updater update ./firmware.tar
+```rust
+# async fn doc() -> Result<(), Box<dyn std::error::Error>> {
+use busylib::ClientBuilder;
+use busylib::model::settings::HttpAccess;
+
+let client = ClientBuilder::new("http://10.0.4.20")?.build_reqwest();
+client
+    .settings()
+    .set_access(&HttpAccess::Key("12345678".parse()?))
+    .await?;
+
+# Ok(())
+# }
 ```
 
-## check
-
-<h3>API client</h3>
+## name
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
 use busylib::ClientBuilder;
 
 let client = ClientBuilder::new("http://10.0.4.20")?.build_reqwest();
-client.updater().check().await?;
+let name = client.settings().name().await?;
 
 # Ok(())
 # }
 ```
 
-<h3>CLI</h3>
-
-```console
-busybar api updater check
-```
-
-## status
-
-<h3>API client</h3>
+## set_name
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
 use busylib::ClientBuilder;
 
 let client = ClientBuilder::new("http://10.0.4.20")?.build_reqwest();
-let status = client.updater().status().await?;
+client.settings().set_name("BUSY bar").await?;
 
 # Ok(())
 # }
 ```
 
-<h3>CLI</h3>
-
-```console
-busybar api updater status
-```
-
-## changelog
-
-<h3>API client</h3>
+## volume
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
 use busylib::ClientBuilder;
 
 let client = ClientBuilder::new("http://10.0.4.20")?.build_reqwest();
-let changelog = client.updater().changelog("25.0.0").await?;
+let volume = client.settings().volume().await?;
 
 # Ok(())
 # }
 ```
 
-<h3>CLI</h3>
+## set_volume
 
-```console
-busybar api updater changelog 25.0.0
+```rust
+# async fn doc() -> Result<(), Box<dyn std::error::Error>> {
+use busylib::ClientBuilder;
+use busylib::types::volume::Volume;
+
+let client = ClientBuilder::new("http://10.0.4.20")?.build_reqwest();
+client.settings().set_volume(Volume::new(35)?, true).await?;
+
+# Ok(())
+# }
 ```
 
-## install
-
-<h3>API client</h3>
+## brightness
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
 use busylib::ClientBuilder;
 
 let client = ClientBuilder::new("http://10.0.4.20")?.build_reqwest();
-client.updater().install("25.0.0").await?;
+let brightness = client.settings().brightness().await?;
 
 # Ok(())
 # }
 ```
 
-<h3>CLI</h3>
-
-```console
-busybar api updater install 25.0.0
-```
-
-## abort_download
-
-<h3>API client</h3>
+## set_brightness
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
 use busylib::ClientBuilder;
+use busylib::types::brightness::Brightness;
 
 let client = ClientBuilder::new("http://10.0.4.20")?.build_reqwest();
-client.updater().abort_download().await?;
+client
+    .settings()
+    .set_brightness(Brightness::level(40)?)
+    .await?;
 
 # Ok(())
 # }
-```
-
-<h3>CLI</h3>
-
-```console
-busybar api updater abort-download
-```
-
-## autoupdate
-
-<h3>API client</h3>
-
-```rust
-# async fn doc() -> Result<(), Box<dyn std::error::Error>> {
-use busylib::ClientBuilder;
-
-let client = ClientBuilder::new("http://10.0.4.20")?.build_reqwest();
-let settings = client.updater().autoupdate().await?;
-
-# Ok(())
-# }
-```
-
-<h3>CLI</h3>
-
-```console
-busybar api updater autoupdate
-```
-
-## set_autoupdate
-
-<h3>API client</h3>
-
-```rust
-# async fn doc() -> Result<(), Box<dyn std::error::Error>> {
-use busylib::ClientBuilder;
-use busylib::model::updater::AutoupdateSettings;
-use busylib::types::time_of_day::TimeOfDay;
-
-let client = ClientBuilder::new("http://10.0.4.20")?.build_reqwest();
-
-let settings = AutoupdateSettings::new()
-    .enabled(true)
-    .window(TimeOfDay::new("08:00")?, TimeOfDay::new("23:59")?);
-client.updater().set_autoupdate(&settings).await?;
-
-# Ok(())
-# }
-```
-
-<h3>CLI</h3>
-
-```console
-busybar api updater set-autoupdate --enable --start 08:00 --end 23:59
 ```

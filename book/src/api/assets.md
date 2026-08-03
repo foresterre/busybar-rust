@@ -1,8 +1,6 @@
-# Assets
+# assets
 
 ## upload
-
-<h3>API client</h3>
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
@@ -17,15 +15,7 @@ client.assets().upload("my_app", "data.png", data).await?;
 # }
 ```
 
-<h3>CLI</h3>
-
-```console
-busybar api assets upload --app my_app --file data.png ./data.png
-```
-
 ## delete
-
-<h3>API client</h3>
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
@@ -38,15 +28,7 @@ client.assets().delete("my_app").await?;
 # }
 ```
 
-<h3>CLI</h3>
-
-```console
-busybar api assets delete --app my_app
-```
-
 ## play
-
-<h3>API client</h3>
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
@@ -63,15 +45,7 @@ client
 # }
 ```
 
-<h3>CLI</h3>
-
-```console
-busybar api assets play --app my_app --stock shared/beep.snd
-```
-
 ## stop
-
-<h3>API client</h3>
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
@@ -84,15 +58,7 @@ client.assets().stop().await?;
 # }
 ```
 
-<h3>CLI</h3>
-
-```console
-busybar api assets stop
-```
-
 ## draw
-
-<h3>API client</h3>
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
@@ -115,15 +81,7 @@ client.assets().draw(&elements).await?;
 # }
 ```
 
-<h3>CLI</h3>
-
-```console
-busybar api assets draw ./draw.json
-```
-
 ## clear
-
-<h3>API client</h3>
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
@@ -135,10 +93,4 @@ client.assets().clear(Some(AppName::new("my_app")?)).await?;
 
 # Ok(())
 # }
-```
-
-<h3>CLI</h3>
-
-```console
-busybar api assets clear --app my_app
 ```

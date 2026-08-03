@@ -1,8 +1,6 @@
-# Storage
+# storage
 
 ## write
-
-<h3>API client</h3>
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
@@ -17,15 +15,7 @@ client.storage().write("/ext/test.png", data).await?;
 # }
 ```
 
-<h3>CLI</h3>
-
-```console
-busybar api storage write /ext/test.png --file ./test.png
-```
-
 ## read
-
-<h3>API client</h3>
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
@@ -38,15 +28,7 @@ let data = client.storage().read("/ext/test.png").await?;
 # }
 ```
 
-<h3>CLI</h3>
-
-```console
-busybar api storage read /ext/test.png --output ./test.png
-```
-
 ## list
-
-<h3>API client</h3>
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
@@ -59,15 +41,7 @@ let entries = client.storage().list("/ext").await?;
 # }
 ```
 
-<h3>CLI</h3>
-
-```console
-busybar api storage list /ext
-```
-
 ## remove
-
-<h3>API client</h3>
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
@@ -80,15 +54,7 @@ client.storage().remove("/ext/test.png").await?;
 # }
 ```
 
-<h3>CLI</h3>
-
-```console
-busybar api storage remove /ext/test.png
-```
-
 ## mkdir
-
-<h3>API client</h3>
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
@@ -101,15 +67,7 @@ client.storage().mkdir("/ext/sub").await?;
 # }
 ```
 
-<h3>CLI</h3>
-
-```console
-busybar api storage mkdir /ext/sub
-```
-
 ## rename
-
-<h3>API client</h3>
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
@@ -125,15 +83,7 @@ client
 # }
 ```
 
-<h3>CLI</h3>
-
-```console
-busybar api storage rename /ext/test.png /ext/sub/test.png
-```
-
 ## status
-
-<h3>API client</h3>
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
@@ -144,10 +94,4 @@ let status = client.storage().status().await?;
 
 # Ok(())
 # }
-```
-
-<h3>CLI</h3>
-
-```console
-busybar api storage status
 ```

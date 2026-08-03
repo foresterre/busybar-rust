@@ -1,8 +1,6 @@
-# Account
+# account
 
 ## info
-
-<h3>API client</h3>
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
@@ -15,15 +13,7 @@ let info = client.account().info().await?;
 # }
 ```
 
-<h3>CLI</h3>
-
-```console
-busybar api account info
-```
-
 ## status
-
-<h3>API client</h3>
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
@@ -36,15 +26,7 @@ let status = client.account().status().await?;
 # }
 ```
 
-<h3>CLI</h3>
-
-```console
-busybar api account status
-```
-
 ## backend
-
-<h3>API client</h3>
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
@@ -55,10 +37,4 @@ let backend = client.account().backend().await?;
 
 # Ok(())
 # }
-```
-
-<h3>CLI</h3>
-
-```console
-busybar api account backend
 ```

@@ -1,8 +1,6 @@
-# System
+# system
 
 ## version
-
-<h3>API client</h3>
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
@@ -15,15 +13,7 @@ let version = client.system().version().await?;
 # }
 ```
 
-<h3>CLI</h3>
-
-```console
-busybar api system version
-```
-
 ## transport
-
-<h3>API client</h3>
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
@@ -36,15 +26,7 @@ let transport = client.system().transport().await?;
 # }
 ```
 
-<h3>CLI</h3>
-
-```console
-busybar api system transport
-```
-
 ## status
-
-<h3>API client</h3>
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
@@ -57,15 +39,7 @@ let status = client.system().status().await?;
 # }
 ```
 
-<h3>CLI</h3>
-
-```console
-busybar api system status
-```
-
 ## status_device
-
-<h3>API client</h3>
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
@@ -78,15 +52,7 @@ let device = client.system().status_device().await?;
 # }
 ```
 
-<h3>CLI</h3>
-
-```console
-busybar api system status-device
-```
-
 ## status_firmware
-
-<h3>API client</h3>
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
@@ -99,15 +65,7 @@ let firmware = client.system().status_firmware().await?;
 # }
 ```
 
-<h3>CLI</h3>
-
-```console
-busybar api system status-firmware
-```
-
 ## status_system
-
-<h3>API client</h3>
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
@@ -120,15 +78,7 @@ let system = client.system().status_system().await?;
 # }
 ```
 
-<h3>CLI</h3>
-
-```console
-busybar api system status-system
-```
-
 ## status_power
-
-<h3>API client</h3>
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
@@ -141,15 +91,7 @@ let power = client.system().status_power().await?;
 # }
 ```
 
-<h3>CLI</h3>
-
-```console
-busybar api system status-power
-```
-
 ## log_dump
-
-<h3>API client</h3>
 
 ```rust
 # async fn doc() -> Result<(), Box<dyn std::error::Error>> {
@@ -164,10 +106,4 @@ let path = client
 
 # Ok(())
 # }
-```
-
-<h3>CLI</h3>
-
-```console
-busybar api system log-dump --filename dump
 ```
