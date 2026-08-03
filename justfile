@@ -65,6 +65,13 @@ bump version:
     if missing:
         sys.exit(f"crates without a changelog: {', '.join(missing)}")
 
+    # Check that the documented dependency versions are the ones we are bumping
+    docs = [pathlib.Path("README.md"), pathlib.Path("book/src/api/index.md")]
+    dependency = f'busylib = "{old}"'
+    stale = [str(doc) for doc in docs if dependency not in doc.read_text()]
+    if stale:
+        sys.exit(f"docs without a `{dependency}` dependency: {', '.join(stale)}")
+
     # Update Cargo manifest versions
     manifest.write_text(text.replace(f'version = "{old}"', f'version = "{new}"'))
 
@@ -78,6 +85,10 @@ bump version:
                 1,
             )
         )
+
+    # Update the documented dependency versions
+    for doc in docs:
+        doc.write_text(doc.read_text().replace(dependency, f'busylib = "{new}"'))
 
     subprocess.run(["cargo", "update", "--workspace", "--quiet"], check=True)
     print(f"bumped {old} to {new}")
