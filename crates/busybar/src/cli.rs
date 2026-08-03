@@ -7,6 +7,7 @@ use crate::reporter::Reporter;
 use crate::types::api_prefix_arg::ApiPrefixArg;
 use crate::types::image_format_arg::ImageFormatArg;
 use crate::types::output_format::OutputFormatArg;
+use crate::types::timeout_arg::TimeoutArg;
 
 /// Control a BUSY Bar over its HTTP API, using this CLI <3
 #[derive(Debug, Parser)]
@@ -42,6 +43,10 @@ pub struct Cli {
     #[arg(long, value_enum, default_value_t = ImageFormatArg::Png)]
     image_format: ImageFormatArg,
 
+    /// API timeout to be used, unless individual subcommands specify it otherwise
+    #[arg(long, value_name = "MS", default_value_t = TimeoutArg::DEFAULT)]
+    timeout: TimeoutArg,
+
     #[command(subcommand)]
     command: Command,
 }
@@ -54,10 +59,13 @@ impl Cli {
             token,
             output_format,
             image_format,
+            timeout,
             command,
         } = self;
 
-        let mut builder = ClientBuilder::new(&url)?.api_prefix(api_prefix.into());
+        let mut builder = ClientBuilder::new(&url)?
+            .timeout(timeout.to_duration())
+            .api_prefix(api_prefix.into());
         if let Some(token) = token {
             builder = builder.token(token)?;
         }

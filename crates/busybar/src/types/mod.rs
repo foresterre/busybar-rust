@@ -8,3 +8,4 @@ pub mod screen_arg;
 pub mod slot_arg;
 pub mod switch_startup_arg;
 pub mod switch_state_arg;
+pub mod timeout_arg;
