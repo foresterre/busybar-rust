@@ -264,7 +264,7 @@ mod tests {
     fn numbers_each_message_it_reports() {
         let event = StreamingStatusEvent::heartbeat(7, 1785692728867, None);
 
-        assert_eq!(event.to_string(), "#7 heartbeat");
+        assert_eq!(event.to_string(), "#7 time 1785692728867 heartbeat");
         assert_eq!(
             serde_json::to_value(CliEvent::from(event)).unwrap(),
             json!({"event": "streaming_status", "sequence": 7, "timestamp": 1785692728867u64})
@@ -281,7 +281,10 @@ mod tests {
         );
         let event = StreamingStatusEvent::frame(1, 1785692728867, None, payload);
 
-        assert_eq!(event.to_string(), "#1 frame front 72x16 run-length rgb888");
+        assert_eq!(
+            event.to_string(),
+            "#1 time 1785692728867 frame front 72x16 run-length rgb888"
+        );
 
         let json = serde_json::to_value(CliEvent::from(event)).unwrap();
         let frame = &json["frame"];
@@ -307,7 +310,7 @@ mod tests {
 
         assert_eq!(
             event.to_string(),
-            "#1 frame front 72x16 run-length rgb888 -> frames/front-000001.png"
+            "#1 time 1785692728867 frame front 72x16 run-length rgb888 frames/front-000001.png"
         );
     }
 
@@ -336,7 +339,7 @@ mod tests {
 
         assert_eq!(
             event.to_string(),
-            "#2 frame front 72x16 run-length rgb888 \
+            "#2 time 1785692728867 frame front 72x16 run-length rgb888 \
              (the device streamed a deflate frame, which is not supported yet)"
         );
 
@@ -361,7 +364,7 @@ mod tests {
         });
         let event = StreamingStatusEvent::update(3, 1785692728867, None, update);
 
-        assert_eq!(event.to_string(), "#3 brightness 30");
+        assert_eq!(event.to_string(), "#3 time 1785692728867 brightness 30");
     }
 
     #[test]
