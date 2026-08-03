@@ -6,4 +6,4 @@ busybar mirror
 
 ## Cast
 
-[![asciicast](https://asciinema.org/a/HnZ322D3k1zMPrHm.svg)](https://asciinema.org/a/HnZ322D3k1zMPrHm)
+<script src="https://asciinema.org/a/HnZ322D3k1zMPrHm.js" id="asciicast-HnZ322D3k1zMPrHm" async="true"></script>
