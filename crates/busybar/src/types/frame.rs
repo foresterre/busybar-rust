@@ -67,6 +67,10 @@ impl Frame {
         )?))
     }
 
+    pub fn image(&self) -> &RawImage {
+        &self.0
+    }
+
     pub fn with_raster(&self, raster: Raster) -> Result<Self, FrameError> {
         Ok(Self(self.0.with_raster(raster)?))
     }

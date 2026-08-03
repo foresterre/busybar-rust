@@ -11,5 +11,6 @@ rust-version = "1.88"
 
 [dependencies]
 base64.workspace = true
+crossterm.workspace = true
 image.workspace = true
 thiserror.workspace = true

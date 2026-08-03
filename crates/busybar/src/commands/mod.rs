@@ -3,6 +3,7 @@ mod assets;
 mod ble;
 mod busy;
 mod input;
+mod mirror;
 mod settings;
 mod smart_home;
 mod storage;
@@ -16,6 +17,7 @@ use clap::Subcommand;
 
 use crate::cli::Context;
 use crate::error::Result;
+use crate::types::screen_arg::ScreenArg;
 
 #[derive(Debug, Subcommand)]
 pub enum Command {
@@ -47,6 +49,17 @@ pub enum Command {
     Input {
         #[command(subcommand)]
         command: input::InputCommand,
+    },
+
+    /// Mirror a screen of the device in the terminal, until interrupted with ctrl-c
+    Mirror {
+        /// Screen to mirror
+        #[arg(long, value_enum, default_value_t = ScreenArg::Front)]
+        screen: ScreenArg,
+
+        /// Do not space the pixels of front frames out on the black raster of the matrix
+        #[arg(long)]
+        no_screen_raster: bool,
     },
 
     /// Device name, HTTP API access, volume and brightness
@@ -107,6 +120,10 @@ impl Command {
             Command::Ble { command } => command.run(context).await,
             Command::Busy { command } => command.run(context).await,
             Command::Input { command } => command.run(context).await,
+            Command::Mirror {
+                screen,
+                no_screen_raster,
+            } => mirror::run(context, screen, no_screen_raster).await,
             Command::Settings { command } => command.run(context).await,
             Command::SmartHome { command } => command.run(context).await,
             Command::Storage { command } => command.run(context).await,

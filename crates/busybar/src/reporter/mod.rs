@@ -22,8 +22,8 @@ pub use crate::reporter::events::{
     StorageStatusEvent, StreamingScreenEvent, StreamingStatusEvent, SystemLogDumpEvent,
     SystemStatusDeviceEvent, SystemStatusEvent, SystemStatusFirmwareEvent, SystemStatusPowerEvent,
     SystemStatusSystemEvent, SystemTransportEvent, SystemVersionEvent, TimeNowEvent,
-    TimeTimezoneEvent, TimeTzlistEvent, UpdaterAutoupdateEvent, UpdaterChangelogEvent,
-    UpdaterStatusEvent, WifiStatusEvent,
+    TimeTimezoneEvent, TimeTzlistEvent, UnsupportedEvent, UpdaterAutoupdateEvent,
+    UpdaterChangelogEvent, UpdaterStatusEvent, WifiStatusEvent,
 };
 pub use crate::reporter::output::{Output, OutputError};
 

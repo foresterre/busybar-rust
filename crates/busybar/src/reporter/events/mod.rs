@@ -10,6 +10,7 @@ mod storage;
 mod streaming;
 mod system;
 mod time;
+mod unsupported;
 mod updater;
 mod wifi;
 
@@ -41,6 +42,7 @@ pub use crate::reporter::events::system::{
     SystemStatusPowerEvent, SystemStatusSystemEvent, SystemTransportEvent, SystemVersionEvent,
 };
 pub use crate::reporter::events::time::{TimeNowEvent, TimeTimezoneEvent, TimeTzlistEvent};
+pub use crate::reporter::events::unsupported::UnsupportedEvent;
 pub use crate::reporter::events::updater::{
     UpdaterAutoupdateEvent, UpdaterChangelogEvent, UpdaterStatusEvent,
 };
@@ -50,6 +52,7 @@ pub use crate::reporter::events::wifi::WifiStatusEvent;
 #[serde(tag = "event", rename_all = "snake_case")]
 pub enum CliEvent {
     Ok(OkEvent),
+    Unsupported(UnsupportedEvent),
 
     AccountInfo(AccountInfoEvent),
     AccountStatus(AccountStatusEvent),
@@ -100,6 +103,7 @@ impl fmt::Display for CliEvent {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             CliEvent::Ok(event) => event.fmt(f),
+            CliEvent::Unsupported(event) => event.fmt(f),
             CliEvent::AccountInfo(event) => event.fmt(f),
             CliEvent::AccountStatus(event) => event.fmt(f),
             CliEvent::AccountBackend(event) => event.fmt(f),
