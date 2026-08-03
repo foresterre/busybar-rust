@@ -1,23 +1,14 @@
-mod account;
-mod assets;
-mod ble;
-mod busy;
-mod input;
+pub mod api;
 mod mirror;
-mod settings;
-mod smart_home;
-mod storage;
-mod streaming;
-mod system;
-mod time;
-mod updater;
-mod wifi;
-
-use clap::Subcommand;
 
 use crate::cli::Context;
 use crate::error::Result;
 use crate::types::screen_arg::ScreenArg;
+use api::{
+    account, assets, ble, busy, input, settings, smart_home, storage, streaming, system, time,
+    updater, wifi,
+};
+use clap::Subcommand;
 
 #[derive(Debug, Subcommand)]
 pub enum Command {
