@@ -35,4 +35,5 @@
   - [time](cli/api/time.md)
   - [updater](cli/api/updater.md)
   - [wifi](cli/api/wifi.md)
+- [capture-frames](./cli/capture-frames.md)
 - [mirror](./cli/mirror.md)

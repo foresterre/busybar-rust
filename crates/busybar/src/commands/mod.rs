@@ -1,5 +1,8 @@
 pub mod api;
+mod capture_frames;
 mod mirror;
+
+use std::path::PathBuf;
 
 use crate::cli::Context;
 use crate::error::Result;
@@ -16,6 +19,21 @@ pub enum Command {
     Api {
         #[command(subcommand)]
         command: ApiCommand,
+    },
+
+    /// Write streamed frames of a screen to a folder, until interrupted with ctrl-c
+    CaptureFrames {
+        /// Folder to write the frames to, see --image-format
+        #[arg(value_name = "DIR")]
+        directory: PathBuf,
+
+        /// Screen to capture
+        #[arg(long, value_enum, default_value_t = ScreenArg::Front)]
+        screen: ScreenArg,
+
+        /// Do not space the pixels of front frames out on the black raster of the matrix
+        #[arg(long)]
+        no_image_raster: bool,
     },
 
     /// Mirror a screen of the device in the terminal, until interrupted with ctrl-c
@@ -116,6 +134,11 @@ impl Command {
     pub async fn run(self, context: &Context) -> Result<()> {
         match self {
             Command::Api { command } => command.run(context).await,
+            Command::CaptureFrames {
+                directory,
+                screen,
+                no_image_raster,
+            } => capture_frames::run(context, &directory, screen, no_image_raster).await,
             Command::Mirror {
                 screen,
                 no_screen_raster,

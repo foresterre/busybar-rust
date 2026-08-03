@@ -147,7 +147,7 @@ impl From<StreamingStatusEvent> for CliEvent {
 
 impl fmt::Display for StreamingStatusEvent {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "#{} ", self.sequence)?;
+        write!(f, "#{} time {} ", self.sequence, self.timestamp)?;
 
         match (&self.frame, &self.update) {
             (Some(frame), _) => write_frame(f, frame)?,
@@ -170,7 +170,7 @@ fn write_frame(f: &mut fmt::Formatter<'_>, frame: &FramePayload) -> fmt::Result 
     )?;
 
     match (&frame.path, &frame.reason) {
-        (Some(path), _) => write!(f, " -> {path}"),
+        (Some(path), _) => write!(f, " {path}"),
         (None, Some(reason)) => write!(f, " ({reason})"),
         (None, None) => Ok(()),
     }

@@ -22,18 +22,17 @@ Prints one numbered line per message as it arrives, until interrupted with ctrl-
 busybar api streaming status-ws
 ```
 
-If you provide a `--frame-dir <dir>` option, `busybar` as a side effect, will decode the streamed frames and write
-them as images to the given folder.
-
-By default, front frames are rendered with a black raster to mimic the
-matrix display of the actual device. This can be disabled by providing the `--no-image-raster` flag.
+Reported events carry the frame inline as base64. The format matches the value of the global `--image-format` option.
+Note that in "text" mode the actual frame data isn't printed. You can get the frames in conventional
+image formats via [`busybar capture-frames`](../capture-frames.md), or set the output format to `json`.
 
 ```console
-busybar api streaming status-ws --frame-dir ./frames
+busybar --image-format jpg --output-format json api streaming status-ws
 ```
 
-Reported events carry the frame inline as base64, in the same `--image-format` the files use.
+Front frames are rendered with a black raster to mimic the matrix display of the actual device. 
+This can be disabled by providing the `--no-image-raster` flag.
 
 ```console
-busybar --image-format jpg -o json api streaming status-ws
+busybar --output-format json api streaming status-ws --no-image-raster
 ```
