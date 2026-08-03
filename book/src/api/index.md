@@ -4,7 +4,7 @@ Add to your crate by running `cargo add busylib` or adding `busylib` to your dep
 
 ```toml
 [dependencies]
-busylib = "0.0.9" # check latest version https://crates.io/crates/busylib
+busylib = "0.0.10" # check latest version https://crates.io/crates/busylib
 ```
 
 For the Rust docs, see [docs.rs](https://docs.rs/busylib).
