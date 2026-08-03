@@ -25,3 +25,21 @@ be disabled by providing the `--no-image-raster` flag.
 ```console
 busybar capture-frames --no-image-raster ./frames
 ```
+
+## Cast
+
+<script src="https://asciinema.org/a/4Fitxb74bAGJDs46.js" id="asciicast-4Fitxb74bAGJDs46" async="true"></script>
+
+**Frames captured**
+
+![front-000001](../assets/cli/capture-frames-demo/front-000001.png)
+![front-000002](../assets/cli/capture-frames-demo/front-000002.png)
+![front-000003](../assets/cli/capture-frames-demo/front-000003.png)
+![front-000004](../assets/cli/capture-frames-demo/front-000004.png)
+![front-000005](../assets/cli/capture-frames-demo/front-000005.png)
+![front-000006](../assets/cli/capture-frames-demo/front-000006.png)
+![front-000007](../assets/cli/capture-frames-demo/front-000007.png)
+![front-000008](../assets/cli/capture-frames-demo/front-000008.png)
+![front-000009](../assets/cli/capture-frames-demo/front-000009.png)
+![front-000010](../assets/cli/capture-frames-demo/front-000010.png)
+
