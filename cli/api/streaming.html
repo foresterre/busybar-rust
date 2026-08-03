@@ -35,10 +35,10 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-98c0b76d.js";
+            window.path_to_searchindex_js = "../../searchindex-e914335f.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../../toc-1524e3c3.js"></script>
+        <script src="../../toc-cb3217e5.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -187,14 +187,14 @@ extension is not one of these, you instead get raw bytes.</p>
 <code>--output-format json</code> each line is a JSON object (aka jsonlines), so the stream can for example be piped into <code>jq</code>.</p>
 <pre><code class="language-console">busybar api streaming status-ws
 </code></pre>
-<p>If you provide a <code>--frame-dir &lt;dir&gt;</code> option, <code>busybar</code> as a side effect, will decode the streamed frames and write
-them as images to the given folder.</p>
-<p>By default, front frames are rendered with a black raster to mimic the
-matrix display of the actual device. This can be disabled by providing the <code>--no-image-raster</code> flag.</p>
-<pre><code class="language-console">busybar api streaming status-ws --frame-dir ./frames
+<p>Reported events carry the frame inline as base64. The format matches the value of the global <code>--image-format</code> option.
+Note that in “text” mode the actual frame data isn’t printed. You can get the frames in conventional
+image formats via <a href="../capture-frames.html"><code>busybar capture-frames</code></a>, or set the output format to <code>json</code>.</p>
+<pre><code class="language-console">busybar --image-format jpg --output-format json api streaming status-ws
 </code></pre>
-<p>Reported events carry the frame inline as base64, in the same <code>--image-format</code> the files use.</p>
-<pre><code class="language-console">busybar --image-format jpg -o json api streaming status-ws
+<p>Front frames are rendered with a black raster to mimic the matrix display of the actual device.
+This can be disabled by providing the <code>--no-image-raster</code> flag.</p>
+<pre><code class="language-console">busybar --output-format json api streaming status-ws --no-image-raster
 </code></pre>
 
                     </main>
