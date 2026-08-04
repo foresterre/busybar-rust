@@ -38,6 +38,10 @@ tokio-tungstenite = { workspace = true, optional = true }
 url.workspace = true
 
 [dev-dependencies]
-tokio = { workspace = true, features = ["net"] }
+tokio = { workspace = true, features = ["net", "time"] }
 tokio-tungstenite.workspace = true
 wiremock.workspace = true
+
+[[example]]
+name = "weather"
+required-features = ["reqwest"]

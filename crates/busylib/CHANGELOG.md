@@ -4,7 +4,9 @@ All notable changes to this crate are documented in this file. The format is bas
 
 ## Unreleased
 
-No notable changes.
+### Added
+
+- Added a `weather` example, which draws the current Amsterdam weather.
 
 ## 0.0.11 - 2026-08-03
 
